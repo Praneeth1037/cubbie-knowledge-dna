@@ -32,20 +32,38 @@ prerequisites; do not claim its question bank covers arbitrary topics or all of 
 
 Use Cubbie's code sandbox, with the working directory set to this Skill's folder.
 Python 3.12 and the standard library are sufficient. No packages, keys, network hosts,
-install commands or backend are needed. `$SKILL_DATA_DIR` must be provided by the host;
-stop and report a persistence configuration error if it is missing. Never fall back to
-saving profiles in the fresh Skill folder.
+install commands or backend are needed. **Run this storage check on activation, even if
+an earlier conversation reported storage unavailable:**
+
+```sh
+python3 scripts/profile_store.py check
+```
+
+Require `ok: true` and `storage.read_write_verified: true`. This performs an actual write,
+atomic replacement and read-back without modifying any learning history. A missing
+`$SKILL_DATA_DIR` is recoverable: the scripts initialize that variable inside their process
+to `$HOME/.local/share/cubbie-knowledge-dna`, using the persistent student HOME guaranteed
+by the guide. A host-provided absolute `$SKILL_DATA_DIR` always takes priority. The output
+reports the resolved `storage.data_dir` and `configuration` so this initialization is visible.
+Never use the fresh Skill folder, working directory, or temporary storage for profiles.
+Do not declare storage unavailable without running the check and inspecting its result.
 
 Every call takes one JSON object on standard input and returns one JSON object on stdout.
 Write JSON with the sandbox's file-writing ability or JSON serialization, never interpolate
-student text into a shell command. For example, create a request file under
-`$SKILL_DATA_DIR/request.json` and run:
+student text into a shell command. Create `request.json` inside the actual `storage.data_dir`
+returned by the check, using the native file-writing ability, then run:
 
 ```sh
-python3 scripts/diagnose.py < "$SKILL_DATA_DIR/request.json"
+python3 scripts/diagnose.py < "${SKILL_DATA_DIR:-$HOME/.local/share/cubbie-knowledge-dna}/request.json"
 ```
 
 The examples below show the exact contents of that file, not shell commands.
+Proceed only after the diagnostic command returns `ok: true` with a real `session_id`
+and `next` action. A successful preflight alone does not mean a diagnostic was started.
+If no code sandbox tool is available, say that the Skill's scripts could not be executed.
+If execution fails, report the actual error code/message; never invent a missing variable.
+Offer unsaved general practice only if the student wants it, clearly outside the saved
+assessment. Do not silently substitute a tutoring conversation for the diagnostic workflow.
 
 ### Start or resume
 
@@ -74,6 +92,8 @@ After the student replies, preserve their words exactly in JSON:
 
 Use the actual revision and IDs from the last output. Never invent them. Stale or duplicate
 submissions return an error and do not change the profile; resume to recover the current turn.
+If the same student message arrives twice before a new question is sent, process it once;
+never apply that duplicate reply to a different question.
 Use `feedback.message` for a brief response and continue with the returned `next`.
 The engine selects follow-ups, scores math, distinguishes misconceptions, and decides
 when evidence is insufficient. Do not override it by declaring the student “bad at math.”
@@ -115,7 +135,8 @@ or insufficient, offer a worked discussion or a later retry, and avoid asserting
 Some concepts may remain untested: say so. `restart` begins another pass while retaining
 the student's accumulated record; it does not automatically retest demonstrated concepts.
 
-All mutations are saved automatically to `$SKILL_DATA_DIR/profiles/<learner_id>.json`.
+All mutations are saved automatically to the resolved `$SKILL_DATA_DIR/profiles/<learner_id>.json`.
+Read `storage.data_dir` in tool outputs to locate the actual directory.
 Get a compact report with `{"action":"profile","learner_id":"student"}` or:
 
 ```sh
@@ -135,12 +156,15 @@ Success includes `ok`, `session_id`, `revision`, `next`, `diagnosis`, `summary`,
 optional `feedback` and `canvas`. `summary` is a compact current-profile report; inspect
 it instead of dumping the raw file. `diagnosis` lists observations separately from assumptions.
 An `uncertain` result is a valid diagnostic outcome, not a tool failure.
+CLI replies also include `storage` with the resolved directory and configuration source.
 
 Errors return `{"ok":false,"error":{"code":"...","message":"..."}}` and a nonzero
 exit status. For `stale_turn`, resume. For `invalid_input`, correct the JSON/format without
 changing the student's answer. For corrupt or unsupported profiles, preserve the file and
-report the issue; never silently reset it. For I/O or missing data-directory errors, fix
-sandbox persistence before continuing. Never tell the student a save succeeded on an error.
+report the issue; never silently reset it. If `missing_data_dir` remains after the storage
+check, neither an absolute host directory nor a persistent HOME was available: report that
+specific sandbox configuration problem. For I/O errors, preserve the profile and report
+the actual failure before continuing. Never tell the student a save succeeded on an error.
 Outputs stay below Cubbie's 8,000-character read limit; full history is retained in the file.
 
 See [README.md](README.md) for installation, limits and testing, and

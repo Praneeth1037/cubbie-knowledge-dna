@@ -49,12 +49,18 @@ JSON
 ## Real Cubbie acceptance checklist — pending
 
 These are manual acceptance checks, not claims about tests already performed.
+The first student-reported installation succeeded, but Cubbie reported unavailable
+progress storage and continued with unsaved practice. This does not verify the main flow.
+The recovery now initializes a missing `SKILL_DATA_DIR` from the guide's persistent HOME;
+run `python3 scripts/profile_store.py check` before retesting the updated Skill.
 
 - [ ] Publish a public GitHub repository with `SKILL.md` at its root and record the commit SHA.
 - [ ] Text its URL to Cubbie; verify the Skill name, commit, and lack of extra packages/hosts/keys.
 - [ ] Reply yes and verify Cubbie reports installation.
 - [ ] Confirm “I don't understand Transformers” activates the Skill.
 - [ ] Verify the sandbox provides `$SKILL_DATA_DIR` and saves the learning profile there.
+      If the host omits it, verify `check` reports `persistent_home`, then save an answer
+      and resume in a new command invocation to confirm the same pending turn and history.
 - [ ] Run Scenario B from a fresh learner profile; confirm one question per text, lesson delivery,
       fresh reassessment, separate transfer and honest final progress.
 - [ ] Leave a question unanswered, return later and verify the exact pending turn resumes.
@@ -74,7 +80,7 @@ These are manual acceptance checks, not claims about tests already performed.
 | Agent Skills format, publicly installable folder | Root `SKILL.md` with valid name and description; relative script commands |
 | Use Cubbie's native abilities in plain words | Canvas search/read, memory, files/documents and conversation instructions |
 | Scripts cannot call native abilities | JSON context passed by Cubbie; scripts have no service clients or network calls |
-| Python 3.12; ephemeral Skill folder | Standard library; profiles exclusively under required `$SKILL_DATA_DIR` |
+| Python 3.12; ephemeral Skill folder | Standard library; profiles under resolved `$SKILL_DATA_DIR`, initialized in persistent student HOME when the host omits it |
 | No install commands for packages | No third-party runtime dependencies; no `cubbie.yaml` needed |
 | First 8,000 output characters | Compact JSON reports; full evidence retained in profiles |
 | Failure plans and text-thread UX | Canvas fallback, malformed-answer clarification, uncertainty, resume and persistence errors |

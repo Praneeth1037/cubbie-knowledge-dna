@@ -12,6 +12,7 @@ import re
 import tempfile
 
 SCHEMA_VERSION = 1
+HOME_DATA_SUBDIR = Path(".local/share/cubbie-knowledge-dna")
 
 
 class StoreError(ValueError):
@@ -69,9 +70,19 @@ def summarize(profile):
 
 class ProfileStore:
     def __init__(self, root=None):
+        self.configuration = "explicit" if root is not None else "skill_data_dir"
         root = root if root is not None else os.environ.get("SKILL_DATA_DIR")
         if not root:
-            raise StoreError("SKILL_DATA_DIR is required; no profile was saved.", "missing_data_dir")
+            home = os.environ.get("HOME")
+            if not home or not Path(home).is_absolute():
+                raise StoreError(
+                    "Provide an absolute SKILL_DATA_DIR or persistent HOME; no profile was saved.",
+                    "missing_data_dir",
+                )
+            # The guide guarantees student HOME persists even if the Skill folder changes.
+            root = str(Path(home) / HOME_DATA_SUBDIR)
+            os.environ["SKILL_DATA_DIR"] = root
+            self.configuration = "persistent_home"
         self.root = Path(root).expanduser()
         if not self.root.is_absolute():
             raise StoreError("SKILL_DATA_DIR must be an absolute path", "invalid_data_dir")
@@ -79,6 +90,29 @@ class ProfileStore:
         if self.directory.is_symlink():
             raise StoreError("The profiles directory must not be a symlink")
         self.directory.mkdir(parents=True, exist_ok=True, mode=0o700)
+
+    def storage_info(self):
+        return {"data_dir": str(self.root), "configuration": self.configuration}
+
+    def check(self):
+        """Exercise writing, atomic replacement and reading without changing learning history."""
+        with tempfile.TemporaryDirectory(prefix=".storage-check-", dir=self.root) as directory:
+            pending = Path(directory) / "probe.tmp"
+            committed = Path(directory) / "probe.json"
+            marker = {"storage_check": True}
+            with pending.open("w", encoding="utf-8") as handle:
+                json.dump(marker, handle)
+                handle.flush()
+                os.fsync(handle.fileno())
+            os.replace(pending, committed)
+            if json.loads(committed.read_text(encoding="utf-8")) != marker:
+                raise StoreError("Storage read-back did not match the write", "storage_unavailable")
+            directory_fd = os.open(directory, os.O_RDONLY)
+            try:
+                os.fsync(directory_fd)
+            finally:
+                os.close(directory_fd)
+        return {"ok": True, "storage": dict(self.storage_info(), read_write_verified=True)}
 
     def path(self, learner):
         if not isinstance(learner, str) or not re.fullmatch(r"[a-zA-Z0-9][a-zA-Z0-9_-]{0,63}", learner):
@@ -177,11 +211,16 @@ class ProfileStore:
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("action", choices=["summary"])
+    parser.add_argument("action", choices=["summary", "check"])
     parser.add_argument("--learner", default="student")
     args = parser.parse_args()
     try:
-        print(json.dumps({"ok": True, "summary": summarize(ProfileStore().load(args.learner))}))
+        store = ProfileStore()
+        if args.action == "check":
+            print(json.dumps(store.check()))
+        else:
+            print(json.dumps({"ok": True, "storage": store.storage_info(),
+                              "summary": summarize(store.load(args.learner))}))
     except (StoreError, OSError) as exc:
         print(json.dumps({"ok": False, "error": {"code": getattr(exc, "code", "io_error"), "message": str(exc)}}))
         return 1

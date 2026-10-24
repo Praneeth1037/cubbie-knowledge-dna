@@ -389,7 +389,9 @@ def main():
             profile = store.load(learner)
         else:
             profile = store.update(learner, lambda p: engine.transition(p, request))
-        output = json.dumps(engine.report(profile), ensure_ascii=False, allow_nan=False)
+        report = engine.report(profile)
+        report["storage"] = store.storage_info()
+        output = json.dumps(report, ensure_ascii=False, allow_nan=False)
         if len(output) > 8000:
             raise InputError("Report exceeds the host read limit", "report_too_large")
         print(output)

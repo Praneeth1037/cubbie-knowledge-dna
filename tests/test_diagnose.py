@@ -315,9 +315,37 @@ class CLITests(unittest.TestCase):
     def test_missing_environment_is_explicit(self):
         env = dict(self.env)
         env.pop("SKILL_DATA_DIR")
+        env.pop("HOME", None)
         result = self.cli({"action": "start"}, env)
         self.assertEqual(result.returncode, 1)
         self.assertEqual(json.loads(result.stdout)["error"]["code"], "missing_data_dir")
+
+    def test_missing_skill_environment_saves_and_resumes_using_persistent_home(self):
+        env = dict(self.env, HOME=self.directory.name)
+        env.pop("SKILL_DATA_DIR")
+        started = json.loads(self.cli({"action": "start"}, env).stdout)
+        self.assertTrue(started["ok"])
+        self.assertEqual(started["storage"]["configuration"], "persistent_home")
+        answer = self.cli({"action": "answer", "session_id": started["session_id"],
+                           "revision": started["revision"], "question_id": "ao_probe",
+                           "answer": "1,2"}, env)
+        answered = json.loads(answer.stdout)
+        self.assertTrue(answered["ok"])
+        resumed = json.loads(self.cli({"action": "resume"}, env).stdout)
+        self.assertEqual(resumed, answered)
+        self.assertEqual(resumed["summary"]["questions_answered"], 1)
+        self.assertTrue((Path(self.directory.name) / ".local/share/cubbie-knowledge-dna/profiles/student.json").exists())
+
+    def test_storage_preflight_with_missing_environment_does_not_create_learning_history(self):
+        env = dict(self.env, HOME=self.directory.name)
+        env.pop("SKILL_DATA_DIR")
+        result = subprocess.run([sys.executable, str(ROOT / "scripts/profile_store.py"), "check"],
+                                text=True, capture_output=True, env=env)
+        self.assertEqual(result.returncode, 0, result.stdout)
+        report = json.loads(result.stdout)
+        self.assertTrue(report["storage"]["read_write_verified"])
+        root = Path(report["storage"]["data_dir"])
+        self.assertEqual(list((root / "profiles").glob("*.json")), [])
 
     def test_stdout_is_one_bounded_json_document(self):
         result = self.cli({"action": "start", "canvas": {"status": "connected", "materials": [

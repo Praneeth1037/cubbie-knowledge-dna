@@ -12,8 +12,10 @@ There is no frontend, server, GPU, paid API, third-party package or script netwo
 > new weighted sum and a new attention problem. If the answers conflict, it asks another
 > question and can finish with “we don't know yet.”
 
-**Verification status:** automated local tests and all three command-line demos pass on
-Python 3.12.6. Installation and execution on a real Cubbie account have **not** been tested.
+**Verification status:** local tests, all three command-line demos and the initial GitHub
+Actions run pass. A student reported successful installation in Cubbie, followed by a
+storage-setup failure before the diagnostic started. The recovery below is tested locally;
+a complete saved diagnostic in Cubbie still needs verification.
 Public repository: https://github.com/Praneeth1037/cubbie-knowledge-dna
 
 ## Install in Cubbie
@@ -78,10 +80,33 @@ Set a persistent, absolute data directory when testing the Skill scripts directl
 
 ```sh
 export SKILL_DATA_DIR="$PWD/.local-data/student"
+python3 scripts/profile_store.py check
 python3 scripts/diagnose.py <<'JSON'
 {"action":"start","learner_id":"student","target":"transformer_attention","canvas":{"status":"disconnected"}}
 JSON
 ```
+
+If Cubbie omits `SKILL_DATA_DIR`, the scripts initialize it to
+`$HOME/.local/share/cubbie-knowledge-dna` inside their process. The guide guarantees that
+student HOME persists. An existing host-provided directory always takes priority; an
+invalid or unwritable explicit directory produces an error rather than switching locations.
+`check` verifies a write, atomic replacement and read-back without creating fake learning
+history. Both CLI tools report the resolved directory and configuration source in `storage`.
+
+After updating an older install, text Cubbie:
+
+```text
+update cubbie-knowledge-dna
+```
+
+Approve its new commit summary, then ask:
+
+```text
+Run Knowledge DNA's storage check, then start its saved diagnostic. Use the Python scripts and their returned next question.
+```
+
+If it still fails, request the exact storage-check error code and message. A friendly
+tutoring exchange alone does not verify that the engine ran or that any progress was saved.
 
 The returned `next` is the sole next conversational action. `question` contains a prompt
 and ID; `intervention` contains a lesson; `complete` contains a completion reason;
@@ -169,9 +194,11 @@ Unrestricted prose is deliberately unscored; Cubbie asks for a numerical clarifi
 
 ## Knowledge DNA profile
 
-Student profiles live only at `$SKILL_DATA_DIR/profiles/<learner_id>.json`. The Skill folder
-can be replaced at every sandbox launch without losing progress. Missing data-directory
-configuration fails explicitly. Use an opaque learner key in Cubbie's private student sandbox.
+Student profiles live only at the resolved `$SKILL_DATA_DIR/profiles/<learner_id>.json`.
+When the host omits the variable, the scripts initialize it to the stable directory in
+persistent HOME described above. The Skill folder can be replaced at every sandbox launch
+without losing progress. If neither an absolute host directory nor persistent HOME is
+available, configuration fails explicitly. Use an opaque key in Cubbie's private student sandbox.
 
 Each schema-versioned profile retains observations with raw answers, question IDs, roles,
 verdicts, timestamps and possible misconception matches; concept evidence; lessons delivered;

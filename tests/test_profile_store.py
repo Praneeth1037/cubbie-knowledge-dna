@@ -88,13 +88,54 @@ class ProfileTests(unittest.TestCase):
             with self.subTest(learner=learner), self.assertRaises(StoreError):
                 self.store.load(learner)
 
-    def test_required_environment_no_silent_fallback(self):
+    def test_missing_both_persistent_locations_fails(self):
         with patch.dict(os.environ, {}, clear=True):
             with self.assertRaises(StoreError) as caught:
                 ProfileStore()
         self.assertEqual(caught.exception.code, "missing_data_dir")
         with self.assertRaises(StoreError):
             ProfileStore("relative-directory")
+
+    def test_missing_skill_directory_initializes_persistent_home(self):
+        with patch.dict(os.environ, {"HOME": self.directory.name}, clear=True):
+            store = ProfileStore()
+            expected = Path(self.directory.name) / ".local/share/cubbie-knowledge-dna"
+            self.assertEqual(store.root, expected)
+            self.assertEqual(os.environ["SKILL_DATA_DIR"], str(expected))
+            self.assertEqual(store.configuration, "persistent_home")
+            store.update("student", lambda p: p)
+        with patch.dict(os.environ, {"HOME": self.directory.name}, clear=True):
+            self.assertEqual(ProfileStore().load("student")["revision"], 1)
+
+    def test_host_directory_is_preferred_to_home(self):
+        with patch.dict(os.environ, {"HOME": "/unused", "SKILL_DATA_DIR": self.directory.name}, clear=True):
+            store = ProfileStore()
+            self.assertEqual(store.root, Path(self.directory.name))
+            self.assertEqual(store.configuration, "skill_data_dir")
+
+    def test_invalid_host_directory_does_not_change_storage_location(self):
+        with patch.dict(os.environ, {"HOME": self.directory.name, "SKILL_DATA_DIR": "relative"}, clear=True):
+            with self.assertRaises(StoreError) as caught:
+                ProfileStore()
+            self.assertEqual(caught.exception.code, "invalid_data_dir")
+            self.assertFalse((Path(self.directory.name) / ".local").exists())
+
+    def test_storage_check_verifies_io_without_changing_history(self):
+        self.store.update("student", lambda p: p)
+        before = self.store.path("student").read_bytes()
+        result = self.store.check()
+        self.assertTrue(result["storage"]["read_write_verified"])
+        self.assertEqual(result["storage"]["data_dir"], self.directory.name)
+        self.assertEqual(before, self.store.path("student").read_bytes())
+        self.assertEqual(list(Path(self.directory.name).glob(".storage-check-*")), [])
+
+    def test_failed_storage_check_is_reported_and_leaves_history_intact(self):
+        self.store.update("student", lambda p: p)
+        before = self.store.path("student").read_bytes()
+        with patch("scripts.profile_store.os.replace", side_effect=OSError("read-only filesystem")):
+            with self.assertRaises(OSError):
+                self.store.check()
+        self.assertEqual(before, self.store.path("student").read_bytes())
 
     def test_symlink_profile_is_rejected(self):
         other = Path(self.directory.name) / "outside.json"
