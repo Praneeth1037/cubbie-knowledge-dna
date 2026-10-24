@@ -1,0 +1,102 @@
+{
+  "schema_version": 1,
+  "aliases": {
+    "transformers": "transformer_attention",
+    "transformer": "transformer_attention",
+    "attention": "transformer_attention"
+  },
+  "concepts": {
+    "dot_products": {
+      "title": "Dot products",
+      "prerequisites": [],
+      "connection": "Query-key similarity",
+      "lesson": {
+        "explanation": "Multiply matching coordinates, then add those products. The result is one number.",
+        "worked_example": "[1,2] dot [3,5] = 1*3 + 2*5 = 13.",
+        "connection": "Attention compares a query with each key using a dot product."
+      }
+    },
+    "matrix_multiplication": {
+      "title": "Matrix multiplication",
+      "prerequisites": [
+        "dot_products"
+      ],
+      "connection": "Batched attention score calculations",
+      "lesson": {
+        "explanation": "Each output entry is a dot product of a row on the left and a column on the right. Inner dimensions must match.",
+        "worked_example": "[[1,2]] times [[3],[5]] = [[1*3 + 2*5]] = [[13]].",
+        "connection": "QK^T computes many query-key dot products at once."
+      }
+    },
+    "softmax": {
+      "title": "Softmax",
+      "prerequisites": [],
+      "connection": "Normalized attention weights",
+      "lesson": {
+        "explanation": "Exponentiate each score, then divide each exponential by their sum. This makes positive weights that sum to one. For large scores, subtract the largest score before exponentiating.",
+        "worked_example": "Scores [0, ln(2)] have exponentials [1,2]. Divide by 3 to get [1/3,2/3].",
+        "connection": "Attention applies softmax to each row of scaled query-key scores."
+      }
+    },
+    "weighted_sums": {
+      "title": "Weighted sums",
+      "prerequisites": [],
+      "connection": "Attention output aggregation",
+      "lesson": {
+        "explanation": "Multiply every coordinate of each vector by its own weight, then add coordinate by coordinate. Do not add the vectors first.",
+        "worked_example": "Weights [0.25,0.75], vectors [8,0] and [0,4]: 0.25*[8,0] + 0.75*[0,4] = [2,0] + [0,3] = [2,3].",
+        "connection": "An attention output mixes value vectors with their attention weights; it does not just pick the largest weight."
+      }
+    },
+    "attention_scores": {
+      "title": "Scaled attention scores",
+      "prerequisites": [
+        "matrix_multiplication"
+      ],
+      "connection": "QK^T / sqrt(d_k)",
+      "lesson": {
+        "explanation": "Take each query-key dot product, then divide by the square root of the key dimension. Use the given dimension, even when a toy example lists only nonzero coordinates.",
+        "worked_example": "If q dot k = 12 and d_k = 4, the scaled score is 12 / sqrt(4) = 6.",
+        "connection": "Scaling controls the size of logits before softmax produces attention weights."
+      }
+    },
+    "attention_weights": {
+      "title": "Attention weights",
+      "prerequisites": [
+        "softmax"
+      ],
+      "connection": "softmax of each score row",
+      "lesson": {
+        "explanation": "Apply softmax separately to each row of scores. Exponentiate, then normalize; the row sums to one.",
+        "worked_example": "For one score row [ln(2),ln(3)], exponentials [2,3] become weights [0.4,0.6].",
+        "connection": "Each query has its own distribution over the keys."
+      }
+    },
+    "attention_output": {
+      "title": "Attention output",
+      "prerequisites": [
+        "weighted_sums",
+        "attention_weights"
+      ],
+      "connection": "Each output row is a weighted sum of value rows",
+      "lesson": {
+        "explanation": "Multiply each value vector by its matching attention weight and add the scaled vectors.",
+        "worked_example": "Weights [0.25,0.75] and values [8,0],[0,4] give [2,0]+[0,3]=[2,3].",
+        "connection": "Matrix multiplication of the attention-weight matrix by V performs this mixture for every query."
+      }
+    },
+    "transformer_attention": {
+      "title": "Transformer attention",
+      "prerequisites": [
+        "attention_scores",
+        "attention_output"
+      ],
+      "connection": "softmax(QK^T / sqrt(d_k)) V",
+      "lesson": {
+        "explanation": "Attention has three operations: scaled query-key dot products, row-wise softmax, then a weighted sum of values.",
+        "worked_example": "Equal scaled scores [0,0] give weights [0.5,0.5]. With values [4,0] and [0,8], the output is [2,4].",
+        "connection": "This is one attention head. Multiple heads learn different projections and their outputs are combined."
+      }
+    }
+  }
+}

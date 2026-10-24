@@ -1,0 +1,840 @@
+{
+  "schema_version": 1,
+  "questions": [
+    {
+      "id": "dp_probe",
+      "concept": "dot_products",
+      "role": "diagnostic",
+      "prompt": "What is [1,2] dot [3,4]? Reply with one number.",
+      "expected": 11,
+      "tolerance": 1e-06,
+      "patterns": [
+        {
+          "answer": [
+            3,
+            8
+          ],
+          "misconception": "elementwise_product"
+        },
+        {
+          "answer": 10,
+          "misconception": "add_instead_of_dot"
+        }
+      ],
+      "explanation": "Apply the operation step by step; the expected result is 11."
+    },
+    {
+      "id": "dp_followup",
+      "concept": "dot_products",
+      "role": "diagnostic",
+      "prompt": "What is [2,1] dot [5,2]? Reply with one number.",
+      "expected": 12,
+      "tolerance": 1e-06,
+      "patterns": [
+        {
+          "answer": [
+            10,
+            2
+          ],
+          "misconception": "elementwise_product"
+        },
+        {
+          "answer": 10,
+          "misconception": "add_instead_of_dot"
+        }
+      ],
+      "explanation": "Apply the operation step by step; the expected result is 12."
+    },
+    {
+      "id": "dp_tiebreak",
+      "concept": "dot_products",
+      "role": "diagnostic",
+      "prompt": "One more check: [3,2] dot [4,1] = ?",
+      "expected": 14,
+      "tolerance": 1e-06,
+      "patterns": [
+        {
+          "answer": [
+            12,
+            2
+          ],
+          "misconception": "elementwise_product"
+        },
+        {
+          "answer": 10,
+          "misconception": "add_instead_of_dot"
+        }
+      ],
+      "explanation": "Apply the operation step by step; the expected result is 14."
+    },
+    {
+      "id": "dp_reassess",
+      "concept": "dot_products",
+      "role": "reassessment",
+      "prompt": "Fresh check: [2,3] dot [1,5] = ?",
+      "expected": 17,
+      "tolerance": 1e-06,
+      "patterns": [],
+      "explanation": "Multiply then sum: 2*1 + 3*5 = 17."
+    },
+    {
+      "id": "dp_transfer",
+      "concept": "dot_products",
+      "role": "transfer",
+      "prompt": "In attention, query [1,3] meets key [2,2]. What is their unscaled similarity score?",
+      "expected": 8,
+      "tolerance": 1e-06,
+      "patterns": [],
+      "explanation": "The unscaled query-key dot product is 1*2 + 3*2 = 8."
+    },
+    {
+      "id": "mm_probe",
+      "concept": "matrix_multiplication",
+      "role": "diagnostic",
+      "prompt": "Multiply [[1,2],[0,1]] by [[2,0],[1,3]]. Reply with a 2x2 matrix.",
+      "expected": [
+        [
+          4,
+          6
+        ],
+        [
+          1,
+          3
+        ]
+      ],
+      "tolerance": 1e-06,
+      "patterns": [
+        {
+          "answer": [
+            [
+              2,
+              0
+            ],
+            [
+              0,
+              3
+            ]
+          ],
+          "misconception": "elementwise_product"
+        }
+      ],
+      "explanation": "Apply the operation step by step; the expected result is [[4, 6], [1, 3]]."
+    },
+    {
+      "id": "mm_followup",
+      "concept": "matrix_multiplication",
+      "role": "diagnostic",
+      "prompt": "Multiply [[2,1],[1,0]] by [[1,3],[2,1]].",
+      "expected": [
+        [
+          4,
+          7
+        ],
+        [
+          1,
+          3
+        ]
+      ],
+      "tolerance": 1e-06,
+      "patterns": [
+        {
+          "answer": [
+            [
+              2,
+              3
+            ],
+            [
+              2,
+              0
+            ]
+          ],
+          "misconception": "elementwise_product"
+        }
+      ],
+      "explanation": "Apply the operation step by step; the expected result is [[4, 7], [1, 3]]."
+    },
+    {
+      "id": "mm_tiebreak",
+      "concept": "matrix_multiplication",
+      "role": "diagnostic",
+      "prompt": "One more check: [[1,1],[2,0]] times [[3,1],[1,2]] = ?",
+      "expected": [
+        [
+          4,
+          3
+        ],
+        [
+          6,
+          2
+        ]
+      ],
+      "tolerance": 1e-06,
+      "patterns": [
+        {
+          "answer": [
+            [
+              3,
+              1
+            ],
+            [
+              2,
+              0
+            ]
+          ],
+          "misconception": "elementwise_product"
+        }
+      ],
+      "explanation": "Apply the operation step by step; the expected result is [[4, 3], [6, 2]]."
+    },
+    {
+      "id": "mm_reassess",
+      "concept": "matrix_multiplication",
+      "role": "reassessment",
+      "prompt": "Fresh check: [[1,2]] times [[3],[4]] = ? Keep the matrix shape.",
+      "expected": [
+        [
+          11
+        ]
+      ],
+      "tolerance": 1e-06,
+      "patterns": [],
+      "explanation": "The one row meets the one column: [[1*3+2*4]] = [[11]]."
+    },
+    {
+      "id": "mm_transfer",
+      "concept": "matrix_multiplication",
+      "role": "transfer",
+      "prompt": "For attention, Q=[[1,0],[1,1]] and K^T=[[2,0],[0,3]]. Compute the unscaled score matrix QK^T.",
+      "expected": [
+        [
+          2,
+          0
+        ],
+        [
+          2,
+          3
+        ]
+      ],
+      "tolerance": 1e-06,
+      "patterns": [],
+      "explanation": "Row-column dot products give [[2,0],[2,3]]."
+    },
+    {
+      "id": "sm_probe",
+      "concept": "softmax",
+      "role": "diagnostic",
+      "prompt": "Softmax scores [0,ln(3)] have exponentials [1,3]. What are the normalized weights? Reply [a,b].",
+      "expected": [
+        0.25,
+        0.75
+      ],
+      "tolerance": 1e-06,
+      "patterns": [
+        {
+          "answer": [
+            1,
+            3
+          ],
+          "misconception": "missing_normalization"
+        },
+        {
+          "answer": [
+            0,
+            1
+          ],
+          "misconception": "missing_exponentiation"
+        }
+      ],
+      "explanation": "Apply the operation step by step; the expected result is [0.25, 0.75]."
+    },
+    {
+      "id": "sm_followup",
+      "concept": "softmax",
+      "role": "diagnostic",
+      "prompt": "Scores [ln(2),ln(3)] have exponentials [2,3]. What is softmax?",
+      "expected": [
+        0.4,
+        0.6
+      ],
+      "tolerance": 1e-06,
+      "patterns": [
+        {
+          "answer": [
+            2,
+            3
+          ],
+          "misconception": "missing_normalization"
+        }
+      ],
+      "explanation": "Apply the operation step by step; the expected result is [0.4, 0.6]."
+    },
+    {
+      "id": "sm_tiebreak",
+      "concept": "softmax",
+      "role": "diagnostic",
+      "prompt": "Scores [ln(3),0] have exponentials [3,1]. What is softmax?",
+      "expected": [
+        0.75,
+        0.25
+      ],
+      "tolerance": 1e-06,
+      "patterns": [
+        {
+          "answer": [
+            3,
+            1
+          ],
+          "misconception": "missing_normalization"
+        },
+        {
+          "answer": [
+            1,
+            0
+          ],
+          "misconception": "missing_exponentiation"
+        }
+      ],
+      "explanation": "Apply the operation step by step; the expected result is [0.75, 0.25]."
+    },
+    {
+      "id": "sm_reassess",
+      "concept": "softmax",
+      "role": "reassessment",
+      "prompt": "Fresh check: scores [0,ln(4)] have exponentials [1,4]. What is softmax?",
+      "expected": [
+        0.2,
+        0.8
+      ],
+      "tolerance": 1e-06,
+      "patterns": [],
+      "explanation": "Normalize the exponentials by 1+4=5: [0.2,0.8]."
+    },
+    {
+      "id": "sm_transfer",
+      "concept": "softmax",
+      "role": "transfer",
+      "prompt": "An attention score row [ln(3),0] has exponentials [3,1]. Which weights should multiply the two values?",
+      "expected": [
+        0.75,
+        0.25
+      ],
+      "tolerance": 1e-06,
+      "patterns": [],
+      "explanation": "Normalize [3,1] by 4, giving attention weights [0.75,0.25]."
+    },
+    {
+      "id": "ws_probe",
+      "concept": "weighted_sums",
+      "role": "diagnostic",
+      "prompt": "Weights [0.25,0.75] combine vectors [4,0] and [0,8]. What is the weighted sum?",
+      "expected": [
+        1,
+        6
+      ],
+      "tolerance": 1e-06,
+      "patterns": [
+        {
+          "answer": [
+            4,
+            8
+          ],
+          "misconception": "unweighted_sum"
+        },
+        {
+          "answer": [
+            2,
+            4
+          ],
+          "misconception": "simple_average"
+        },
+        {
+          "answer": [
+            0,
+            8
+          ],
+          "misconception": "winner_take_all"
+        }
+      ],
+      "explanation": "Apply the operation step by step; the expected result is [1, 6]."
+    },
+    {
+      "id": "ws_followup",
+      "concept": "weighted_sums",
+      "role": "diagnostic",
+      "prompt": "A second check: weights [0.6,0.4] combine [10,0] and [0,5]. What is the result?",
+      "expected": [
+        6,
+        2
+      ],
+      "tolerance": 1e-06,
+      "patterns": [
+        {
+          "answer": [
+            10,
+            5
+          ],
+          "misconception": "unweighted_sum"
+        },
+        {
+          "answer": [
+            5,
+            2.5
+          ],
+          "misconception": "simple_average"
+        },
+        {
+          "answer": [
+            10,
+            0
+          ],
+          "misconception": "winner_take_all"
+        },
+        {
+          "answer": [
+            4,
+            3
+          ],
+          "misconception": "reversed_weights"
+        }
+      ],
+      "explanation": "Apply the operation step by step; the expected result is [6, 2]."
+    },
+    {
+      "id": "ws_tiebreak",
+      "concept": "weighted_sums",
+      "role": "diagnostic",
+      "prompt": "One more check: weights [0.2,0.8] combine [5,0] and [0,10]. What is the result?",
+      "expected": [
+        1,
+        8
+      ],
+      "tolerance": 1e-06,
+      "patterns": [
+        {
+          "answer": [
+            5,
+            10
+          ],
+          "misconception": "unweighted_sum"
+        },
+        {
+          "answer": [
+            2.5,
+            5
+          ],
+          "misconception": "simple_average"
+        },
+        {
+          "answer": [
+            0,
+            10
+          ],
+          "misconception": "winner_take_all"
+        }
+      ],
+      "explanation": "Apply the operation step by step; the expected result is [1, 8]."
+    },
+    {
+      "id": "ws_reassess",
+      "concept": "weighted_sums",
+      "role": "reassessment",
+      "prompt": "Fresh check: weights [0.4,0.6] combine [5,0] and [0,10]. What is the weighted sum?",
+      "expected": [
+        2,
+        6
+      ],
+      "tolerance": 1e-06,
+      "patterns": [],
+      "explanation": "0.4*[5,0] + 0.6*[0,10] = [2,0]+[0,6] = [2,6]."
+    },
+    {
+      "id": "ws_transfer",
+      "concept": "weighted_sums",
+      "role": "transfer",
+      "prompt": "Attention weights are [0.3,0.7]; value vectors are [10,0] and [0,10]. What output vector does this query receive?",
+      "expected": [
+        3,
+        7
+      ],
+      "tolerance": 1e-06,
+      "patterns": [],
+      "explanation": "Attention multiplies each value by its weight: [3,0]+[0,7]=[3,7]."
+    },
+    {
+      "id": "as_probe",
+      "concept": "attention_scores",
+      "role": "diagnostic",
+      "prompt": "Query [2,0,0,0] and key [3,1,0,0] have d_k=4. What is (q dot k)/sqrt(d_k)?",
+      "expected": 3,
+      "tolerance": 1e-06,
+      "patterns": [
+        {
+          "answer": 6,
+          "misconception": "missing_scaling"
+        }
+      ],
+      "explanation": "Apply the operation step by step; the expected result is 3."
+    },
+    {
+      "id": "as_followup",
+      "concept": "attention_scores",
+      "role": "diagnostic",
+      "prompt": "Query [2,2,0,0], key [1,3,0,0], d_k=4. What is the scaled score?",
+      "expected": 4,
+      "tolerance": 1e-06,
+      "patterns": [
+        {
+          "answer": 8,
+          "misconception": "missing_scaling"
+        }
+      ],
+      "explanation": "Apply the operation step by step; the expected result is 4."
+    },
+    {
+      "id": "as_tiebreak",
+      "concept": "attention_scores",
+      "role": "diagnostic",
+      "prompt": "A dot product is 8 and d_k=16. What is the scaled attention score?",
+      "expected": 2,
+      "tolerance": 1e-06,
+      "patterns": [
+        {
+          "answer": 8,
+          "misconception": "missing_scaling"
+        }
+      ],
+      "explanation": "Apply the operation step by step; the expected result is 2."
+    },
+    {
+      "id": "as_reassess",
+      "concept": "attention_scores",
+      "role": "reassessment",
+      "prompt": "Fresh check: q=[2,1,0,0], k=[1,2,0,0], d_k=4. What is the scaled score?",
+      "expected": 2,
+      "tolerance": 1e-06,
+      "patterns": [],
+      "explanation": "The dot product is 4; divide by sqrt(4)=2 to get 2."
+    },
+    {
+      "id": "as_transfer",
+      "concept": "attention_scores",
+      "role": "transfer",
+      "prompt": "q=[4,0,0,0], keys [1,1,0,0] and [0,2,0,0], d_k=4. Give the two scaled scores as [a,b].",
+      "expected": [
+        2,
+        0
+      ],
+      "tolerance": 1e-06,
+      "patterns": [],
+      "explanation": "Unscaled scores [4,0] divided by sqrt(4)=2 give [2,0]."
+    },
+    {
+      "id": "aw_probe",
+      "concept": "attention_weights",
+      "role": "diagnostic",
+      "prompt": "A row of attention scores is [0,0]. Their exponentials are [1,1]. What are its attention weights?",
+      "expected": [
+        0.5,
+        0.5
+      ],
+      "tolerance": 1e-06,
+      "patterns": [
+        {
+          "answer": [
+            1,
+            1
+          ],
+          "misconception": "missing_normalization"
+        },
+        {
+          "answer": [
+            0,
+            0
+          ],
+          "misconception": "missing_exponentiation"
+        }
+      ],
+      "explanation": "Apply the operation step by step; the expected result is [0.5, 0.5]."
+    },
+    {
+      "id": "aw_followup",
+      "concept": "attention_weights",
+      "role": "diagnostic",
+      "prompt": "An attention score row has exponentials [2,6]. Normalize them into two attention weights.",
+      "expected": [
+        0.25,
+        0.75
+      ],
+      "tolerance": 1e-06,
+      "patterns": [
+        {
+          "answer": [
+            2,
+            6
+          ],
+          "misconception": "missing_normalization"
+        }
+      ],
+      "explanation": "Apply the operation step by step; the expected result is [0.25, 0.75]."
+    },
+    {
+      "id": "aw_tiebreak",
+      "concept": "attention_weights",
+      "role": "diagnostic",
+      "prompt": "Another attention row has exponentials [4,1]. What are the weights?",
+      "expected": [
+        0.8,
+        0.2
+      ],
+      "tolerance": 1e-06,
+      "patterns": [
+        {
+          "answer": [
+            4,
+            1
+          ],
+          "misconception": "missing_normalization"
+        }
+      ],
+      "explanation": "Apply the operation step by step; the expected result is [0.8, 0.2]."
+    },
+    {
+      "id": "aw_reassess",
+      "concept": "attention_weights",
+      "role": "reassessment",
+      "prompt": "Fresh attention row: exponentials [3,2]. What are the weights?",
+      "expected": [
+        0.6,
+        0.4
+      ],
+      "tolerance": 1e-06,
+      "patterns": [],
+      "explanation": "Divide [3,2] by 5, giving [0.6,0.4]."
+    },
+    {
+      "id": "aw_transfer",
+      "concept": "attention_weights",
+      "role": "transfer",
+      "prompt": "Two queries have score exponentials [[1,3],[3,1]]. Normalize each row; give the attention weight matrix.",
+      "expected": [
+        [
+          0.25,
+          0.75
+        ],
+        [
+          0.75,
+          0.25
+        ]
+      ],
+      "tolerance": 1e-06,
+      "patterns": [],
+      "explanation": "Normalize each row independently by 4: [[0.25,0.75],[0.75,0.25]]."
+    },
+    {
+      "id": "ao_probe",
+      "concept": "attention_output",
+      "role": "diagnostic",
+      "prompt": "A query has attention weights [0.75,0.25] and values [8,0] and [0,4]. What is its output vector?",
+      "expected": [
+        6,
+        1
+      ],
+      "tolerance": 1e-06,
+      "patterns": [
+        {
+          "answer": [
+            8,
+            4
+          ],
+          "misconception": "unweighted_sum"
+        },
+        {
+          "answer": [
+            4,
+            2
+          ],
+          "misconception": "simple_average"
+        },
+        {
+          "answer": [
+            8,
+            0
+          ],
+          "misconception": "winner_take_all"
+        }
+      ],
+      "explanation": "Apply the operation step by step; the expected result is [6, 1]."
+    },
+    {
+      "id": "ao_followup",
+      "concept": "attention_output",
+      "role": "diagnostic",
+      "prompt": "Attention weights [0.2,0.8] mix values [10,0] and [0,5]. What output do you get?",
+      "expected": [
+        2,
+        4
+      ],
+      "tolerance": 1e-06,
+      "patterns": [
+        {
+          "answer": [
+            10,
+            5
+          ],
+          "misconception": "unweighted_sum"
+        },
+        {
+          "answer": [
+            0,
+            5
+          ],
+          "misconception": "winner_take_all"
+        }
+      ],
+      "explanation": "Apply the operation step by step; the expected result is [2, 4]."
+    },
+    {
+      "id": "ao_tiebreak",
+      "concept": "attention_output",
+      "role": "diagnostic",
+      "prompt": "Attention weights [0.5,0.5] mix values [4,2] and [2,6]. What is the output?",
+      "expected": [
+        3,
+        4
+      ],
+      "tolerance": 1e-06,
+      "patterns": [
+        {
+          "answer": [
+            6,
+            8
+          ],
+          "misconception": "unweighted_sum"
+        }
+      ],
+      "explanation": "Apply the operation step by step; the expected result is [3, 4]."
+    },
+    {
+      "id": "ao_reassess",
+      "concept": "attention_output",
+      "role": "reassessment",
+      "prompt": "Fresh check: attention weights [0.1,0.9] mix [10,0] and [0,10]. What is the output?",
+      "expected": [
+        1,
+        9
+      ],
+      "tolerance": 1e-06,
+      "patterns": [],
+      "explanation": "Multiply each value by its weight and add: [1,0]+[0,9]=[1,9]."
+    },
+    {
+      "id": "ao_transfer",
+      "concept": "attention_output",
+      "role": "transfer",
+      "prompt": "Attention weights [0.4,0.6] mix values [5,5] and [0,10]. What is the output vector?",
+      "expected": [
+        2,
+        8
+      ],
+      "tolerance": 1e-06,
+      "patterns": [],
+      "explanation": "0.4*[5,5]+0.6*[0,10]=[2,2]+[0,6]=[2,8]."
+    },
+    {
+      "id": "ta_probe",
+      "concept": "transformer_attention",
+      "role": "diagnostic",
+      "prompt": "Scaled query-key scores are [0,0], so exponentials are [1,1]. Values are [2,0] and [0,6]. Apply softmax then mix values. What is the output?",
+      "expected": [
+        1,
+        3
+      ],
+      "tolerance": 1e-06,
+      "patterns": [
+        {
+          "answer": [
+            2,
+            6
+          ],
+          "misconception": "unweighted_sum"
+        },
+        {
+          "answer": [
+            0,
+            6
+          ],
+          "misconception": "winner_take_all"
+        }
+      ],
+      "explanation": "Apply the operation step by step; the expected result is [1, 3]."
+    },
+    {
+      "id": "ta_followup",
+      "concept": "transformer_attention",
+      "role": "diagnostic",
+      "prompt": "Scaled scores [ln(3),0] have exponentials [3,1]. Values are [4,0] and [0,8]. What attention output do you get?",
+      "expected": [
+        3,
+        2
+      ],
+      "tolerance": 1e-06,
+      "patterns": [
+        {
+          "answer": [
+            4,
+            8
+          ],
+          "misconception": "unweighted_sum"
+        }
+      ],
+      "explanation": "Apply the operation step by step; the expected result is [3, 2]."
+    },
+    {
+      "id": "ta_tiebreak",
+      "concept": "transformer_attention",
+      "role": "diagnostic",
+      "prompt": "Scaled scores [0,ln(4)] have exponentials [1,4]. Values [5,0] and [0,5]. What is the attention output?",
+      "expected": [
+        1,
+        4
+      ],
+      "tolerance": 1e-06,
+      "patterns": [
+        {
+          "answer": [
+            5,
+            5
+          ],
+          "misconception": "unweighted_sum"
+        }
+      ],
+      "explanation": "Apply the operation step by step; the expected result is [1, 4]."
+    },
+    {
+      "id": "ta_reassess",
+      "concept": "transformer_attention",
+      "role": "reassessment",
+      "prompt": "Fresh pipeline check: score exponentials [4,1], values [5,0] and [0,10]. Normalize then combine. What is the output?",
+      "expected": [
+        4,
+        2
+      ],
+      "tolerance": 1e-06,
+      "patterns": [],
+      "explanation": "Weights [0.8,0.2] combine values to produce [4,2]."
+    },
+    {
+      "id": "ta_transfer",
+      "concept": "transformer_attention",
+      "role": "transfer",
+      "prompt": "q=[1], keys=[0] and [0], d_k=1; values=[6,0] and [0,4]. Compute scaled scores, softmax, then the output. Reply with the output vector.",
+      "expected": [
+        3,
+        2
+      ],
+      "tolerance": 1e-06,
+      "patterns": [],
+      "explanation": "Both scores are 0, so weights are [0.5,0.5]; the output is [3,2]."
+    }
+  ]
+}

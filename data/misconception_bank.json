@@ -1,0 +1,50 @@
+{
+  "schema_version": 1,
+  "misconceptions": {
+    "unweighted_sum": {
+      "description": "Adds value vectors without applying their weights.",
+      "suspected_concept": "weighted_sums",
+      "interpretation": "Answer pattern is a hypothesis, not proof of the student's reasoning."
+    },
+    "simple_average": {
+      "description": "Replaces unequal weights with an unweighted average.",
+      "suspected_concept": "weighted_sums",
+      "interpretation": "Answer pattern is a hypothesis, not proof of the student's reasoning."
+    },
+    "winner_take_all": {
+      "description": "Chooses the largest-weight value rather than mixing all values.",
+      "suspected_concept": "weighted_sums",
+      "interpretation": "Answer pattern is a hypothesis, not proof of the student's reasoning."
+    },
+    "elementwise_product": {
+      "description": "Multiplies matching entries but does not perform row-column dot products.",
+      "suspected_concept": "dot_products",
+      "interpretation": "Answer pattern is a hypothesis, not proof of the student's reasoning."
+    },
+    "add_instead_of_dot": {
+      "description": "Adds vector entries rather than summing coordinate products.",
+      "suspected_concept": "dot_products",
+      "interpretation": "Answer pattern is a hypothesis, not proof of the student's reasoning."
+    },
+    "missing_normalization": {
+      "description": "Uses exponentials without dividing by their total.",
+      "suspected_concept": "softmax",
+      "interpretation": "Answer pattern is a hypothesis, not proof of the student's reasoning."
+    },
+    "missing_exponentiation": {
+      "description": "Normalizes raw scores rather than their exponentials.",
+      "suspected_concept": "softmax",
+      "interpretation": "Answer pattern is a hypothesis, not proof of the student's reasoning."
+    },
+    "missing_scaling": {
+      "description": "Uses the query-key dot product without dividing by sqrt(d_k).",
+      "suspected_concept": "attention_scores",
+      "interpretation": "Answer pattern is a hypothesis, not proof of the student's reasoning."
+    },
+    "reversed_weights": {
+      "description": "Applies each weight to the other value vector.",
+      "suspected_concept": "weighted_sums",
+      "interpretation": "Answer pattern is a hypothesis, not proof of the student's reasoning."
+    }
+  }
+}
