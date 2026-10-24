@@ -1,0 +1,309 @@
+{
+  "trajectory": "isolated",
+  "synthetic": true,
+  "expected_label": null,
+  "trace": [
+    {
+      "question_id": "attention_initial",
+      "prompt": "V1=[2,0], V2=[0,4]; attention weights are 0.75 and 0.25. What is the attention-weighted output? Reply as a two-number vector.",
+      "selection": {
+        "reason": "Establish the initial observation without explaining the answer."
+      },
+      "answer": [
+        1,
+        1
+      ],
+      "feedback": "That check differs from the expected result; one error does not establish its cause.",
+      "verdict": "incorrect",
+      "revision_message": null,
+      "hypotheses": [
+        {
+          "id": "incomplete_response",
+          "score": 1,
+          "status": "under_consideration"
+        },
+        {
+          "id": "scalar_multiplication",
+          "score": 1,
+          "status": "under_consideration"
+        },
+        {
+          "id": "vector_addition",
+          "score": 1,
+          "status": "under_consideration"
+        },
+        {
+          "id": "weighted_aggregation",
+          "score": 1,
+          "status": "under_consideration"
+        }
+      ]
+    },
+    {
+      "question_id": "scalar_probe",
+      "prompt": "What is 0.75 \u00d7 [2,0]? Reply as a vector.",
+      "selection": {
+        "reason": "Distinguish remaining explanations with an unasked operation check.",
+        "score": 12,
+        "separated_pair_weight": 12,
+        "hypothesis_coverage": 2,
+        "difficulty_cost": 2,
+        "prerequisite_policy": "Isolate graph prerequisites before testing their combination; answered does not mean mastered.",
+        "assumption": "Categorical predictions and ordinal evidence weights are authored heuristics, not probabilities."
+      },
+      "answer": [
+        1.5,
+        0
+      ],
+      "feedback": "That check is correct.",
+      "verdict": "correct",
+      "revision_message": "You multiplied the vector correctly. A scalar-multiplication gap is less likely; let's check combining values or reporting the result.",
+      "hypotheses": [
+        {
+          "id": "incomplete_response",
+          "score": 2,
+          "status": "under_consideration"
+        },
+        {
+          "id": "scalar_multiplication",
+          "score": -2,
+          "status": "less_supported"
+        },
+        {
+          "id": "vector_addition",
+          "score": 1,
+          "status": "under_consideration"
+        },
+        {
+          "id": "weighted_aggregation",
+          "score": 1,
+          "status": "under_consideration"
+        }
+      ]
+    },
+    {
+      "question_id": "addition_probe",
+      "prompt": "What is [1.5,0] + [0,1]? Reply as a vector.",
+      "selection": {
+        "reason": "Distinguish remaining explanations with an unasked operation check.",
+        "score": 10,
+        "separated_pair_weight": 10,
+        "hypothesis_coverage": 2,
+        "difficulty_cost": 2,
+        "prerequisite_policy": "Isolate graph prerequisites before testing their combination; answered does not mean mastered.",
+        "assumption": "Categorical predictions and ordinal evidence weights are authored heuristics, not probabilities."
+      },
+      "answer": [
+        1.5,
+        1
+      ],
+      "feedback": "That check is correct.",
+      "verdict": "correct",
+      "revision_message": "This correct check makes the following explanation less likely: Components may not be added in matching positions.",
+      "hypotheses": [
+        {
+          "id": "incomplete_response",
+          "score": 3,
+          "status": "under_consideration"
+        },
+        {
+          "id": "scalar_multiplication",
+          "score": -2,
+          "status": "less_supported"
+        },
+        {
+          "id": "vector_addition",
+          "score": -2,
+          "status": "less_supported"
+        },
+        {
+          "id": "weighted_aggregation",
+          "score": 1,
+          "status": "under_consideration"
+        }
+      ]
+    },
+    {
+      "question_id": "weighted_probe",
+      "prompt": "Weights [0.6,0.4] combine values [5,0] and [0,10]. What is the weighted sum?",
+      "selection": {
+        "reason": "Distinguish remaining explanations with an unasked operation check.",
+        "score": 10,
+        "separated_pair_weight": 8,
+        "hypothesis_coverage": 6,
+        "difficulty_cost": 4,
+        "prerequisite_policy": "Isolate graph prerequisites before testing their combination; answered does not mean mastered.",
+        "assumption": "Categorical predictions and ordinal evidence weights are authored heuristics, not probabilities."
+      },
+      "answer": [
+        3,
+        4
+      ],
+      "feedback": "That check is correct.",
+      "verdict": "correct",
+      "revision_message": "This correct check makes the following explanation less likely: Weights and values may be combined using the wrong operation.",
+      "hypotheses": [
+        {
+          "id": "incomplete_response",
+          "score": 5,
+          "status": "under_consideration"
+        },
+        {
+          "id": "scalar_multiplication",
+          "score": -2,
+          "status": "less_supported"
+        },
+        {
+          "id": "vector_addition",
+          "score": -2,
+          "status": "less_supported"
+        },
+        {
+          "id": "weighted_aggregation",
+          "score": -2,
+          "status": "less_supported"
+        }
+      ]
+    }
+  ],
+  "result": {
+    "ok": true,
+    "engine": "knowledge-dna",
+    "engine_version": "3.0",
+    "next": {
+      "kind": "uncertain",
+      "reason": "Mixed or insufficient evidence; no reliable cause established."
+    },
+    "report": {
+      "original_goal": "Transformer attention",
+      "diagnosis": {
+        "status": "uncertain",
+        "hypothesis": null,
+        "basis": [],
+        "language": "Mixed or insufficient evidence; no reliable cause established."
+      },
+      "observed_difficulty": "No specific cause established by the available observations.",
+      "understanding": {},
+      "intervention": null,
+      "improvement_verified": false,
+      "recall_application_mismatch": false,
+      "diagnostic_questions_used": 4,
+      "next_step": "Talk through one conflicting answer; keep the cause uncertain until another independent check."
+    },
+    "feedback": "That check is correct.",
+    "revision_message": "This correct check makes the following explanation less likely: Weights and values may be combined using the wrong operation.",
+    "hypotheses": [
+      {
+        "id": "incomplete_response",
+        "score": 5,
+        "status": "under_consideration"
+      },
+      {
+        "id": "scalar_multiplication",
+        "score": -2,
+        "status": "less_supported"
+      },
+      {
+        "id": "vector_addition",
+        "score": -2,
+        "status": "less_supported"
+      },
+      {
+        "id": "weighted_aggregation",
+        "score": -2,
+        "status": "less_supported"
+      }
+    ],
+    "academic_evidence": {
+      "sources_used": 0,
+      "synthetic": false,
+      "connections": {
+        "canvas": "not_requested",
+        "google": "not_requested"
+      }
+    },
+    "last_observation": {
+      "question_id": "weighted_probe",
+      "verdict": "correct",
+      "signal": "correct"
+    },
+    "investigation": {
+      "hypotheses": [
+        {
+          "id": "incomplete_response",
+          "description": "Incomplete response or component reporting; intent is not established.",
+          "for": [
+            "attention_initial",
+            "scalar_probe",
+            "addition_probe",
+            "weighted_probe"
+          ],
+          "against": [],
+          "source_priors": []
+        },
+        {
+          "id": "scalar_multiplication",
+          "description": "A scalar may not be applied to every vector component.",
+          "for": [
+            "attention_initial"
+          ],
+          "against": [
+            "scalar_probe"
+          ],
+          "source_priors": []
+        },
+        {
+          "id": "vector_addition",
+          "description": "Components may not be added in matching positions.",
+          "for": [
+            "attention_initial"
+          ],
+          "against": [
+            "addition_probe"
+          ],
+          "source_priors": []
+        },
+        {
+          "id": "weighted_aggregation",
+          "description": "Weights and values may be combined using the wrong operation.",
+          "for": [
+            "attention_initial"
+          ],
+          "against": [
+            "weighted_probe"
+          ],
+          "source_priors": []
+        }
+      ],
+      "path": [
+        {
+          "question_id": "attention_initial",
+          "answer": "[1, 1]",
+          "verdict": "incorrect"
+        },
+        {
+          "question_id": "scalar_probe",
+          "answer": "[1.5, 0]",
+          "verdict": "correct"
+        },
+        {
+          "question_id": "addition_probe",
+          "answer": "[1.5, 1]",
+          "verdict": "correct"
+        },
+        {
+          "question_id": "weighted_probe",
+          "answer": "[3, 4]",
+          "verdict": "correct"
+        }
+      ],
+      "sources": [],
+      "connections": {
+        "canvas": "not_requested",
+        "google": "not_requested"
+      },
+      "assessments": []
+    },
+    "revision": 5
+  }
+}

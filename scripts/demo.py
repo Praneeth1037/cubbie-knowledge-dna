@@ -19,7 +19,7 @@ def replay(scenario, data_dir):
 
     def call(request):
         request["learner_id"] = learner
-        result = subprocess.run([sys.executable, str(ROOT / "scripts/diagnose.py")],
+        result = subprocess.run([sys.executable, str(ROOT / "scripts/legacy_diagnose.py")],
                                 input=json.dumps(request), text=True, capture_output=True,
                                 env=env, cwd=ROOT, check=True)
         response = json.loads(result.stdout)

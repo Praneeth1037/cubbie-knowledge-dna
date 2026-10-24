@@ -6,7 +6,7 @@ import sys
 import tempfile
 import unittest
 
-from scripts.diagnose import DiagnosticEngine, InputError, evaluate
+from scripts.legacy_diagnose import DiagnosticEngine, InputError, evaluate
 from scripts.profile_store import ProfileStore
 from scripts.demo import replay
 
@@ -295,7 +295,7 @@ class CLITests(unittest.TestCase):
         self.env = dict(os.environ, SKILL_DATA_DIR=self.directory.name)
 
     def cli(self, request, env=None):
-        return subprocess.run([sys.executable, str(ROOT / "scripts/diagnose.py")],
+        return subprocess.run([sys.executable, str(ROOT / "scripts/legacy_diagnose.py")],
                               input=request if isinstance(request, str) else json.dumps(request),
                               text=True, capture_output=True, env=env or self.env)
 

@@ -1,3 +1,5 @@
+> Legacy v1 transcript. For the 3.0 active investigation see [transformer_demo.md](transformer_demo.md).
+
 # Three Transformer conversations
 
 These are example student-facing transcripts of the executable demo paths. Tool names and

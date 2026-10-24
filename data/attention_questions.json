@@ -1,0 +1,1061 @@
+{
+  "version": 3,
+  "questions": [
+    {
+      "id": "attention_initial",
+      "domain": "attention",
+      "concept": "attention_output",
+      "role": "diagnostic",
+      "prompt": "V1=[2,0], V2=[0,4]; attention weights are 0.75 and 0.25. What is the attention-weighted output? Reply as a two-number vector.",
+      "expected": [
+        1.5,
+        1
+      ],
+      "tests": [],
+      "direct_test": null,
+      "requires": [],
+      "patterns": [
+        {
+          "answer": [
+            2,
+            4
+          ],
+          "tag": "unweighted"
+        },
+        {
+          "answer": [
+            1,
+            2
+          ],
+          "tag": "average"
+        },
+        {
+          "answer": [
+            2,
+            0
+          ],
+          "tag": "winner"
+        }
+      ],
+      "evidence": {
+        "incomplete": {
+          "incomplete_response": 1,
+          "scalar_multiplication": 1,
+          "vector_addition": 1,
+          "weighted_aggregation": 1
+        },
+        "incorrect": {
+          "incomplete_response": 1,
+          "scalar_multiplication": 1,
+          "vector_addition": 1,
+          "weighted_aggregation": 1
+        },
+        "unweighted": {
+          "weighted_aggregation": 2
+        },
+        "average": {
+          "weighted_aggregation": 2
+        },
+        "winner": {
+          "weighted_aggregation": 2
+        }
+      },
+      "difficulty": 2,
+      "priority": 0,
+      "opening": true,
+      "answer_type": "numeric",
+      "predictions": {
+        "incomplete_response": "correct",
+        "scalar_multiplication": "correct",
+        "vector_addition": "correct",
+        "weighted_aggregation": "correct"
+      }
+    },
+    {
+      "id": "dimension",
+      "domain": "attention",
+      "concept": "vector_dimension",
+      "role": "diagnostic",
+      "prompt": "If we add two vectors that each contain two numbers, how many numbers should the result contain? Briefly say why.",
+      "expected": 2,
+      "tests": [
+        "incomplete_response",
+        "weighted_aggregation"
+      ],
+      "direct_test": null,
+      "requires": [],
+      "patterns": [],
+      "evidence": {
+        "correct": {
+          "weighted_aggregation": -1,
+          "incomplete_response": 1
+        },
+        "incorrect": {
+          "weighted_aggregation": 1
+        }
+      },
+      "difficulty": 0,
+      "priority": 100,
+      "opening": false,
+      "answer_type": "dimension",
+      "predictions": {
+        "incomplete_response": "correct",
+        "scalar_multiplication": "correct",
+        "vector_addition": "correct",
+        "weighted_aggregation": "error"
+      }
+    },
+    {
+      "id": "scalar_probe",
+      "domain": "attention",
+      "concept": "scalar_multiplication",
+      "role": "diagnostic",
+      "prompt": "What is 0.75 \u00d7 [2,0]? Reply as a vector.",
+      "expected": [
+        1.5,
+        0
+      ],
+      "tests": [
+        "scalar_multiplication"
+      ],
+      "direct_test": "scalar_multiplication",
+      "requires": [],
+      "patterns": [],
+      "evidence": {
+        "correct": {
+          "scalar_multiplication": -3,
+          "incomplete_response": 1
+        },
+        "incorrect": {
+          "scalar_multiplication": 3
+        },
+        "incomplete": {
+          "incomplete_response": 1
+        }
+      },
+      "difficulty": 1,
+      "priority": 10,
+      "opening": false,
+      "answer_type": "numeric",
+      "predictions": {
+        "incomplete_response": "correct",
+        "scalar_multiplication": "error",
+        "vector_addition": "correct",
+        "weighted_aggregation": "correct"
+      }
+    },
+    {
+      "id": "scalar_followup",
+      "domain": "attention",
+      "concept": "scalar_multiplication",
+      "role": "diagnostic",
+      "prompt": "Use new values: what is 0.25 \u00d7 [4,2]?",
+      "expected": [
+        1,
+        0.5
+      ],
+      "tests": [
+        "scalar_multiplication"
+      ],
+      "direct_test": "scalar_multiplication",
+      "requires": [
+        "scalar_probe"
+      ],
+      "patterns": [],
+      "evidence": {
+        "correct": {
+          "scalar_multiplication": -3
+        },
+        "incorrect": {
+          "scalar_multiplication": 3
+        }
+      },
+      "difficulty": 1,
+      "priority": 12,
+      "opening": false,
+      "answer_type": "numeric",
+      "predictions": {
+        "incomplete_response": "correct",
+        "scalar_multiplication": "error",
+        "vector_addition": "correct",
+        "weighted_aggregation": "correct"
+      },
+      "after_error": "scalar_probe"
+    },
+    {
+      "id": "addition_probe",
+      "domain": "attention",
+      "concept": "vector_addition",
+      "role": "diagnostic",
+      "prompt": "What is [1.5,0] + [0,1]? Reply as a vector.",
+      "expected": [
+        1.5,
+        1
+      ],
+      "tests": [
+        "vector_addition"
+      ],
+      "direct_test": "vector_addition",
+      "requires": [],
+      "patterns": [],
+      "evidence": {
+        "correct": {
+          "vector_addition": -3,
+          "incomplete_response": 1
+        },
+        "incorrect": {
+          "vector_addition": 3
+        },
+        "incomplete": {
+          "incomplete_response": 1
+        }
+      },
+      "difficulty": 1,
+      "priority": 9,
+      "opening": false,
+      "answer_type": "numeric",
+      "predictions": {
+        "incomplete_response": "correct",
+        "scalar_multiplication": "correct",
+        "vector_addition": "error",
+        "weighted_aggregation": "correct"
+      }
+    },
+    {
+      "id": "addition_followup",
+      "domain": "attention",
+      "concept": "vector_addition",
+      "role": "diagnostic",
+      "prompt": "A different addition check: [2,3] + [4,1] = ?",
+      "expected": [
+        6,
+        4
+      ],
+      "tests": [
+        "vector_addition"
+      ],
+      "direct_test": "vector_addition",
+      "requires": [
+        "addition_probe"
+      ],
+      "patterns": [],
+      "evidence": {
+        "correct": {
+          "vector_addition": -3
+        },
+        "incorrect": {
+          "vector_addition": 3
+        }
+      },
+      "difficulty": 1,
+      "priority": 12,
+      "opening": false,
+      "answer_type": "numeric",
+      "predictions": {
+        "incomplete_response": "correct",
+        "scalar_multiplication": "correct",
+        "vector_addition": "error",
+        "weighted_aggregation": "correct"
+      },
+      "after_error": "addition_probe"
+    },
+    {
+      "id": "weighted_probe",
+      "domain": "attention",
+      "concept": "weighted_sums",
+      "role": "diagnostic",
+      "prompt": "Weights [0.6,0.4] combine values [5,0] and [0,10]. What is the weighted sum?",
+      "expected": [
+        3,
+        4
+      ],
+      "tests": [
+        "weighted_aggregation",
+        "incomplete_response"
+      ],
+      "direct_test": "weighted_aggregation",
+      "requires": [
+        "scalar_probe",
+        "addition_probe"
+      ],
+      "patterns": [
+        {
+          "answer": [
+            5,
+            10
+          ],
+          "tag": "unweighted"
+        },
+        {
+          "answer": [
+            2.5,
+            5
+          ],
+          "tag": "average"
+        }
+      ],
+      "evidence": {
+        "correct": {
+          "weighted_aggregation": -3,
+          "incomplete_response": 2
+        },
+        "incorrect": {
+          "weighted_aggregation": 3
+        },
+        "unweighted": {
+          "weighted_aggregation": 3
+        },
+        "average": {
+          "weighted_aggregation": 3
+        },
+        "incomplete": {
+          "incomplete_response": 2
+        }
+      },
+      "difficulty": 2,
+      "priority": 8,
+      "opening": false,
+      "answer_type": "numeric",
+      "predictions": {
+        "incomplete_response": "correct",
+        "scalar_multiplication": "correct",
+        "vector_addition": "correct",
+        "weighted_aggregation": "error"
+      }
+    },
+    {
+      "id": "weighted_followup",
+      "domain": "attention",
+      "concept": "weighted_sums",
+      "role": "diagnostic",
+      "prompt": "Check another case: weights [0.2,0.8], values [10,0] and [0,5]. What is the output vector?",
+      "expected": [
+        2,
+        4
+      ],
+      "tests": [
+        "weighted_aggregation"
+      ],
+      "direct_test": "weighted_aggregation",
+      "requires": [
+        "weighted_probe"
+      ],
+      "patterns": [
+        {
+          "answer": [
+            10,
+            5
+          ],
+          "tag": "unweighted"
+        }
+      ],
+      "evidence": {
+        "correct": {
+          "weighted_aggregation": -3
+        },
+        "incorrect": {
+          "weighted_aggregation": 3
+        }
+      },
+      "difficulty": 2,
+      "priority": 12,
+      "opening": false,
+      "answer_type": "numeric",
+      "predictions": {
+        "incomplete_response": "correct",
+        "scalar_multiplication": "correct",
+        "vector_addition": "correct",
+        "weighted_aggregation": "error"
+      },
+      "after_error": "weighted_probe"
+    },
+    {
+      "id": "format_check",
+      "domain": "attention",
+      "concept": "vector_dimension",
+      "role": "diagnostic",
+      "prompt": "Give both components of this vector: first component 3, second component 2. Reply [a,b].",
+      "expected": [
+        3,
+        2
+      ],
+      "tests": [
+        "incomplete_response"
+      ],
+      "direct_test": null,
+      "requires": [
+        "dimension"
+      ],
+      "patterns": [],
+      "evidence": {
+        "correct": {
+          "incomplete_response": 1
+        },
+        "incomplete": {
+          "incomplete_response": 1
+        }
+      },
+      "difficulty": 1,
+      "priority": 11,
+      "opening": false,
+      "answer_type": "numeric",
+      "predictions": {
+        "incomplete_response": "correct",
+        "scalar_multiplication": "correct",
+        "vector_addition": "correct",
+        "weighted_aggregation": "correct"
+      },
+      "after_error": "dimension"
+    },
+    {
+      "id": "recall_qkv",
+      "domain": "attention",
+      "concept": "attention_output",
+      "role": "recall",
+      "prompt": "What are Q, K and V in attention? Give each role briefly.",
+      "expected": null,
+      "tests": [],
+      "direct_test": null,
+      "requires": [],
+      "patterns": [],
+      "evidence": {},
+      "difficulty": 1,
+      "priority": 0,
+      "opening": true,
+      "answer_type": "rubric",
+      "predictions": {
+        "incomplete_response": "correct",
+        "scalar_multiplication": "correct",
+        "vector_addition": "correct",
+        "weighted_aggregation": "correct"
+      },
+      "rubric": [
+        [
+          "quer\\w*.*(?:look|seek|search|request)",
+          "what.*(?:look|seek)"
+        ],
+        [
+          "key\\w*.*(?:match|compar|address|similar)"
+        ],
+        [
+          "value\\w*.*(?:information|content|contribut|mix)"
+        ]
+      ]
+    },
+    {
+      "id": "practice_weighted",
+      "domain": "attention",
+      "concept": "attention_output",
+      "role": "practice",
+      "prompt": "Practice: weights [0.5,0.5] combine [6,2] and [2,4]. Give the weighted sum.",
+      "expected": [
+        4,
+        3
+      ],
+      "tests": [],
+      "direct_test": null,
+      "requires": [],
+      "patterns": [],
+      "evidence": {},
+      "difficulty": 1,
+      "priority": 0,
+      "opening": false,
+      "answer_type": "numeric",
+      "predictions": {
+        "incomplete_response": "correct",
+        "scalar_multiplication": "correct",
+        "vector_addition": "correct",
+        "weighted_aggregation": "correct"
+      }
+    },
+    {
+      "id": "independent_attention",
+      "domain": "attention",
+      "concept": "attention_output",
+      "role": "verification",
+      "prompt": "Independent check: V1=[4,2], V2=[0,6], weights [0.25,0.75]. What is the weighted output?",
+      "expected": [
+        1,
+        5
+      ],
+      "tests": [],
+      "direct_test": null,
+      "requires": [],
+      "patterns": [],
+      "evidence": {},
+      "difficulty": 1,
+      "priority": 0,
+      "opening": false,
+      "answer_type": "numeric",
+      "predictions": {
+        "incomplete_response": "correct",
+        "scalar_multiplication": "correct",
+        "vector_addition": "correct",
+        "weighted_aggregation": "correct"
+      }
+    },
+    {
+      "id": "transfer_attention",
+      "domain": "attention",
+      "concept": "attention_output",
+      "role": "transfer",
+      "prompt": "Why does a Transformer multiply attention weights by value vectors and add the results?",
+      "expected": null,
+      "tests": [],
+      "direct_test": null,
+      "requires": [],
+      "patterns": [],
+      "evidence": {},
+      "difficulty": 1,
+      "priority": 0,
+      "opening": false,
+      "answer_type": "rubric",
+      "predictions": {
+        "incomplete_response": "correct",
+        "scalar_multiplication": "correct",
+        "vector_addition": "correct",
+        "weighted_aggregation": "correct"
+      },
+      "rubric": [
+        [
+          "(?:combin|mix|aggregat|sum|add|blend)"
+        ],
+        [
+          "value\\s*(?:vector|s)?",
+          "information"
+        ],
+        [
+          "weight",
+          "relevance",
+          "importance"
+        ]
+      ]
+    },
+    {
+      "id": "practice_scalar",
+      "domain": "attention",
+      "concept": "scalar_multiplication",
+      "role": "practice",
+      "prompt": "Practice: what is 0.5 \u00d7 [2,6]?",
+      "expected": [
+        1,
+        3
+      ],
+      "tests": [],
+      "direct_test": null,
+      "requires": [],
+      "patterns": [],
+      "evidence": {},
+      "difficulty": 1,
+      "priority": 0,
+      "opening": false,
+      "answer_type": "numeric",
+      "predictions": {
+        "incomplete_response": "correct",
+        "scalar_multiplication": "correct",
+        "vector_addition": "correct",
+        "weighted_aggregation": "correct"
+      }
+    },
+    {
+      "id": "practice_addition",
+      "domain": "attention",
+      "concept": "vector_addition",
+      "role": "practice",
+      "prompt": "Practice: what is [1,4] + [2,2]?",
+      "expected": [
+        3,
+        6
+      ],
+      "tests": [],
+      "direct_test": null,
+      "requires": [],
+      "patterns": [],
+      "evidence": {},
+      "difficulty": 1,
+      "priority": 0,
+      "opening": false,
+      "answer_type": "numeric",
+      "predictions": {
+        "incomplete_response": "correct",
+        "scalar_multiplication": "correct",
+        "vector_addition": "correct",
+        "weighted_aggregation": "correct"
+      }
+    },
+    {
+      "id": "practice_format",
+      "domain": "attention",
+      "concept": "vector_dimension",
+      "role": "practice",
+      "prompt": "Practice reporting: first component is 4, second is 3. Give the full vector.",
+      "expected": [
+        4,
+        3
+      ],
+      "tests": [],
+      "direct_test": null,
+      "requires": [],
+      "patterns": [],
+      "evidence": {},
+      "difficulty": 1,
+      "priority": 0,
+      "opening": false,
+      "answer_type": "numeric",
+      "predictions": {
+        "incomplete_response": "correct",
+        "scalar_multiplication": "correct",
+        "vector_addition": "correct",
+        "weighted_aggregation": "correct"
+      }
+    },
+    {
+      "id": "shape_initial",
+      "domain": "shapes",
+      "concept": "tensor_shapes",
+      "role": "diagnostic",
+      "prompt": "A tensor has shape (2,4,8). What is its shape after swapping axes 1 and 2? Use zero-based axes.",
+      "expected": [
+        2,
+        8,
+        4
+      ],
+      "tests": [
+        "tensor_shapes"
+      ],
+      "direct_test": "tensor_shapes",
+      "requires": [],
+      "patterns": [],
+      "evidence": {
+        "correct": {
+          "tensor_shapes": -3
+        },
+        "incorrect": {
+          "tensor_shapes": 3
+        }
+      },
+      "difficulty": 1,
+      "priority": 10,
+      "opening": false,
+      "answer_type": "numeric",
+      "predictions": {
+        "tensor_shapes": "error",
+        "broadcasting": "correct",
+        "notation_to_code": "correct",
+        "isolated_error": "correct"
+      }
+    },
+    {
+      "id": "shape_followup",
+      "domain": "shapes",
+      "concept": "tensor_shapes",
+      "role": "diagnostic",
+      "prompt": "A tensor has shape (3,5,7). Swap axes 0 and 2. What is the new shape?",
+      "expected": [
+        7,
+        5,
+        3
+      ],
+      "tests": [
+        "tensor_shapes"
+      ],
+      "direct_test": "tensor_shapes",
+      "requires": [
+        "shape_initial"
+      ],
+      "patterns": [],
+      "evidence": {
+        "correct": {
+          "tensor_shapes": -3
+        },
+        "incorrect": {
+          "tensor_shapes": 3
+        }
+      },
+      "difficulty": 1,
+      "priority": 12,
+      "opening": false,
+      "answer_type": "numeric",
+      "predictions": {
+        "tensor_shapes": "error",
+        "broadcasting": "correct",
+        "notation_to_code": "correct",
+        "isolated_error": "correct"
+      },
+      "after_error": "shape_initial"
+    },
+    {
+      "id": "broadcast_probe",
+      "domain": "shapes",
+      "concept": "broadcasting",
+      "role": "diagnostic",
+      "prompt": "For a tensor of shape (2,4,8), which mask shape broadcasts along its final dimension: reply 1 for (8,), or 2 for (4,)?",
+      "expected": 1,
+      "tests": [
+        "broadcasting"
+      ],
+      "direct_test": "broadcasting",
+      "requires": [],
+      "patterns": [],
+      "evidence": {
+        "correct": {
+          "broadcasting": -3
+        },
+        "incorrect": {
+          "broadcasting": 3
+        }
+      },
+      "difficulty": 1,
+      "priority": 9,
+      "opening": false,
+      "answer_type": "numeric",
+      "predictions": {
+        "tensor_shapes": "correct",
+        "broadcasting": "error",
+        "notation_to_code": "correct",
+        "isolated_error": "correct"
+      }
+    },
+    {
+      "id": "broadcast_followup",
+      "domain": "shapes",
+      "concept": "broadcasting",
+      "role": "diagnostic",
+      "prompt": "For an array of shape (3,5,7), which vector broadcasts along the last dimension: 1 for (5,), or 2 for (7,)?",
+      "expected": 2,
+      "tests": [
+        "broadcasting"
+      ],
+      "direct_test": "broadcasting",
+      "requires": [
+        "broadcast_probe"
+      ],
+      "patterns": [],
+      "evidence": {
+        "correct": {
+          "broadcasting": -3
+        },
+        "incorrect": {
+          "broadcasting": 3
+        }
+      },
+      "difficulty": 1,
+      "priority": 12,
+      "opening": false,
+      "answer_type": "numeric",
+      "predictions": {
+        "tensor_shapes": "correct",
+        "broadcasting": "error",
+        "notation_to_code": "correct",
+        "isolated_error": "correct"
+      },
+      "after_error": "broadcast_probe"
+    },
+    {
+      "id": "implementation_probe",
+      "domain": "shapes",
+      "concept": "notation_to_code",
+      "role": "diagnostic",
+      "prompt": "Which axis order implements swapping axes 1 and 2 of a rank-3 tensor? Reply with the three zero-based axes.",
+      "expected": [
+        0,
+        2,
+        1
+      ],
+      "tests": [
+        "notation_to_code"
+      ],
+      "direct_test": "notation_to_code",
+      "requires": [],
+      "patterns": [],
+      "evidence": {
+        "correct": {
+          "notation_to_code": -3
+        },
+        "incorrect": {
+          "notation_to_code": 3
+        }
+      },
+      "difficulty": 1,
+      "priority": 8,
+      "opening": false,
+      "answer_type": "numeric",
+      "predictions": {
+        "tensor_shapes": "correct",
+        "broadcasting": "correct",
+        "notation_to_code": "error",
+        "isolated_error": "correct"
+      }
+    },
+    {
+      "id": "implementation_followup",
+      "domain": "shapes",
+      "concept": "notation_to_code",
+      "role": "diagnostic",
+      "prompt": "Which axis order implements swapping axes 0 and 1 of a rank-3 tensor?",
+      "expected": [
+        1,
+        0,
+        2
+      ],
+      "tests": [
+        "notation_to_code"
+      ],
+      "direct_test": "notation_to_code",
+      "requires": [
+        "implementation_probe"
+      ],
+      "patterns": [],
+      "evidence": {
+        "correct": {
+          "notation_to_code": -3
+        },
+        "incorrect": {
+          "notation_to_code": 3
+        }
+      },
+      "difficulty": 1,
+      "priority": 12,
+      "opening": false,
+      "answer_type": "numeric",
+      "predictions": {
+        "tensor_shapes": "correct",
+        "broadcasting": "correct",
+        "notation_to_code": "error",
+        "isolated_error": "correct"
+      },
+      "after_error": "implementation_probe"
+    },
+    {
+      "id": "practice_shapes",
+      "domain": "shapes",
+      "concept": "tensor_shapes",
+      "role": "practice",
+      "prompt": "Practice: shape (2,3,5), swap axes 1 and 2. What shape results?",
+      "expected": [
+        2,
+        5,
+        3
+      ],
+      "tests": [],
+      "direct_test": null,
+      "requires": [],
+      "patterns": [],
+      "evidence": {},
+      "difficulty": 1,
+      "priority": 0,
+      "opening": false,
+      "answer_type": "numeric",
+      "predictions": {
+        "tensor_shapes": "correct",
+        "broadcasting": "correct",
+        "notation_to_code": "correct",
+        "isolated_error": "correct"
+      }
+    },
+    {
+      "id": "independent_shapes",
+      "domain": "shapes",
+      "concept": "tensor_shapes",
+      "role": "verification",
+      "prompt": "Independent check: shape (4,6,9), swap axes 0 and 2. What shape results?",
+      "expected": [
+        9,
+        6,
+        4
+      ],
+      "tests": [],
+      "direct_test": null,
+      "requires": [],
+      "patterns": [],
+      "evidence": {},
+      "difficulty": 1,
+      "priority": 0,
+      "opening": false,
+      "answer_type": "numeric",
+      "predictions": {
+        "tensor_shapes": "correct",
+        "broadcasting": "correct",
+        "notation_to_code": "correct",
+        "isolated_error": "correct"
+      }
+    },
+    {
+      "id": "transfer_shapes",
+      "domain": "shapes",
+      "concept": "tensor_shapes",
+      "role": "transfer",
+      "prompt": "Why track tensor dimensions when applying a mask to attention scores?",
+      "expected": null,
+      "tests": [],
+      "direct_test": null,
+      "requires": [],
+      "patterns": [],
+      "evidence": {},
+      "difficulty": 1,
+      "priority": 0,
+      "opening": false,
+      "answer_type": "rubric",
+      "predictions": {
+        "tensor_shapes": "correct",
+        "broadcasting": "correct",
+        "notation_to_code": "correct",
+        "isolated_error": "correct"
+      },
+      "rubric": [
+        [
+          "mask"
+        ],
+        [
+          "axis",
+          "axes",
+          "dimension",
+          "shape"
+        ],
+        [
+          "align",
+          "correct",
+          "match",
+          "broadcast"
+        ]
+      ]
+    },
+    {
+      "id": "practice_broadcast",
+      "domain": "shapes",
+      "concept": "tensor_shapes",
+      "role": "practice",
+      "prompt": "Practice: tensor (2,3,5), choose the last-axis vector: 1 for (5,), 2 for (3,).",
+      "expected": 1,
+      "tests": [],
+      "direct_test": null,
+      "requires": [],
+      "patterns": [],
+      "evidence": {},
+      "difficulty": 1,
+      "priority": 0,
+      "opening": false,
+      "answer_type": "numeric",
+      "predictions": {
+        "tensor_shapes": "correct",
+        "broadcasting": "correct",
+        "notation_to_code": "correct",
+        "isolated_error": "correct"
+      }
+    },
+    {
+      "id": "independent_broadcast",
+      "domain": "shapes",
+      "concept": "tensor_shapes",
+      "role": "verification",
+      "prompt": "Independent check: tensor (4,6,9), choose the last-axis vector: 1 for (6,), 2 for (9,).",
+      "expected": 2,
+      "tests": [],
+      "direct_test": null,
+      "requires": [],
+      "patterns": [],
+      "evidence": {},
+      "difficulty": 1,
+      "priority": 0,
+      "opening": false,
+      "answer_type": "numeric",
+      "predictions": {
+        "tensor_shapes": "correct",
+        "broadcasting": "correct",
+        "notation_to_code": "correct",
+        "isolated_error": "correct"
+      }
+    },
+    {
+      "id": "practice_implementation",
+      "domain": "shapes",
+      "concept": "tensor_shapes",
+      "role": "practice",
+      "prompt": "Practice: give the axis order that swaps axes 1 and 2 of a rank-3 tensor.",
+      "expected": [
+        0,
+        2,
+        1
+      ],
+      "tests": [],
+      "direct_test": null,
+      "requires": [],
+      "patterns": [],
+      "evidence": {},
+      "difficulty": 1,
+      "priority": 0,
+      "opening": false,
+      "answer_type": "numeric",
+      "predictions": {
+        "tensor_shapes": "correct",
+        "broadcasting": "correct",
+        "notation_to_code": "correct",
+        "isolated_error": "correct"
+      }
+    },
+    {
+      "id": "independent_implementation",
+      "domain": "shapes",
+      "concept": "tensor_shapes",
+      "role": "verification",
+      "prompt": "Independent check: give the axis order that reverses a rank-3 tensor's axes.",
+      "expected": [
+        2,
+        1,
+        0
+      ],
+      "tests": [],
+      "direct_test": null,
+      "requires": [],
+      "patterns": [],
+      "evidence": {},
+      "difficulty": 1,
+      "priority": 0,
+      "opening": false,
+      "answer_type": "numeric",
+      "predictions": {
+        "tensor_shapes": "correct",
+        "broadcasting": "correct",
+        "notation_to_code": "correct",
+        "isolated_error": "correct"
+      }
+    }
+  ],
+  "repairs": {
+    "response_format": {
+      "explanation": "The tested operations worked. The initial reply contained one component, so practice reporting the full vector. This does not establish why you omitted a component.",
+      "example": "A vector whose first component is 2 and second is 3 is written [2,3].",
+      "connection": "An attention output contains every component of the mixed value vectors."
+    },
+    "scalar_multiplication": {
+      "explanation": "Multiply every component by the scalar.",
+      "example": "0.5 \u00d7 [6,4] = [3,2].",
+      "connection": "An attention weight scales every coordinate of its value vector."
+    },
+    "vector_addition": {
+      "explanation": "Add matching components; preserve the vector shape.",
+      "example": "[2,1]+[3,4]=[5,5].",
+      "connection": "Attention adds the scaled value vectors coordinate by coordinate."
+    },
+    "weighted_sums": {
+      "explanation": "Scale each value by its own weight, then add matching components.",
+      "example": "0.25\u00d7[8,0]+0.75\u00d7[0,4]=[2,0]+[0,3]=[2,3].",
+      "connection": "This mixes information from value vectors according to attention weights."
+    },
+    "tensor_shapes": {
+      "explanation": "Swapping axes exchanges those positions in the shape, not the values of every dimension.",
+      "example": "(2,3,4), swap axes 0 and 1: (3,2,4).",
+      "connection": "Attention masks and score tensors must refer to matching axes."
+    },
+    "broadcasting": {
+      "explanation": "Broadcasting aligns trailing dimensions. Corresponding dimensions must match or be one.",
+      "example": "A vector of shape (4,) broadcasts over (2,3,4); a vector of shape (3,) does not.",
+      "connection": "A mask must align with the intended query or key dimension."
+    },
+    "notation_to_code": {
+      "explanation": "Write the output axis order explicitly before choosing a transpose operation.",
+      "example": "For original axes [0,1,2], swapping the first two produces [1,0,2].",
+      "connection": "An attention formula does not automatically specify the correct tensor-axis order in code."
+    }
+  }
+}

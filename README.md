@@ -1,260 +1,244 @@
-# Cubbie Knowledge DNA
+# Knowledge DNA 3.0
 
-**Find the foundation behind “I don't understand Transformers,” teach it, and check that the student can use it.**
+**AI Learning Forensics**
 
-Knowledge DNA is an installable **Cubbie Agent Skill**, with `SKILL.md` as its entry point.
-Cubbie handles the conversation, course materials, memory and files. Small, offline Python
-scripts handle prerequisite traversal, math scoring, adaptive questions and private progress.
-There is no frontend, server, GPU, paid API, third-party package or script network access.
+Other AI tutors explain your mistakes. Knowledge DNA investigates why you make them.
 
-> Student adds two value vectors and ignores their attention weights. Knowledge DNA tests
-> weighted sums with two independent problems, teaches only that likely gap, then checks a
-> new weighted sum and a new attention problem. If the answers conflict, it asks another
-> question and can finish with “we don't know yet.”
+Two students can give the same wrong answer for completely different reasons. Knowledge DNA
+uses competing hypotheses and adaptive experiments to discover which explanation each
+student actually needs. It runs as a **Cubbie Agent Skill**: no frontend, backend, GPU,
+paid API, service account or third-party Python dependency.
 
-**Verification status:** local tests, all three command-line demos and the initial GitHub
-Actions run pass. A student reported successful installation in Cubbie, followed by a
-storage-setup failure before the diagnostic started. The recovery below is tested locally;
-a complete saved diagnostic in Cubbie still needs verification.
-Public repository: https://github.com/Praneeth1037/cubbie-knowledge-dna
+**Status:** implemented and tested locally; synthetic transcripts and executed evaluation
+are included. An earlier Skill installed in Cubbie, but its saved diagnostic did not run in
+the reported exchange. **The 3.0 main flow still requires a real Cubbie acceptance test.**
+Connected Canvas/Google retrieval has not been verified on a real student account.
 
-## Install in Cubbie
+## Try it
 
-1. Use this public repository. `SKILL.md`, `scripts/` and `data/` are at its root.
-   No Cubbie source checkout or changes are needed.
-2. Text Cubbie the repository URL:
-   `https://github.com/Praneeth1037/cubbie-knowledge-dna`.
-3. Cubbie shows the Skill summary and exact commit. Reply **yes** to install.
-   The guide says nothing is installed before that reply. This Skill needs no packages,
-   keys, logins or network hosts. Canvas is optional through Cubbie's existing connection.
-4. Text **“I want to understand Transformers. Use Knowledge DNA.”**
-5. Complete a question, return later and text **“Resume Knowledge DNA.”**
-
-Installs are per student and pinned to a commit. After pushing a fix, text
-`update cubbie-knowledge-dna` and approve the new summary. Use `What Skills do I have?`
-to inspect installed Skills or `remove cubbie-knowledge-dna` to uninstall.
-
-For the hackathon, submit the real Skill-folder URL **at the tested commit**:
-`https://github.com/Praneeth1037/cubbie-knowledge-dna/tree/FULL_COMMIT_SHA`.
-The supplied guide requires Track 1's real-account install and main flow within the first
-10 hours; confirm the actual cutoff and submission form with the organizers.
-
-## Run locally
-
-Requires Python 3.12 on Linux or macOS. Runtime code uses the standard library only.
+Python 3.12 on Linux or macOS:
 
 ```sh
-python3 --version
 python3 -m unittest discover -s tests -v
-python3 scripts/demo.py
+python3 scripts/diagnose.py demo
+python3 scripts/demo_runner.py --scenario B --json
+python3 scripts/demo_runner.py --scenario academic --json
+python3 scripts/evaluate.py --output evaluation/results.json --markdown docs/evaluation.md
 ```
 
-Expected demo output:
+All demos use the actual engine and isolated temporary learner profiles. They do not read
+or overwrite real learning records. The academic demonstration uses **clearly labeled
+synthetic Canvas/Docs records**, not live accounts. Developer transcripts include selected
+questions, selection reasons, student responses, evidence changes and actual final results.
+
+## The flagship investigation
+
+Student: “I understand Transformers, but I keep getting attention calculations wrong.
+Don't teach me immediately. Find out why.”
+
+The initial problem combines `[2,0]` and `[0,4]` with weights `0.75` and `0.25`. The student
+answers **`1`**. The engine records an incomplete response, keeps four explanations open,
+and asks about dimensions before isolating operations. It does not reveal `[1.5,1]`.
+
+After the student correctly computes scalar multiplication, the engine can say:
+
+> You multiplied the vector correctly. A scalar-multiplication gap is less likely; let's
+> check combining values or reporting the result.
+
+One path subsequently demonstrates all operations and supports a response-completeness
+finding. Another student gives the **same initial `1`** but repeatedly combines weighted
+values incorrectly, supporting a weighted-aggregation repair. A third path gives conflicting
+answers and finishes uncertain. Correct calculations receive an independent check with
+new vectors `[4,2]`, `[0,6]` and weights `[0.25,0.75]`, then an explanation of why attention
+mixes values according to weights. Recall of Q/K/V definitions is recorded separately.
+
+## Why Cubbie matters
+
+Cubbie supplies the conversation, private sandbox, persistent student storage, optional
+academic integrations, memory and documents. The Skill adds a reproducible investigation
+protocol and deterministic math. Native Canvas/Google abilities can retrieve relevant
+feedback, rubric excerpts, notes, drafts and clarification messages with the student's
+permission. Python receives only small structured findings with provenance.
+
+For example, two feedback excerpts about tensor shape and masking can prioritize shape,
+broadcasting and notation-to-code hypotheses. Correct live shape answers can reduce that
+priority. **Academic sources never establish a gap by themselves.** Disconnected accounts
+continue through live questions. Scripts never fetch Canvas, Google, URLs or other services.
+
+## Architecture
+
+```mermaid
+flowchart LR
+    C[Cubbie conversation and authorized native retrieval] --> E[Academic evidence with provenance]
+    E --> H[Competing hypothesis ledger]
+    Q[Prerequisite graph and question bank] --> S[Deterministic experiment selector]
+    H --> S
+    S --> A[One student answer]
+    A --> V[Safe numerical or conservative rubric evaluator]
+    V --> H
+    H --> R[Targeted repair or explicit uncertainty]
+    R --> I[Practice, independent verification, transfer]
+    I --> M[Atomic private profile or explicit temporary checkpoint]
+```
+
+| Component | Responsibility |
+| --- | --- |
+| `SKILL.md` | Activation, exact execution boundary, consent, native retrieval, short replies |
+| `scripts/evidence_engine.py` | Validate provenance and cap source-derived priors |
+| `scripts/hypothesis_engine.py` | Separate supporting and contrary evidence; conservative stopping |
+| `scripts/question_selector.py` | Select unasked experiments by categorical separation, coverage and difficulty |
+| `scripts/answer_evaluator.py` | Safe literals, shape-aware incomplete answers, explicit text rubrics |
+| `scripts/investigation.py` | Investigation, repair, independent checks and scoped understanding |
+| `scripts/diagnose.py` | Stable JSON commands, execution receipts, persistent/temporary orchestration |
+| `scripts/profile_store.py` | Existing atomic writes, locks, schema checks and explicit quarantine recovery |
+| `scripts/demo_runner.py` / `scripts/evaluate.py` | Real-engine synthetic replays and measured policy comparison |
+
+The original graph, 40-item curriculum and engine remain available as an explicit v1
+compatibility path (`scripts/legacy_diagnose.py`, `scripts/demo.py`). Existing regression
+assertions remain intact and target that interface. Existing profile history is preserved;
+V3 stores a separate forensic record in the same versioned profile. See [audit](docs/audit.md).
+
+## Install or update in Cubbie
+
+Text this **branch link** to Cubbie and approve its installation/update summary:
+
+https://github.com/Praneeth1037/cubbie-knowledge-dna/tree/main
+
+Then send a **new message**:
 
 ```text
-Scenario A: complete; 8 turns; 0 verified improvement(s)
-Scenario B: complete; 6 turns; 1 verified improvement(s)
-Scenario C: uncertain; 4 turns; 0 verified improvement(s)
+Start Knowledge DNA. I keep getting attention calculations wrong. Don't teach me immediately. Run the Python investigation.
 ```
 
-Here a turn is a scored student reply or a delivered lesson. A needs eight diagnostic
-answers. B needs three diagnostic answers, one lesson, one reassessment and one transfer.
-C needs four diagnostic answers. The demo uses the real JSON CLI in fresh processes, not
-a prewritten transcript. It reads the answer key to simulate students; it is a presenter
-tool and is never called during the student's Skill workflow.
+The installed Skill runs its storage check and engine. If it cannot execute a sandbox tool,
+it must say so rather than fabricate a diagnostic. If disk saving fails, the same engine
+continues in temporary mode with an explicit limitation. Verify execution by requesting
+“Show your investigation,” then check that question IDs/receipts come from actual tool calls.
+Receipts are debugging aids, not cryptographic proof of execution.
 
-```sh
-python3 scripts/demo.py --scenario B --json
-python3 scripts/demo.py --data-dir "$PWD/.local-data/demo"
-python3 scripts/knowledge_graph.py prerequisites transformer_attention
-```
+Texting the branch link again fetches the latest push. A pinned commit link deliberately
+keeps a fixed version. Submit the **repository URL** according to the current official kit:
 
-The default demo uses temporary profiles and deletes them afterward. `--data-dir` retains
-separate `demo_a`, `demo_b` and `demo_c` profiles; rerunning it starts new sessions while
-preserving history, so cumulative counts can increase. Use a fresh demo directory for the
-exact sample counts. Never point demo tooling at a real learner's data.
+https://github.com/Praneeth1037/cubbie-knowledge-dna
 
-## Structured JSON interface
+The exact current submission window must be checked using the official kit's live status;
+this README does not invent a cutoff. Installation alone does not satisfy the real-flow
+requirement. Follow [live-testing.md](docs/live-testing.md) before claiming completion.
 
-Set a persistent, absolute data directory when testing the Skill scripts directly:
+## Command interface and persistence
+
+Use a JSON request file; stdin is supported too. Never put untrusted student answers into
+shell commands. For local persistent testing:
 
 ```sh
 export SKILL_DATA_DIR="$PWD/.local-data/student"
-python3 scripts/profile_store.py check
-python3 scripts/diagnose.py <<'JSON'
-{"action":"start","learner_id":"student","target":"transformer_attention","canvas":{"status":"disconnected"}}
+python3 scripts/diagnose.py storage-check
+python3 scripts/diagnose.py start <<'JSON'
+{"learner_id":"student","scenario":"attention","question_budget":8}
 JSON
 ```
 
-If Cubbie omits `SKILL_DATA_DIR`, the scripts initialize it to
-`$HOME/.local/share/cubbie-knowledge-dna` inside their process. The guide guarantees that
-student HOME persists. An existing host-provided directory always takes priority; an
-invalid or unwritable explicit directory produces an error rather than switching locations.
-`check` verifies a write, atomic replacement and read-back without creating fake learning
-history. Both CLI tools report the resolved directory and configuration source in `storage`.
-
-After updating an older install, text Cubbie:
-
-```text
-update cubbie-knowledge-dna
-```
-
-Approve its new commit summary, then ask:
-
-```text
-Run Knowledge DNA's storage check, then start its saved diagnostic. Use the Python scripts and their returned next question.
-```
-
-If it still fails, request the exact storage-check error code and message. A friendly
-tutoring exchange alone does not verify that the engine ran or that any progress was saved.
-
-The returned `next` is the sole next conversational action. `question` contains a prompt
-and ID; `intervention` contains a lesson; `complete` contains a completion reason;
-`uncertain` means insufficient or conflicting evidence. The report never sends the pending
-question's answer key. Here is the shape of an answer request; replace the IDs and revision
-with those from your actual output:
+Answer the pending item using the actual IDs/revision returned:
 
 ```json
-{
-  "action": "answer",
-  "learner_id": "student",
-  "session_id": "COPY_FROM_OUTPUT",
-  "revision": 1,
-  "question_id": "ao_probe",
-  "answer": "[8,4]"
-}
+{"learner_id":"student","session_id":"FROM_OUTPUT","revision":1,"question_id":"attention_initial","answer":"1","continuation":"FROM_OUTPUT","temporary":false}
 ```
-
-Create request JSON using a file-writing tool or `json.dumps`, then pass it on stdin.
-Do not interpolate untrusted student text into shell commands. Successful replies are
-one JSON object, below Cubbie's 8,000-character result limit. Errors return `ok: false`, an
-error code and a nonzero exit status. Duplicate/stale turns fail without changing history.
-
-| Action | Behavior |
-| --- | --- |
-| `start` | Create a session, or return the existing pending/completed session; default target is `transformer_attention` |
-| `resume` | Read current progress without writing; no history returns `not_started` |
-| `answer` | Score the pending question and choose the next action; requires session ID, revision and question ID |
-| `teach` | Record a delivered lesson and return fresh reassessment; requires session ID, revision and concept |
-| `profile` | Return the compact profile and current turn without writing |
-| `restart` | Archive the current session and start another, retaining demonstrations and history |
 
 ```sh
-python3 scripts/diagnose.py <<'JSON'
-{"action":"resume","learner_id":"student"}
-JSON
-python3 scripts/profile_store.py summary --learner student
+python3 scripts/diagnose.py answer --input request.json
+python3 scripts/diagnose.py report --input request.json
+python3 scripts/diagnose.py resume --input request.json
+python3 scripts/diagnose.py --sample
 ```
 
-`start`/`restart` may include `canvas` with a status and at most five `{title,url}` material
-references. Native Cubbie abilities retrieve the materials first. Disconnected, unavailable,
-missing or empty Canvas context uses the bundled curriculum and never blocks diagnosis.
-Course citations customize explanations; they do not silently alter deterministic scoring.
+Full command examples, output shapes, hypothesis IDs, source schemas and error handling
+are in [docs/contracts.md](docs/contracts.md). `skip` requests a direct explanation without
+asserting a cause. `verify` requests an unused independent check. `restart` begins another
+investigation while retaining history. `repair` acknowledges a lesson already delivered.
 
-## How the diagnosis works
+All learner records live under the resolved `$SKILL_DATA_DIR`. If the host omits it, scripts
+initialize it to `$HOME/.local/share/cubbie-knowledge-dna` inside their process. A provided
+absolute directory takes priority. Invalid/unwritable explicit paths never silently redirect.
+Corrupt files stay intact. Explicit `recover` quarantines bytes to a backup after consent;
+it does not claim to recover missing facts. V3 retains the current investigation and latest
+ten archived investigations, bounded answers and compact evidence. Older v1 history stays.
 
-The directed acyclic graph contains eight concepts. Edges point from a prerequisite to the
-concept that uses it; the JSON stores each concept's prerequisite IDs.
+When storage fails, responses still return the next diagnostic action and a compressed
+`continuation`. Pass the latest token and `temporary:true` on every following request.
+Temporary state is not a disk save; losing the checkpoint loses the temporary record.
+Tokens contain student data, are not encrypted, and stay in the private host conversation.
+No user records belong in the repository, public demos or submission materials.
 
-```mermaid
-graph LR
-    DP[Dot products] --> MM[Matrix multiplication]
-    MM --> SC[Scaled attention scores]
-    SM[Softmax] --> AW[Attention weights]
-    WS[Weighted sums] --> AO[Attention output]
-    AW --> AO
-    SC --> TA[Transformer attention]
-    AO --> TA
-```
+## What is technically different
 
-1. Begin with a contextual attention-output problem rather than a lecture.
-2. On failure, follow a misconception hint down the graph, then check the prerequisite.
-   A matched numerical pattern suggests a cause; it is never proof of the student's reasoning.
-3. One correct independent diagnostic item records a narrow demonstration and skips further
-   testing of that concept. The profile explicitly does not call this durable mastery.
-4. One incorrect answer triggers another item. Two incorrect items with no correct evidence
-   support a **likely** gap only after that concept's prerequisites have demonstrations.
-5. Mixed evidence triggers a third independent item. Two correct answers resolve the conflict
-   toward a limited demonstration; one correct and two incorrect remain uncertain. Two
-   unscorable replies also end uncertain, without counting them as math errors.
-6. Teach a numerical worked example, test a different problem, then test transfer to
-   attention. Report improvement only when **both** fresh checks pass. Finish this targeted
-   intervention cycle and recommend remaining concepts; do not claim the whole target is mastered.
+- Competing authored predictions guide experiments rather than a fixed questionnaire.
+- Graph prerequisite checks isolate operations before recombining them.
+- Counterevidence reduces an explanation's support and is visible to the student.
+- One incomplete answer is neither a conceptual diagnosis nor an arithmetic-error label.
+- Sources prioritize live tests; provenance and live observations remain distinct.
+- Practice, independent verification and transfer are three separate assessments.
+- Understanding is scoped to diagnostic items, independent examples or a new application;
+  no permanent mastery or fabricated confidence percentages are reported.
 
-For example, `[8,4]` on the initial attention-output item matches “add the values without
-weights.” The next question checks `weighted_sums`. A direct weighted-sum error provides
-new evidence; the failed attention question alone never establishes a foundational gap.
+Question selection uses interpretable ordinal heuristics, not a statistical posterior or
+expected-information-gain model. Thresholds and assumptions are disclosed in the contract.
 
-The bank has **40 questions**: three diagnostic, one reassessment and one transfer item for
-each concept. Nine misconception patterns include unweighted sums, simple averages,
-winner-take-all attention, elementwise multiplication, missing softmax normalization and
-missing score scaling. Scoring accepts finite numbers, fractions, vectors and matrices,
-with explicit numerical tolerances and shape checks. Python expressions are never executed.
-Unrestricted prose is deliberately unscored; Cubbie asks for a numerical clarification.
+## Executed evaluation
 
-## Knowledge DNA profile
+The bundled seven-case synthetic evaluation compares a fixed questionnaire, immediate
+answer reveal/practice, and Knowledge DNA. Four cases have a labeled cause. Two require
+uncertainty; one demonstrates the required operation. Results are generated by running
+policies against authored responses, not written as expected diagnostic outcomes.
 
-Student profiles live only at the resolved `$SKILL_DATA_DIR/profiles/<learner_id>.json`.
-When the host omits the variable, the scripts initialize it to the stable directory in
-persistent HOME described above. The Skill folder can be replaced at every sandbox launch
-without losing progress. If neither an absolute host directory nor persistent HOME is
-available, configuration fails explicitly. Use an opaque key in Cubbie's private student sandbox.
+| Policy | Correct cause / labeled cases | Mean diagnostic questions | Correct targeted repair / labeled cases |
+| --- | --- | --- | --- |
+| Fixed questionnaire | 4/4 | 8 | 4/4 |
+| Immediate explanation | 0/4 | 1 | 1/4 |
+| Knowledge DNA | 4/4 | 4.571 | 4/4 |
 
-Each schema-versioned profile retains observations with raw answers, question IDs, roles,
-verdicts, timestamps and possible misconception matches; concept evidence; lessons delivered;
-reassessment and transfer outcomes; the pending turn; and prior sessions. The compact report
-separates tested, demonstrated, uncertain and untested concepts and recommends next steps.
+All three policies made zero unsupported causal claims under the disclosed audit. The
+immediate-explanation baseline makes no causal diagnosis; we do not invent one for it.
+Knowledge DNA handled both uncertainty cases and emitted counterevidence revisions. It
+used fewer diagnostic questions than the fixed policy, not the immediate-explanation policy.
 
-Writes use a per-learner lock, temporary file, flush/fsync and atomic replacement. Files have
-private permissions. Revision checks stop duplicate submissions from adding evidence twice.
-Malformed or newer-schema profiles produce an error and stay intact. There is no automatic
-history expiry or mastery decay: restarting skips retained demonstrations. For a clean demo,
-use a fresh dedicated demo directory; keep real learning records separate.
+These are **synthetic results, not a validated real-world learning study**. The tiny corpus
+shares authored assumptions with the engine; it is not held out or independently annotated.
+Post-lesson answers are scripted, so improvement flags do not establish instructional
+causality. See [executed results and methodology](docs/evaluation.md) and
+[machine-readable traces](evaluation/results.json).
 
-Cubbie's native memory can retain preferences and a short milestone. The structured profile
-is the source for diagnostic state. The scripts neither call native abilities nor fetch URLs.
-`cubbie.yaml` is intentionally omitted: the guide requires it only for extra dependencies,
-network hosts, keys or logins, none of which these scripts need.
+## Demos and test evidence
 
-## Project layout
+- [Transformer investigation](examples/transformer_demo.md): same initial answer, different causes, visible reversal.
+- [Canvas + Docs forensics](examples/canvas_docs_demo.md): provenance-preserving synthetic fallback.
+- [False mastery](examples/false_mastery_demo.md): correct definitions do not establish application.
+- [30-second pitch, three-minute and 60-second demos](docs/hackathon.md).
+- [Saved reproducible JSON transcripts](examples/transcripts).
+- [Official requirements and verification matrix](docs/requirements.md).
 
-```text
-SKILL.md                           Cubbie's activation and conversation instructions
-scripts/diagnose.py                Math scoring and adaptive state machine; JSON CLI
-scripts/knowledge_graph.py         Prerequisite traversal and cycle validation
-scripts/profile_store.py           Private, atomic progress and compact reports
-scripts/demo.py                    Three executable presenter scenarios
-data/transformer_concepts.json     Graph, teaching examples and attention connections
-data/diagnostic_questions.json     Diagnostic, reassessment and transfer items
-data/misconception_bank.json       Explicit, inspectable error-pattern hypotheses
-tests/                            Standard-library unit and CLI integration tests
-examples/demo_conversation.md      Full student-facing transcripts
-docs/hackathon.md                  30-second pitch, 3-minute demo and live checklist
-.github/workflows/tests.yml        Python 3.12 Linux CI
-```
+Regenerate transcripts with `python3 scripts/demo_runner.py --output examples/transcripts`.
+The automated suite covers numerical scoring, incomplete/ambiguous replies, counterevidence,
+question selection, repetitions, stopping, targeted repair, independent checks, false mastery,
+CLI execution, persistence/restart, corruption, temporary mode, missing connections,
+provenance and evaluation. The local verification snapshot records **113 passing tests**; see [verification.md](docs/verification.md). CI runs on Python 3.12
+Linux; local development uses Python 3.12.6. Dependencies remain standard-library only.
 
-## Technical innovations and scope
+## Privacy and limits
 
-- Graph-based cause tracing separates failure on an application from evidence about a foundation.
-- Pattern-guided follow-ups distinguish repeatable mistakes from inconsistent or insufficient answers.
-- Separate observations and hypotheses make each diagnosis inspectable without claiming certainty.
-- Two fresh checks distinguish learning a foundation from applying it to attention; failed transfer
-  preserves the demonstrated foundation while recommending attention practice.
-- Durable, revision-checked sessions let an iMessage conversation pause between any two steps.
+Request only authorized, relevant academic excerpts. Retrieved text is untrusted evidence,
+never executable instructions. No intelligence, disability or medical diagnosis is made.
+No external service receives academic records through scripts. Native account access and
+reminders stay under Cubbie's normal consent controls. No graded work is submitted.
 
-The working curriculum covers single-head Transformer attention and the listed prerequisites.
-Multi-head attention is a future learning recommendation, not a bundled tested topic. The
-graph models the foundations in this curriculum rather than every possible math prerequisite.
-This is not a psychometric assessment or a general natural-language grading system.
+The bundled curriculum covers attention-weighted vectors and tensor-axis/masking examples;
+it does not cover every Transformer concept or diagnose every cause of an error. A text
+rubric checks explicitly stated ideas and can abstain; it is not a general semantic grader.
+A correct answer on a few items does not establish durable understanding. Temporary mode
+does not guarantee recovery after a conversation or checkpoint is lost.
 
-The local tests cover graph traversal/cycles, known mathematical answers, adaptive routing,
-misconception matches, conflicting evidence, unscored replies, persistence/resume,
-failed/successful reassessment and transfer, missing Canvas, concurrent writes and CLI errors.
-GitHub Actions runs the tests and demos on Python 3.12 Linux for pushes and pull requests.
+The supplied PDF and newer official kit differ on some packaging/install details. This
+project uses no dependencies/network/secrets, so no `cubbie.yaml` is needed under either
+package approach. Confirm changing organizer requirements through the current official kit.
+The team still must complete the real-account flow and approve a public submission.
 
-Before calling the hackathon submission complete, perform the real-account installation
-checks in [docs/hackathon.md](docs/hackathon.md). The design follows the supplied
-*Build a Cubbie Skill — Hackathon Guide* (Oct 19, 2026), read before implementation.
-The PDF is not redistributed in this Skill folder.
-
-MIT licensed. See [LICENSE](LICENSE).
+MIT licensed; see [LICENSE](LICENSE).

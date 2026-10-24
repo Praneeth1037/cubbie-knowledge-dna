@@ -1,0 +1,17 @@
+{
+  "synthetic": true,
+  "sources": [
+    {
+      "id": "synthetic-docs-1",
+      "source_type": "google_docs",
+      "title": "SYNTHETIC attention notes",
+      "reference": "bundled synthetic notes, paragraph 1",
+      "excerpt": "Scaled dot-product attention computes softmax(QK^T / sqrt(d_k)) V. This is an example note, not evidence of any real student's understanding.",
+      "evidence_type": "direct",
+      "supports": [
+        "notation_to_code"
+      ],
+      "synthetic": true
+    }
+  ]
+}

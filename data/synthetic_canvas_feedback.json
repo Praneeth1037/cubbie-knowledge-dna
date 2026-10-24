@@ -1,0 +1,31 @@
+{
+  "synthetic": true,
+  "sources": [
+    {
+      "id": "synthetic-canvas-1",
+      "source_type": "canvas_feedback",
+      "title": "SYNTHETIC Assignment 1",
+      "url": "https://canvas.example.invalid/assignments/1",
+      "excerpt": "Incorrect tensor shape after reshaping.",
+      "evidence_type": "direct",
+      "supports": [
+        "tensor_shapes",
+        "notation_to_code"
+      ],
+      "synthetic": true
+    },
+    {
+      "id": "synthetic-canvas-2",
+      "source_type": "canvas_feedback",
+      "title": "SYNTHETIC Assignment 2",
+      "url": "https://canvas.example.invalid/assignments/2",
+      "excerpt": "Mask applied to the wrong dimension.",
+      "evidence_type": "direct",
+      "supports": [
+        "tensor_shapes",
+        "broadcasting"
+      ],
+      "synthetic": true
+    }
+  ]
+}

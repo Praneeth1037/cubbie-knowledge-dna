@@ -1,0 +1,45 @@
+{
+  "version": 3,
+  "hypotheses": {
+    "incomplete_response": {
+      "domain": "attention",
+      "description": "Incomplete response or component reporting; intent is not established.",
+      "repair": "response_format"
+    },
+    "scalar_multiplication": {
+      "domain": "attention",
+      "description": "A scalar may not be applied to every vector component.",
+      "repair": "scalar_multiplication"
+    },
+    "vector_addition": {
+      "domain": "attention",
+      "description": "Components may not be added in matching positions.",
+      "repair": "vector_addition"
+    },
+    "weighted_aggregation": {
+      "domain": "attention",
+      "description": "Weights and values may be combined using the wrong operation.",
+      "repair": "weighted_sums"
+    },
+    "tensor_shapes": {
+      "domain": "shapes",
+      "description": "Difficulty tracking dimensions when permuting tensor axes.",
+      "repair": "tensor_shapes"
+    },
+    "broadcasting": {
+      "domain": "shapes",
+      "description": "Difficulty aligning trailing dimensions for broadcasting.",
+      "repair": "broadcasting"
+    },
+    "notation_to_code": {
+      "domain": "shapes",
+      "description": "Difficulty translating an axis operation into implementation notation.",
+      "repair": "notation_to_code"
+    },
+    "isolated_error": {
+      "domain": "shapes",
+      "description": "Earlier mistakes may be isolated; current evidence may not show a persistent gap.",
+      "repair": "tensor_shapes"
+    }
+  }
+}

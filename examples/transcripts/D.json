@@ -1,0 +1,248 @@
+{
+  "trajectory": "D",
+  "synthetic": true,
+  "expected_label": null,
+  "trace": [
+    {
+      "question_id": "attention_initial",
+      "prompt": "V1=[2,0], V2=[0,4]; attention weights are 0.75 and 0.25. What is the attention-weighted output? Reply as a two-number vector.",
+      "selection": {
+        "reason": "Establish the initial observation without explaining the answer."
+      },
+      "answer": [
+        1.5,
+        1
+      ],
+      "feedback": "That check is correct.",
+      "verdict": "correct",
+      "revision_message": null,
+      "hypotheses": [
+        {
+          "id": "incomplete_response",
+          "score": 0,
+          "status": "under_consideration"
+        },
+        {
+          "id": "scalar_multiplication",
+          "score": 0,
+          "status": "under_consideration"
+        },
+        {
+          "id": "vector_addition",
+          "score": 0,
+          "status": "under_consideration"
+        },
+        {
+          "id": "weighted_aggregation",
+          "score": 0,
+          "status": "under_consideration"
+        }
+      ]
+    },
+    {
+      "question_id": "independent_attention",
+      "prompt": "Independent check: V1=[4,2], V2=[0,6], weights [0.25,0.75]. What is the weighted output?",
+      "selection": {
+        "reason": "Change values and weights to check an independent example."
+      },
+      "answer": [
+        1,
+        5
+      ],
+      "feedback": "That check is correct.",
+      "verdict": "correct",
+      "revision_message": null,
+      "hypotheses": [
+        {
+          "id": "incomplete_response",
+          "score": 0,
+          "status": "under_consideration"
+        },
+        {
+          "id": "scalar_multiplication",
+          "score": 0,
+          "status": "under_consideration"
+        },
+        {
+          "id": "vector_addition",
+          "score": 0,
+          "status": "under_consideration"
+        },
+        {
+          "id": "weighted_aggregation",
+          "score": 0,
+          "status": "under_consideration"
+        }
+      ]
+    },
+    {
+      "question_id": "transfer_attention",
+      "prompt": "Why does a Transformer multiply attention weights by value vectors and add the results?",
+      "selection": {
+        "reason": "A numerical success does not establish transfer to an explanation of attention."
+      },
+      "answer": "Attention combines information from value vectors according to their weights.",
+      "feedback": "Your explanation meets the stated rubric.",
+      "verdict": "correct",
+      "revision_message": null,
+      "hypotheses": [
+        {
+          "id": "incomplete_response",
+          "score": 0,
+          "status": "under_consideration"
+        },
+        {
+          "id": "scalar_multiplication",
+          "score": 0,
+          "status": "under_consideration"
+        },
+        {
+          "id": "vector_addition",
+          "score": 0,
+          "status": "under_consideration"
+        },
+        {
+          "id": "weighted_aggregation",
+          "score": 0,
+          "status": "under_consideration"
+        }
+      ]
+    }
+  ],
+  "result": {
+    "ok": true,
+    "engine": "knowledge-dna",
+    "engine_version": "3.0",
+    "next": {
+      "kind": "complete",
+      "reason": "Independent and transfer observations recorded; no permanent mastery claim is made."
+    },
+    "report": {
+      "original_goal": "Transformer attention",
+      "diagnosis": {
+        "status": "no_gap_demonstrated",
+        "hypothesis": null,
+        "basis": [
+          "attention_initial"
+        ],
+        "language": "The initial calculation worked; independent verification follows."
+      },
+      "observed_difficulty": "No specific cause established by the available observations.",
+      "understanding": {
+        "calculation": "demonstrated on independent examples",
+        "transfer": "demonstrated in a new application"
+      },
+      "intervention": null,
+      "improvement_verified": false,
+      "recall_application_mismatch": false,
+      "diagnostic_questions_used": 1,
+      "next_step": "Try query-key scores or softmax next; those are outside this investigation's checks."
+    },
+    "feedback": "Your explanation meets the stated rubric.",
+    "revision_message": null,
+    "hypotheses": [
+      {
+        "id": "incomplete_response",
+        "score": 0,
+        "status": "under_consideration"
+      },
+      {
+        "id": "scalar_multiplication",
+        "score": 0,
+        "status": "under_consideration"
+      },
+      {
+        "id": "vector_addition",
+        "score": 0,
+        "status": "under_consideration"
+      },
+      {
+        "id": "weighted_aggregation",
+        "score": 0,
+        "status": "under_consideration"
+      }
+    ],
+    "academic_evidence": {
+      "sources_used": 0,
+      "synthetic": false,
+      "connections": {
+        "canvas": "not_requested",
+        "google": "not_requested"
+      }
+    },
+    "last_observation": {
+      "question_id": "transfer_attention",
+      "verdict": "correct",
+      "signal": "correct"
+    },
+    "investigation": {
+      "hypotheses": [
+        {
+          "id": "incomplete_response",
+          "description": "Incomplete response or component reporting; intent is not established.",
+          "for": [],
+          "against": [],
+          "source_priors": []
+        },
+        {
+          "id": "scalar_multiplication",
+          "description": "A scalar may not be applied to every vector component.",
+          "for": [],
+          "against": [],
+          "source_priors": []
+        },
+        {
+          "id": "vector_addition",
+          "description": "Components may not be added in matching positions.",
+          "for": [],
+          "against": [],
+          "source_priors": []
+        },
+        {
+          "id": "weighted_aggregation",
+          "description": "Weights and values may be combined using the wrong operation.",
+          "for": [],
+          "against": [],
+          "source_priors": []
+        }
+      ],
+      "path": [
+        {
+          "question_id": "attention_initial",
+          "answer": "[1.5, 1]",
+          "verdict": "correct"
+        },
+        {
+          "question_id": "independent_attention",
+          "answer": "[1, 5]",
+          "verdict": "correct"
+        },
+        {
+          "question_id": "transfer_attention",
+          "answer": "Attention combines information from value vectors according to their weights.",
+          "verdict": "correct"
+        }
+      ],
+      "sources": [],
+      "connections": {
+        "canvas": "not_requested",
+        "google": "not_requested"
+      },
+      "assessments": [
+        {
+          "question_id": "independent_attention",
+          "role": "verification",
+          "answer_excerpt": "[1, 5]",
+          "verdict": "correct"
+        },
+        {
+          "question_id": "transfer_attention",
+          "role": "transfer",
+          "answer_excerpt": "Attention combines information from value vectors according to their weights.",
+          "verdict": "correct"
+        }
+      ]
+    },
+    "revision": 4
+  }
+}

@@ -1,0 +1,2596 @@
+{
+  "synthetic_only": true,
+  "validated_real_world_learning_study": false,
+  "seed": "deterministic; no randomness",
+  "mandatory_same_initial_answer_test": true,
+  "summary": [
+    {
+      "method": "Fixed questionnaire",
+      "labeled_cause_correct": 4,
+      "labeled_cases": 4,
+      "mean_diagnostic_questions": 8,
+      "unsupported_conclusions": 0,
+      "cases": 7,
+      "correct_repair": 4,
+      "uncertain_cases_handled": 2,
+      "uncertain_cases": 2,
+      "visible_counterevidence_revision": false
+    },
+    {
+      "method": "Immediate explanation",
+      "labeled_cause_correct": 0,
+      "labeled_cases": 4,
+      "mean_diagnostic_questions": 1,
+      "unsupported_conclusions": 0,
+      "cases": 7,
+      "correct_repair": 1,
+      "uncertain_cases_handled": 0,
+      "uncertain_cases": 2,
+      "visible_counterevidence_revision": false
+    },
+    {
+      "method": "Knowledge DNA",
+      "labeled_cause_correct": 4,
+      "labeled_cases": 4,
+      "mean_diagnostic_questions": 4.571,
+      "unsupported_conclusions": 0,
+      "cases": 7,
+      "correct_repair": 4,
+      "uncertain_cases_handled": 2,
+      "uncertain_cases": 2,
+      "visible_counterevidence_revision": true
+    }
+  ],
+  "details": {
+    "Fixed questionnaire": {
+      "A": {
+        "prediction": "incomplete_response",
+        "repair": "response_format",
+        "diagnostic_questions": 8,
+        "unsupported_conclusion": false,
+        "visible_revision": false,
+        "uncertain": false,
+        "trace": [
+          {
+            "question_id": "attention_initial",
+            "answer": "1",
+            "verdict": "incomplete"
+          },
+          {
+            "question_id": "dimension",
+            "answer": 2,
+            "verdict": "correct"
+          },
+          {
+            "question_id": "scalar_probe",
+            "answer": [
+              1.5,
+              0
+            ],
+            "verdict": "correct"
+          },
+          {
+            "question_id": "scalar_followup",
+            "answer": [
+              1,
+              0.5
+            ],
+            "verdict": "correct"
+          },
+          {
+            "question_id": "addition_probe",
+            "answer": [
+              1.5,
+              1
+            ],
+            "verdict": "correct"
+          },
+          {
+            "question_id": "addition_followup",
+            "answer": [
+              6,
+              4
+            ],
+            "verdict": "correct"
+          },
+          {
+            "question_id": "weighted_probe",
+            "answer": [
+              3,
+              4
+            ],
+            "verdict": "correct"
+          },
+          {
+            "question_id": "weighted_followup",
+            "answer": [
+              2,
+              4
+            ],
+            "verdict": "correct"
+          }
+        ]
+      },
+      "B": {
+        "prediction": "weighted_aggregation",
+        "repair": "weighted_sums",
+        "diagnostic_questions": 8,
+        "unsupported_conclusion": false,
+        "visible_revision": false,
+        "uncertain": false,
+        "trace": [
+          {
+            "question_id": "attention_initial",
+            "answer": "1",
+            "verdict": "incomplete"
+          },
+          {
+            "question_id": "dimension",
+            "answer": 2,
+            "verdict": "correct"
+          },
+          {
+            "question_id": "scalar_probe",
+            "answer": [
+              1.5,
+              0
+            ],
+            "verdict": "correct"
+          },
+          {
+            "question_id": "scalar_followup",
+            "answer": [
+              1,
+              0.5
+            ],
+            "verdict": "correct"
+          },
+          {
+            "question_id": "addition_probe",
+            "answer": [
+              1.5,
+              1
+            ],
+            "verdict": "correct"
+          },
+          {
+            "question_id": "addition_followup",
+            "answer": [
+              6,
+              4
+            ],
+            "verdict": "correct"
+          },
+          {
+            "question_id": "weighted_probe",
+            "answer": [
+              5,
+              10
+            ],
+            "verdict": "incorrect"
+          },
+          {
+            "question_id": "weighted_followup",
+            "answer": [
+              10,
+              5
+            ],
+            "verdict": "incorrect"
+          }
+        ]
+      },
+      "C": {
+        "prediction": null,
+        "repair": null,
+        "diagnostic_questions": 8,
+        "unsupported_conclusion": false,
+        "visible_revision": false,
+        "uncertain": true,
+        "trace": [
+          {
+            "question_id": "attention_initial",
+            "answer": "1",
+            "verdict": "incomplete"
+          },
+          {
+            "question_id": "dimension",
+            "answer": 2,
+            "verdict": "correct"
+          },
+          {
+            "question_id": "scalar_probe",
+            "answer": [
+              1.5,
+              0
+            ],
+            "verdict": "correct"
+          },
+          {
+            "question_id": "scalar_followup",
+            "answer": [
+              1,
+              0.5
+            ],
+            "verdict": "correct"
+          },
+          {
+            "question_id": "addition_probe",
+            "answer": [
+              1.5,
+              0
+            ],
+            "verdict": "incorrect"
+          },
+          {
+            "question_id": "addition_followup",
+            "answer": [
+              6,
+              4
+            ],
+            "verdict": "correct"
+          },
+          {
+            "question_id": "weighted_probe",
+            "answer": [
+              5,
+              10
+            ],
+            "verdict": "incorrect"
+          },
+          {
+            "question_id": "weighted_followup",
+            "answer": [
+              2,
+              4
+            ],
+            "verdict": "correct"
+          }
+        ]
+      },
+      "D": {
+        "prediction": null,
+        "repair": null,
+        "diagnostic_questions": 8,
+        "unsupported_conclusion": false,
+        "visible_revision": false,
+        "uncertain": false,
+        "trace": [
+          {
+            "question_id": "attention_initial",
+            "answer": [
+              1.5,
+              1
+            ],
+            "verdict": "correct"
+          },
+          {
+            "question_id": "dimension",
+            "answer": 2,
+            "verdict": "correct"
+          },
+          {
+            "question_id": "scalar_probe",
+            "answer": [
+              1.5,
+              0
+            ],
+            "verdict": "correct"
+          },
+          {
+            "question_id": "scalar_followup",
+            "answer": [
+              1,
+              0.5
+            ],
+            "verdict": "correct"
+          },
+          {
+            "question_id": "addition_probe",
+            "answer": [
+              1.5,
+              1
+            ],
+            "verdict": "correct"
+          },
+          {
+            "question_id": "addition_followup",
+            "answer": [
+              6,
+              4
+            ],
+            "verdict": "correct"
+          },
+          {
+            "question_id": "weighted_probe",
+            "answer": [
+              3,
+              4
+            ],
+            "verdict": "correct"
+          },
+          {
+            "question_id": "weighted_followup",
+            "answer": [
+              2,
+              4
+            ],
+            "verdict": "correct"
+          }
+        ]
+      },
+      "scalar_gap": {
+        "prediction": "scalar_multiplication",
+        "repair": "scalar_multiplication",
+        "diagnostic_questions": 8,
+        "unsupported_conclusion": false,
+        "visible_revision": false,
+        "uncertain": false,
+        "trace": [
+          {
+            "question_id": "attention_initial",
+            "answer": "1",
+            "verdict": "incomplete"
+          },
+          {
+            "question_id": "dimension",
+            "answer": 2,
+            "verdict": "correct"
+          },
+          {
+            "question_id": "scalar_probe",
+            "answer": [
+              2,
+              0
+            ],
+            "verdict": "incorrect"
+          },
+          {
+            "question_id": "scalar_followup",
+            "answer": [
+              4,
+              2
+            ],
+            "verdict": "incorrect"
+          },
+          {
+            "question_id": "addition_probe",
+            "answer": [
+              1.5,
+              1
+            ],
+            "verdict": "correct"
+          },
+          {
+            "question_id": "addition_followup",
+            "answer": [
+              6,
+              4
+            ],
+            "verdict": "correct"
+          },
+          {
+            "question_id": "weighted_probe",
+            "answer": [
+              3,
+              4
+            ],
+            "verdict": "correct"
+          },
+          {
+            "question_id": "weighted_followup",
+            "answer": [
+              2,
+              4
+            ],
+            "verdict": "correct"
+          }
+        ]
+      },
+      "addition_gap": {
+        "prediction": "vector_addition",
+        "repair": "vector_addition",
+        "diagnostic_questions": 8,
+        "unsupported_conclusion": false,
+        "visible_revision": false,
+        "uncertain": false,
+        "trace": [
+          {
+            "question_id": "attention_initial",
+            "answer": "1",
+            "verdict": "incomplete"
+          },
+          {
+            "question_id": "dimension",
+            "answer": 2,
+            "verdict": "correct"
+          },
+          {
+            "question_id": "scalar_probe",
+            "answer": [
+              1.5,
+              0
+            ],
+            "verdict": "correct"
+          },
+          {
+            "question_id": "scalar_followup",
+            "answer": [
+              1,
+              0.5
+            ],
+            "verdict": "correct"
+          },
+          {
+            "question_id": "addition_probe",
+            "answer": [
+              1.5,
+              0
+            ],
+            "verdict": "incorrect"
+          },
+          {
+            "question_id": "addition_followup",
+            "answer": [
+              2,
+              3
+            ],
+            "verdict": "incorrect"
+          },
+          {
+            "question_id": "weighted_probe",
+            "answer": [
+              3,
+              4
+            ],
+            "verdict": "correct"
+          },
+          {
+            "question_id": "weighted_followup",
+            "answer": [
+              2,
+              4
+            ],
+            "verdict": "correct"
+          }
+        ]
+      },
+      "isolated": {
+        "prediction": null,
+        "repair": null,
+        "diagnostic_questions": 8,
+        "unsupported_conclusion": false,
+        "visible_revision": false,
+        "uncertain": true,
+        "trace": [
+          {
+            "question_id": "attention_initial",
+            "answer": [
+              1,
+              1
+            ],
+            "verdict": "incorrect"
+          },
+          {
+            "question_id": "dimension",
+            "answer": 2,
+            "verdict": "correct"
+          },
+          {
+            "question_id": "scalar_probe",
+            "answer": [
+              1.5,
+              0
+            ],
+            "verdict": "correct"
+          },
+          {
+            "question_id": "scalar_followup",
+            "answer": [
+              1,
+              0.5
+            ],
+            "verdict": "correct"
+          },
+          {
+            "question_id": "addition_probe",
+            "answer": [
+              1.5,
+              1
+            ],
+            "verdict": "correct"
+          },
+          {
+            "question_id": "addition_followup",
+            "answer": [
+              6,
+              4
+            ],
+            "verdict": "correct"
+          },
+          {
+            "question_id": "weighted_probe",
+            "answer": [
+              3,
+              4
+            ],
+            "verdict": "correct"
+          },
+          {
+            "question_id": "weighted_followup",
+            "answer": [
+              2,
+              4
+            ],
+            "verdict": "correct"
+          }
+        ]
+      }
+    },
+    "Immediate explanation": {
+      "A": {
+        "prediction": null,
+        "repair": "weighted_sums",
+        "diagnostic_questions": 1,
+        "unsupported_conclusion": false,
+        "visible_revision": false,
+        "uncertain": false,
+        "trace": [
+          {
+            "question_id": "attention_initial",
+            "answer": "1",
+            "verdict": "incomplete"
+          },
+          {
+            "revealed_answer": [
+              1.5,
+              1
+            ]
+          },
+          {
+            "question_id": "practice_weighted",
+            "answer": [
+              4,
+              3
+            ],
+            "verdict": "correct"
+          }
+        ]
+      },
+      "B": {
+        "prediction": null,
+        "repair": "weighted_sums",
+        "diagnostic_questions": 1,
+        "unsupported_conclusion": false,
+        "visible_revision": false,
+        "uncertain": false,
+        "trace": [
+          {
+            "question_id": "attention_initial",
+            "answer": "1",
+            "verdict": "incomplete"
+          },
+          {
+            "revealed_answer": [
+              1.5,
+              1
+            ]
+          },
+          {
+            "question_id": "practice_weighted",
+            "answer": [
+              4,
+              3
+            ],
+            "verdict": "correct"
+          }
+        ]
+      },
+      "C": {
+        "prediction": null,
+        "repair": "weighted_sums",
+        "diagnostic_questions": 1,
+        "unsupported_conclusion": false,
+        "visible_revision": false,
+        "uncertain": false,
+        "trace": [
+          {
+            "question_id": "attention_initial",
+            "answer": "1",
+            "verdict": "incomplete"
+          },
+          {
+            "revealed_answer": [
+              1.5,
+              1
+            ]
+          },
+          {
+            "question_id": "practice_weighted",
+            "answer": [
+              4,
+              3
+            ],
+            "verdict": "correct"
+          }
+        ]
+      },
+      "D": {
+        "prediction": null,
+        "repair": null,
+        "diagnostic_questions": 1,
+        "unsupported_conclusion": false,
+        "visible_revision": false,
+        "uncertain": false,
+        "trace": [
+          {
+            "question_id": "attention_initial",
+            "answer": [
+              1.5,
+              1
+            ],
+            "verdict": "correct"
+          }
+        ]
+      },
+      "scalar_gap": {
+        "prediction": null,
+        "repair": "weighted_sums",
+        "diagnostic_questions": 1,
+        "unsupported_conclusion": false,
+        "visible_revision": false,
+        "uncertain": false,
+        "trace": [
+          {
+            "question_id": "attention_initial",
+            "answer": "1",
+            "verdict": "incomplete"
+          },
+          {
+            "revealed_answer": [
+              1.5,
+              1
+            ]
+          },
+          {
+            "question_id": "practice_weighted",
+            "answer": [
+              4,
+              3
+            ],
+            "verdict": "correct"
+          }
+        ]
+      },
+      "addition_gap": {
+        "prediction": null,
+        "repair": "weighted_sums",
+        "diagnostic_questions": 1,
+        "unsupported_conclusion": false,
+        "visible_revision": false,
+        "uncertain": false,
+        "trace": [
+          {
+            "question_id": "attention_initial",
+            "answer": "1",
+            "verdict": "incomplete"
+          },
+          {
+            "revealed_answer": [
+              1.5,
+              1
+            ]
+          },
+          {
+            "question_id": "practice_weighted",
+            "answer": [
+              4,
+              3
+            ],
+            "verdict": "correct"
+          }
+        ]
+      },
+      "isolated": {
+        "prediction": null,
+        "repair": "weighted_sums",
+        "diagnostic_questions": 1,
+        "unsupported_conclusion": false,
+        "visible_revision": false,
+        "uncertain": false,
+        "trace": [
+          {
+            "question_id": "attention_initial",
+            "answer": [
+              1,
+              1
+            ],
+            "verdict": "incorrect"
+          },
+          {
+            "revealed_answer": [
+              1.5,
+              1
+            ]
+          },
+          {
+            "question_id": "practice_weighted",
+            "answer": [
+              4,
+              3
+            ],
+            "verdict": "correct"
+          }
+        ]
+      }
+    },
+    "Knowledge DNA": {
+      "A": {
+        "prediction": "incomplete_response",
+        "repair": "response_format",
+        "diagnostic_questions": 5,
+        "unsupported_conclusion": false,
+        "visible_revision": true,
+        "uncertain": false,
+        "trace": [
+          {
+            "question_id": "attention_initial",
+            "prompt": "V1=[2,0], V2=[0,4]; attention weights are 0.75 and 0.25. What is the attention-weighted output? Reply as a two-number vector.",
+            "selection": {
+              "reason": "Establish the initial observation without explaining the answer."
+            },
+            "answer": "1",
+            "feedback": "You sent one number; the requested response contains multiple components.",
+            "verdict": "incomplete",
+            "revision_message": null,
+            "hypotheses": [
+              {
+                "id": "incomplete_response",
+                "score": 1,
+                "status": "under_consideration"
+              },
+              {
+                "id": "scalar_multiplication",
+                "score": 1,
+                "status": "under_consideration"
+              },
+              {
+                "id": "vector_addition",
+                "score": 1,
+                "status": "under_consideration"
+              },
+              {
+                "id": "weighted_aggregation",
+                "score": 1,
+                "status": "under_consideration"
+              }
+            ]
+          },
+          {
+            "question_id": "dimension",
+            "prompt": "If we add two vectors that each contain two numbers, how many numbers should the result contain? Briefly say why.",
+            "selection": {
+              "reason": "Distinguish remaining explanations with an unasked operation check.",
+              "score": 116,
+              "separated_pair_weight": 12,
+              "hypothesis_coverage": 4,
+              "difficulty_cost": 0,
+              "prerequisite_policy": "Isolate graph prerequisites before testing their combination; answered does not mean mastered.",
+              "assumption": "Categorical predictions and ordinal evidence weights are authored heuristics, not probabilities."
+            },
+            "answer": 2,
+            "feedback": "That check is correct.",
+            "verdict": "correct",
+            "revision_message": "This correct check makes the following explanation less likely: Weights and values may be combined using the wrong operation.",
+            "hypotheses": [
+              {
+                "id": "incomplete_response",
+                "score": 2,
+                "status": "under_consideration"
+              },
+              {
+                "id": "scalar_multiplication",
+                "score": 1,
+                "status": "under_consideration"
+              },
+              {
+                "id": "vector_addition",
+                "score": 1,
+                "status": "under_consideration"
+              },
+              {
+                "id": "weighted_aggregation",
+                "score": 0,
+                "status": "under_consideration"
+              }
+            ]
+          },
+          {
+            "question_id": "scalar_probe",
+            "prompt": "What is 0.75 \u00d7 [2,0]? Reply as a vector.",
+            "selection": {
+              "reason": "Distinguish remaining explanations with an unasked operation check.",
+              "score": 12,
+              "separated_pair_weight": 12,
+              "hypothesis_coverage": 2,
+              "difficulty_cost": 2,
+              "prerequisite_policy": "Isolate graph prerequisites before testing their combination; answered does not mean mastered.",
+              "assumption": "Categorical predictions and ordinal evidence weights are authored heuristics, not probabilities."
+            },
+            "answer": [
+              1.5,
+              0
+            ],
+            "feedback": "That check is correct.",
+            "verdict": "correct",
+            "revision_message": "You multiplied the vector correctly. A scalar-multiplication gap is less likely; let's check combining values or reporting the result.",
+            "hypotheses": [
+              {
+                "id": "incomplete_response",
+                "score": 3,
+                "status": "under_consideration"
+              },
+              {
+                "id": "scalar_multiplication",
+                "score": -2,
+                "status": "less_supported"
+              },
+              {
+                "id": "vector_addition",
+                "score": 1,
+                "status": "under_consideration"
+              },
+              {
+                "id": "weighted_aggregation",
+                "score": 0,
+                "status": "under_consideration"
+              }
+            ]
+          },
+          {
+            "question_id": "addition_probe",
+            "prompt": "What is [1.5,0] + [0,1]? Reply as a vector.",
+            "selection": {
+              "reason": "Distinguish remaining explanations with an unasked operation check.",
+              "score": 10,
+              "separated_pair_weight": 10,
+              "hypothesis_coverage": 2,
+              "difficulty_cost": 2,
+              "prerequisite_policy": "Isolate graph prerequisites before testing their combination; answered does not mean mastered.",
+              "assumption": "Categorical predictions and ordinal evidence weights are authored heuristics, not probabilities."
+            },
+            "answer": [
+              1.5,
+              1
+            ],
+            "feedback": "That check is correct.",
+            "verdict": "correct",
+            "revision_message": "This correct check makes the following explanation less likely: Components may not be added in matching positions.",
+            "hypotheses": [
+              {
+                "id": "incomplete_response",
+                "score": 4,
+                "status": "under_consideration"
+              },
+              {
+                "id": "scalar_multiplication",
+                "score": -2,
+                "status": "less_supported"
+              },
+              {
+                "id": "vector_addition",
+                "score": -2,
+                "status": "less_supported"
+              },
+              {
+                "id": "weighted_aggregation",
+                "score": 0,
+                "status": "under_consideration"
+              }
+            ]
+          },
+          {
+            "question_id": "weighted_probe",
+            "prompt": "Weights [0.6,0.4] combine values [5,0] and [0,10]. What is the weighted sum?",
+            "selection": {
+              "reason": "Distinguish remaining explanations with an unasked operation check.",
+              "score": 7,
+              "separated_pair_weight": 5,
+              "hypothesis_coverage": 6,
+              "difficulty_cost": 4,
+              "prerequisite_policy": "Isolate graph prerequisites before testing their combination; answered does not mean mastered.",
+              "assumption": "Categorical predictions and ordinal evidence weights are authored heuristics, not probabilities."
+            },
+            "answer": [
+              3,
+              4
+            ],
+            "feedback": "That check is correct.",
+            "verdict": "correct",
+            "revision_message": "This correct check makes the following explanation less likely: Weights and values may be combined using the wrong operation.",
+            "hypotheses": [
+              {
+                "id": "incomplete_response",
+                "score": 6,
+                "status": "supported"
+              },
+              {
+                "id": "scalar_multiplication",
+                "score": -2,
+                "status": "less_supported"
+              },
+              {
+                "id": "vector_addition",
+                "score": -2,
+                "status": "less_supported"
+              },
+              {
+                "id": "weighted_aggregation",
+                "score": -3,
+                "status": "less_supported"
+              }
+            ]
+          },
+          {
+            "kind": "lesson",
+            "repair": "response_format",
+            "lesson": {
+              "explanation": "The tested operations worked. The initial reply contained one component, so practice reporting the full vector. This does not establish why you omitted a component.",
+              "example": "A vector whose first component is 2 and second is 3 is written [2,3].",
+              "connection": "An attention output contains every component of the mixed value vectors."
+            }
+          },
+          {
+            "question_id": "practice_format",
+            "prompt": "Practice reporting: first component is 4, second is 3. Give the full vector.",
+            "selection": {
+              "reason": "Try new values after the delivered targeted lesson."
+            },
+            "answer": [
+              4,
+              3
+            ],
+            "feedback": "That check is correct.",
+            "verdict": "correct",
+            "revision_message": null,
+            "hypotheses": [
+              {
+                "id": "incomplete_response",
+                "score": 6,
+                "status": "supported"
+              },
+              {
+                "id": "scalar_multiplication",
+                "score": -2,
+                "status": "less_supported"
+              },
+              {
+                "id": "vector_addition",
+                "score": -2,
+                "status": "less_supported"
+              },
+              {
+                "id": "weighted_aggregation",
+                "score": -3,
+                "status": "less_supported"
+              }
+            ]
+          },
+          {
+            "question_id": "independent_attention",
+            "prompt": "Independent check: V1=[4,2], V2=[0,6], weights [0.25,0.75]. What is the weighted output?",
+            "selection": {
+              "reason": "Practice succeeded; now change the conditions independently."
+            },
+            "answer": [
+              1,
+              5
+            ],
+            "feedback": "That check is correct.",
+            "verdict": "correct",
+            "revision_message": null,
+            "hypotheses": [
+              {
+                "id": "incomplete_response",
+                "score": 6,
+                "status": "supported"
+              },
+              {
+                "id": "scalar_multiplication",
+                "score": -2,
+                "status": "less_supported"
+              },
+              {
+                "id": "vector_addition",
+                "score": -2,
+                "status": "less_supported"
+              },
+              {
+                "id": "weighted_aggregation",
+                "score": -3,
+                "status": "less_supported"
+              }
+            ]
+          },
+          {
+            "question_id": "transfer_attention",
+            "prompt": "Why does a Transformer multiply attention weights by value vectors and add the results?",
+            "selection": {
+              "reason": "A numerical success does not establish transfer to an explanation of attention."
+            },
+            "answer": "Attention combines information from value vectors according to their weights.",
+            "feedback": "Your explanation meets the stated rubric.",
+            "verdict": "correct",
+            "revision_message": null,
+            "hypotheses": [
+              {
+                "id": "incomplete_response",
+                "score": 6,
+                "status": "supported"
+              },
+              {
+                "id": "scalar_multiplication",
+                "score": -2,
+                "status": "less_supported"
+              },
+              {
+                "id": "vector_addition",
+                "score": -2,
+                "status": "less_supported"
+              },
+              {
+                "id": "weighted_aggregation",
+                "score": -3,
+                "status": "less_supported"
+              }
+            ]
+          }
+        ]
+      },
+      "B": {
+        "prediction": "weighted_aggregation",
+        "repair": "weighted_sums",
+        "diagnostic_questions": 6,
+        "unsupported_conclusion": false,
+        "visible_revision": true,
+        "uncertain": false,
+        "trace": [
+          {
+            "question_id": "attention_initial",
+            "prompt": "V1=[2,0], V2=[0,4]; attention weights are 0.75 and 0.25. What is the attention-weighted output? Reply as a two-number vector.",
+            "selection": {
+              "reason": "Establish the initial observation without explaining the answer."
+            },
+            "answer": "1",
+            "feedback": "You sent one number; the requested response contains multiple components.",
+            "verdict": "incomplete",
+            "revision_message": null,
+            "hypotheses": [
+              {
+                "id": "incomplete_response",
+                "score": 1,
+                "status": "under_consideration"
+              },
+              {
+                "id": "scalar_multiplication",
+                "score": 1,
+                "status": "under_consideration"
+              },
+              {
+                "id": "vector_addition",
+                "score": 1,
+                "status": "under_consideration"
+              },
+              {
+                "id": "weighted_aggregation",
+                "score": 1,
+                "status": "under_consideration"
+              }
+            ]
+          },
+          {
+            "question_id": "dimension",
+            "prompt": "If we add two vectors that each contain two numbers, how many numbers should the result contain? Briefly say why.",
+            "selection": {
+              "reason": "Distinguish remaining explanations with an unasked operation check.",
+              "score": 116,
+              "separated_pair_weight": 12,
+              "hypothesis_coverage": 4,
+              "difficulty_cost": 0,
+              "prerequisite_policy": "Isolate graph prerequisites before testing their combination; answered does not mean mastered.",
+              "assumption": "Categorical predictions and ordinal evidence weights are authored heuristics, not probabilities."
+            },
+            "answer": 2,
+            "feedback": "That check is correct.",
+            "verdict": "correct",
+            "revision_message": "This correct check makes the following explanation less likely: Weights and values may be combined using the wrong operation.",
+            "hypotheses": [
+              {
+                "id": "incomplete_response",
+                "score": 2,
+                "status": "under_consideration"
+              },
+              {
+                "id": "scalar_multiplication",
+                "score": 1,
+                "status": "under_consideration"
+              },
+              {
+                "id": "vector_addition",
+                "score": 1,
+                "status": "under_consideration"
+              },
+              {
+                "id": "weighted_aggregation",
+                "score": 0,
+                "status": "under_consideration"
+              }
+            ]
+          },
+          {
+            "question_id": "scalar_probe",
+            "prompt": "What is 0.75 \u00d7 [2,0]? Reply as a vector.",
+            "selection": {
+              "reason": "Distinguish remaining explanations with an unasked operation check.",
+              "score": 12,
+              "separated_pair_weight": 12,
+              "hypothesis_coverage": 2,
+              "difficulty_cost": 2,
+              "prerequisite_policy": "Isolate graph prerequisites before testing their combination; answered does not mean mastered.",
+              "assumption": "Categorical predictions and ordinal evidence weights are authored heuristics, not probabilities."
+            },
+            "answer": [
+              1.5,
+              0
+            ],
+            "feedback": "That check is correct.",
+            "verdict": "correct",
+            "revision_message": "You multiplied the vector correctly. A scalar-multiplication gap is less likely; let's check combining values or reporting the result.",
+            "hypotheses": [
+              {
+                "id": "incomplete_response",
+                "score": 3,
+                "status": "under_consideration"
+              },
+              {
+                "id": "scalar_multiplication",
+                "score": -2,
+                "status": "less_supported"
+              },
+              {
+                "id": "vector_addition",
+                "score": 1,
+                "status": "under_consideration"
+              },
+              {
+                "id": "weighted_aggregation",
+                "score": 0,
+                "status": "under_consideration"
+              }
+            ]
+          },
+          {
+            "question_id": "addition_probe",
+            "prompt": "What is [1.5,0] + [0,1]? Reply as a vector.",
+            "selection": {
+              "reason": "Distinguish remaining explanations with an unasked operation check.",
+              "score": 10,
+              "separated_pair_weight": 10,
+              "hypothesis_coverage": 2,
+              "difficulty_cost": 2,
+              "prerequisite_policy": "Isolate graph prerequisites before testing their combination; answered does not mean mastered.",
+              "assumption": "Categorical predictions and ordinal evidence weights are authored heuristics, not probabilities."
+            },
+            "answer": [
+              1.5,
+              1
+            ],
+            "feedback": "That check is correct.",
+            "verdict": "correct",
+            "revision_message": "This correct check makes the following explanation less likely: Components may not be added in matching positions.",
+            "hypotheses": [
+              {
+                "id": "incomplete_response",
+                "score": 4,
+                "status": "under_consideration"
+              },
+              {
+                "id": "scalar_multiplication",
+                "score": -2,
+                "status": "less_supported"
+              },
+              {
+                "id": "vector_addition",
+                "score": -2,
+                "status": "less_supported"
+              },
+              {
+                "id": "weighted_aggregation",
+                "score": 0,
+                "status": "under_consideration"
+              }
+            ]
+          },
+          {
+            "question_id": "weighted_probe",
+            "prompt": "Weights [0.6,0.4] combine values [5,0] and [0,10]. What is the weighted sum?",
+            "selection": {
+              "reason": "Distinguish remaining explanations with an unasked operation check.",
+              "score": 7,
+              "separated_pair_weight": 5,
+              "hypothesis_coverage": 6,
+              "difficulty_cost": 4,
+              "prerequisite_policy": "Isolate graph prerequisites before testing their combination; answered does not mean mastered.",
+              "assumption": "Categorical predictions and ordinal evidence weights are authored heuristics, not probabilities."
+            },
+            "answer": [
+              5,
+              10
+            ],
+            "feedback": "That response is useful evidence; let's distinguish the possible causes.",
+            "verdict": "incorrect",
+            "revision_message": null,
+            "hypotheses": [
+              {
+                "id": "incomplete_response",
+                "score": 4,
+                "status": "under_consideration"
+              },
+              {
+                "id": "scalar_multiplication",
+                "score": -2,
+                "status": "less_supported"
+              },
+              {
+                "id": "vector_addition",
+                "score": -2,
+                "status": "less_supported"
+              },
+              {
+                "id": "weighted_aggregation",
+                "score": 3,
+                "status": "under_consideration"
+              }
+            ]
+          },
+          {
+            "question_id": "weighted_followup",
+            "prompt": "Check another case: weights [0.2,0.8], values [10,0] and [0,5]. What is the output vector?",
+            "selection": {
+              "reason": "Distinguish remaining explanations with an unasked operation check.",
+              "score": 20,
+              "separated_pair_weight": 20,
+              "hypothesis_coverage": 4,
+              "difficulty_cost": 4,
+              "prerequisite_policy": "Isolate graph prerequisites before testing their combination; answered does not mean mastered.",
+              "assumption": "Categorical predictions and ordinal evidence weights are authored heuristics, not probabilities."
+            },
+            "answer": [
+              10,
+              5
+            ],
+            "feedback": "That response is useful evidence; let's distinguish the possible causes.",
+            "verdict": "incorrect",
+            "revision_message": null,
+            "hypotheses": [
+              {
+                "id": "incomplete_response",
+                "score": 4,
+                "status": "under_consideration"
+              },
+              {
+                "id": "scalar_multiplication",
+                "score": -2,
+                "status": "less_supported"
+              },
+              {
+                "id": "vector_addition",
+                "score": -2,
+                "status": "less_supported"
+              },
+              {
+                "id": "weighted_aggregation",
+                "score": 6,
+                "status": "supported"
+              }
+            ]
+          },
+          {
+            "kind": "lesson",
+            "repair": "weighted_sums",
+            "lesson": {
+              "explanation": "Scale each value by its own weight, then add matching components.",
+              "example": "0.25\u00d7[8,0]+0.75\u00d7[0,4]=[2,0]+[0,3]=[2,3].",
+              "connection": "This mixes information from value vectors according to attention weights."
+            }
+          },
+          {
+            "question_id": "practice_weighted",
+            "prompt": "Practice: weights [0.5,0.5] combine [6,2] and [2,4]. Give the weighted sum.",
+            "selection": {
+              "reason": "Try new values after the delivered targeted lesson."
+            },
+            "answer": [
+              4,
+              3
+            ],
+            "feedback": "That check is correct.",
+            "verdict": "correct",
+            "revision_message": null,
+            "hypotheses": [
+              {
+                "id": "incomplete_response",
+                "score": 4,
+                "status": "under_consideration"
+              },
+              {
+                "id": "scalar_multiplication",
+                "score": -2,
+                "status": "less_supported"
+              },
+              {
+                "id": "vector_addition",
+                "score": -2,
+                "status": "less_supported"
+              },
+              {
+                "id": "weighted_aggregation",
+                "score": 6,
+                "status": "supported"
+              }
+            ]
+          },
+          {
+            "question_id": "independent_attention",
+            "prompt": "Independent check: V1=[4,2], V2=[0,6], weights [0.25,0.75]. What is the weighted output?",
+            "selection": {
+              "reason": "Practice succeeded; now change the conditions independently."
+            },
+            "answer": [
+              1,
+              5
+            ],
+            "feedback": "That check is correct.",
+            "verdict": "correct",
+            "revision_message": null,
+            "hypotheses": [
+              {
+                "id": "incomplete_response",
+                "score": 4,
+                "status": "under_consideration"
+              },
+              {
+                "id": "scalar_multiplication",
+                "score": -2,
+                "status": "less_supported"
+              },
+              {
+                "id": "vector_addition",
+                "score": -2,
+                "status": "less_supported"
+              },
+              {
+                "id": "weighted_aggregation",
+                "score": 6,
+                "status": "supported"
+              }
+            ]
+          },
+          {
+            "question_id": "transfer_attention",
+            "prompt": "Why does a Transformer multiply attention weights by value vectors and add the results?",
+            "selection": {
+              "reason": "A numerical success does not establish transfer to an explanation of attention."
+            },
+            "answer": "Attention combines information from value vectors according to their weights.",
+            "feedback": "Your explanation meets the stated rubric.",
+            "verdict": "correct",
+            "revision_message": null,
+            "hypotheses": [
+              {
+                "id": "incomplete_response",
+                "score": 4,
+                "status": "under_consideration"
+              },
+              {
+                "id": "scalar_multiplication",
+                "score": -2,
+                "status": "less_supported"
+              },
+              {
+                "id": "vector_addition",
+                "score": -2,
+                "status": "less_supported"
+              },
+              {
+                "id": "weighted_aggregation",
+                "score": 6,
+                "status": "supported"
+              }
+            ]
+          }
+        ]
+      },
+      "C": {
+        "prediction": null,
+        "repair": null,
+        "diagnostic_questions": 7,
+        "unsupported_conclusion": false,
+        "visible_revision": true,
+        "uncertain": true,
+        "trace": [
+          {
+            "question_id": "attention_initial",
+            "prompt": "V1=[2,0], V2=[0,4]; attention weights are 0.75 and 0.25. What is the attention-weighted output? Reply as a two-number vector.",
+            "selection": {
+              "reason": "Establish the initial observation without explaining the answer."
+            },
+            "answer": "1",
+            "feedback": "You sent one number; the requested response contains multiple components.",
+            "verdict": "incomplete",
+            "revision_message": null,
+            "hypotheses": [
+              {
+                "id": "incomplete_response",
+                "score": 1,
+                "status": "under_consideration"
+              },
+              {
+                "id": "scalar_multiplication",
+                "score": 1,
+                "status": "under_consideration"
+              },
+              {
+                "id": "vector_addition",
+                "score": 1,
+                "status": "under_consideration"
+              },
+              {
+                "id": "weighted_aggregation",
+                "score": 1,
+                "status": "under_consideration"
+              }
+            ]
+          },
+          {
+            "question_id": "dimension",
+            "prompt": "If we add two vectors that each contain two numbers, how many numbers should the result contain? Briefly say why.",
+            "selection": {
+              "reason": "Distinguish remaining explanations with an unasked operation check.",
+              "score": 116,
+              "separated_pair_weight": 12,
+              "hypothesis_coverage": 4,
+              "difficulty_cost": 0,
+              "prerequisite_policy": "Isolate graph prerequisites before testing their combination; answered does not mean mastered.",
+              "assumption": "Categorical predictions and ordinal evidence weights are authored heuristics, not probabilities."
+            },
+            "answer": 2,
+            "feedback": "That check is correct.",
+            "verdict": "correct",
+            "revision_message": "This correct check makes the following explanation less likely: Weights and values may be combined using the wrong operation.",
+            "hypotheses": [
+              {
+                "id": "incomplete_response",
+                "score": 2,
+                "status": "under_consideration"
+              },
+              {
+                "id": "scalar_multiplication",
+                "score": 1,
+                "status": "under_consideration"
+              },
+              {
+                "id": "vector_addition",
+                "score": 1,
+                "status": "under_consideration"
+              },
+              {
+                "id": "weighted_aggregation",
+                "score": 0,
+                "status": "under_consideration"
+              }
+            ]
+          },
+          {
+            "question_id": "scalar_probe",
+            "prompt": "What is 0.75 \u00d7 [2,0]? Reply as a vector.",
+            "selection": {
+              "reason": "Distinguish remaining explanations with an unasked operation check.",
+              "score": 12,
+              "separated_pair_weight": 12,
+              "hypothesis_coverage": 2,
+              "difficulty_cost": 2,
+              "prerequisite_policy": "Isolate graph prerequisites before testing their combination; answered does not mean mastered.",
+              "assumption": "Categorical predictions and ordinal evidence weights are authored heuristics, not probabilities."
+            },
+            "answer": [
+              1.5,
+              0
+            ],
+            "feedback": "That check is correct.",
+            "verdict": "correct",
+            "revision_message": "You multiplied the vector correctly. A scalar-multiplication gap is less likely; let's check combining values or reporting the result.",
+            "hypotheses": [
+              {
+                "id": "incomplete_response",
+                "score": 3,
+                "status": "under_consideration"
+              },
+              {
+                "id": "scalar_multiplication",
+                "score": -2,
+                "status": "less_supported"
+              },
+              {
+                "id": "vector_addition",
+                "score": 1,
+                "status": "under_consideration"
+              },
+              {
+                "id": "weighted_aggregation",
+                "score": 0,
+                "status": "under_consideration"
+              }
+            ]
+          },
+          {
+            "question_id": "addition_probe",
+            "prompt": "What is [1.5,0] + [0,1]? Reply as a vector.",
+            "selection": {
+              "reason": "Distinguish remaining explanations with an unasked operation check.",
+              "score": 10,
+              "separated_pair_weight": 10,
+              "hypothesis_coverage": 2,
+              "difficulty_cost": 2,
+              "prerequisite_policy": "Isolate graph prerequisites before testing their combination; answered does not mean mastered.",
+              "assumption": "Categorical predictions and ordinal evidence weights are authored heuristics, not probabilities."
+            },
+            "answer": [
+              1.5,
+              0
+            ],
+            "feedback": "That check differs from the expected result; one error does not establish its cause.",
+            "verdict": "incorrect",
+            "revision_message": null,
+            "hypotheses": [
+              {
+                "id": "incomplete_response",
+                "score": 3,
+                "status": "under_consideration"
+              },
+              {
+                "id": "scalar_multiplication",
+                "score": -2,
+                "status": "less_supported"
+              },
+              {
+                "id": "vector_addition",
+                "score": 4,
+                "status": "under_consideration"
+              },
+              {
+                "id": "weighted_aggregation",
+                "score": 0,
+                "status": "under_consideration"
+              }
+            ]
+          },
+          {
+            "question_id": "addition_followup",
+            "prompt": "A different addition check: [2,3] + [4,1] = ?",
+            "selection": {
+              "reason": "Distinguish remaining explanations with an unasked operation check.",
+              "score": 28,
+              "separated_pair_weight": 25,
+              "hypothesis_coverage": 5,
+              "difficulty_cost": 2,
+              "prerequisite_policy": "Isolate graph prerequisites before testing their combination; answered does not mean mastered.",
+              "assumption": "Categorical predictions and ordinal evidence weights are authored heuristics, not probabilities."
+            },
+            "answer": [
+              6,
+              4
+            ],
+            "feedback": "That check is correct.",
+            "verdict": "correct",
+            "revision_message": "This correct check makes the following explanation less likely: Components may not be added in matching positions.",
+            "hypotheses": [
+              {
+                "id": "incomplete_response",
+                "score": 3,
+                "status": "under_consideration"
+              },
+              {
+                "id": "scalar_multiplication",
+                "score": -2,
+                "status": "less_supported"
+              },
+              {
+                "id": "vector_addition",
+                "score": 1,
+                "status": "under_consideration"
+              },
+              {
+                "id": "weighted_aggregation",
+                "score": 0,
+                "status": "under_consideration"
+              }
+            ]
+          },
+          {
+            "question_id": "weighted_probe",
+            "prompt": "Weights [0.6,0.4] combine values [5,0] and [0,10]. What is the weighted sum?",
+            "selection": {
+              "reason": "Distinguish remaining explanations with an unasked operation check.",
+              "score": 7,
+              "separated_pair_weight": 6,
+              "hypothesis_coverage": 5,
+              "difficulty_cost": 4,
+              "prerequisite_policy": "Isolate graph prerequisites before testing their combination; answered does not mean mastered.",
+              "assumption": "Categorical predictions and ordinal evidence weights are authored heuristics, not probabilities."
+            },
+            "answer": [
+              5,
+              10
+            ],
+            "feedback": "That response is useful evidence; let's distinguish the possible causes.",
+            "verdict": "incorrect",
+            "revision_message": null,
+            "hypotheses": [
+              {
+                "id": "incomplete_response",
+                "score": 3,
+                "status": "under_consideration"
+              },
+              {
+                "id": "scalar_multiplication",
+                "score": -2,
+                "status": "less_supported"
+              },
+              {
+                "id": "vector_addition",
+                "score": 1,
+                "status": "under_consideration"
+              },
+              {
+                "id": "weighted_aggregation",
+                "score": 3,
+                "status": "under_consideration"
+              }
+            ]
+          },
+          {
+            "question_id": "weighted_followup",
+            "prompt": "Check another case: weights [0.2,0.8], values [10,0] and [0,5]. What is the output vector?",
+            "selection": {
+              "reason": "Distinguish remaining explanations with an unasked operation check.",
+              "score": 24,
+              "separated_pair_weight": 24,
+              "hypothesis_coverage": 4,
+              "difficulty_cost": 4,
+              "prerequisite_policy": "Isolate graph prerequisites before testing their combination; answered does not mean mastered.",
+              "assumption": "Categorical predictions and ordinal evidence weights are authored heuristics, not probabilities."
+            },
+            "answer": [
+              2,
+              4
+            ],
+            "feedback": "That check is correct.",
+            "verdict": "correct",
+            "revision_message": "This correct check makes the following explanation less likely: Weights and values may be combined using the wrong operation.",
+            "hypotheses": [
+              {
+                "id": "incomplete_response",
+                "score": 3,
+                "status": "under_consideration"
+              },
+              {
+                "id": "scalar_multiplication",
+                "score": -2,
+                "status": "less_supported"
+              },
+              {
+                "id": "vector_addition",
+                "score": 1,
+                "status": "under_consideration"
+              },
+              {
+                "id": "weighted_aggregation",
+                "score": 0,
+                "status": "under_consideration"
+              }
+            ]
+          }
+        ]
+      },
+      "D": {
+        "prediction": null,
+        "repair": null,
+        "diagnostic_questions": 1,
+        "unsupported_conclusion": false,
+        "visible_revision": false,
+        "uncertain": false,
+        "trace": [
+          {
+            "question_id": "attention_initial",
+            "prompt": "V1=[2,0], V2=[0,4]; attention weights are 0.75 and 0.25. What is the attention-weighted output? Reply as a two-number vector.",
+            "selection": {
+              "reason": "Establish the initial observation without explaining the answer."
+            },
+            "answer": [
+              1.5,
+              1
+            ],
+            "feedback": "That check is correct.",
+            "verdict": "correct",
+            "revision_message": null,
+            "hypotheses": [
+              {
+                "id": "incomplete_response",
+                "score": 0,
+                "status": "under_consideration"
+              },
+              {
+                "id": "scalar_multiplication",
+                "score": 0,
+                "status": "under_consideration"
+              },
+              {
+                "id": "vector_addition",
+                "score": 0,
+                "status": "under_consideration"
+              },
+              {
+                "id": "weighted_aggregation",
+                "score": 0,
+                "status": "under_consideration"
+              }
+            ]
+          },
+          {
+            "question_id": "independent_attention",
+            "prompt": "Independent check: V1=[4,2], V2=[0,6], weights [0.25,0.75]. What is the weighted output?",
+            "selection": {
+              "reason": "Change values and weights to check an independent example."
+            },
+            "answer": [
+              1,
+              5
+            ],
+            "feedback": "That check is correct.",
+            "verdict": "correct",
+            "revision_message": null,
+            "hypotheses": [
+              {
+                "id": "incomplete_response",
+                "score": 0,
+                "status": "under_consideration"
+              },
+              {
+                "id": "scalar_multiplication",
+                "score": 0,
+                "status": "under_consideration"
+              },
+              {
+                "id": "vector_addition",
+                "score": 0,
+                "status": "under_consideration"
+              },
+              {
+                "id": "weighted_aggregation",
+                "score": 0,
+                "status": "under_consideration"
+              }
+            ]
+          },
+          {
+            "question_id": "transfer_attention",
+            "prompt": "Why does a Transformer multiply attention weights by value vectors and add the results?",
+            "selection": {
+              "reason": "A numerical success does not establish transfer to an explanation of attention."
+            },
+            "answer": "Attention combines information from value vectors according to their weights.",
+            "feedback": "Your explanation meets the stated rubric.",
+            "verdict": "correct",
+            "revision_message": null,
+            "hypotheses": [
+              {
+                "id": "incomplete_response",
+                "score": 0,
+                "status": "under_consideration"
+              },
+              {
+                "id": "scalar_multiplication",
+                "score": 0,
+                "status": "under_consideration"
+              },
+              {
+                "id": "vector_addition",
+                "score": 0,
+                "status": "under_consideration"
+              },
+              {
+                "id": "weighted_aggregation",
+                "score": 0,
+                "status": "under_consideration"
+              }
+            ]
+          }
+        ]
+      },
+      "scalar_gap": {
+        "prediction": "scalar_multiplication",
+        "repair": "scalar_multiplication",
+        "diagnostic_questions": 4,
+        "unsupported_conclusion": false,
+        "visible_revision": true,
+        "uncertain": false,
+        "trace": [
+          {
+            "question_id": "attention_initial",
+            "prompt": "V1=[2,0], V2=[0,4]; attention weights are 0.75 and 0.25. What is the attention-weighted output? Reply as a two-number vector.",
+            "selection": {
+              "reason": "Establish the initial observation without explaining the answer."
+            },
+            "answer": "1",
+            "feedback": "You sent one number; the requested response contains multiple components.",
+            "verdict": "incomplete",
+            "revision_message": null,
+            "hypotheses": [
+              {
+                "id": "incomplete_response",
+                "score": 1,
+                "status": "under_consideration"
+              },
+              {
+                "id": "scalar_multiplication",
+                "score": 1,
+                "status": "under_consideration"
+              },
+              {
+                "id": "vector_addition",
+                "score": 1,
+                "status": "under_consideration"
+              },
+              {
+                "id": "weighted_aggregation",
+                "score": 1,
+                "status": "under_consideration"
+              }
+            ]
+          },
+          {
+            "question_id": "dimension",
+            "prompt": "If we add two vectors that each contain two numbers, how many numbers should the result contain? Briefly say why.",
+            "selection": {
+              "reason": "Distinguish remaining explanations with an unasked operation check.",
+              "score": 116,
+              "separated_pair_weight": 12,
+              "hypothesis_coverage": 4,
+              "difficulty_cost": 0,
+              "prerequisite_policy": "Isolate graph prerequisites before testing their combination; answered does not mean mastered.",
+              "assumption": "Categorical predictions and ordinal evidence weights are authored heuristics, not probabilities."
+            },
+            "answer": 2,
+            "feedback": "That check is correct.",
+            "verdict": "correct",
+            "revision_message": "This correct check makes the following explanation less likely: Weights and values may be combined using the wrong operation.",
+            "hypotheses": [
+              {
+                "id": "incomplete_response",
+                "score": 2,
+                "status": "under_consideration"
+              },
+              {
+                "id": "scalar_multiplication",
+                "score": 1,
+                "status": "under_consideration"
+              },
+              {
+                "id": "vector_addition",
+                "score": 1,
+                "status": "under_consideration"
+              },
+              {
+                "id": "weighted_aggregation",
+                "score": 0,
+                "status": "under_consideration"
+              }
+            ]
+          },
+          {
+            "question_id": "scalar_probe",
+            "prompt": "What is 0.75 \u00d7 [2,0]? Reply as a vector.",
+            "selection": {
+              "reason": "Distinguish remaining explanations with an unasked operation check.",
+              "score": 12,
+              "separated_pair_weight": 12,
+              "hypothesis_coverage": 2,
+              "difficulty_cost": 2,
+              "prerequisite_policy": "Isolate graph prerequisites before testing their combination; answered does not mean mastered.",
+              "assumption": "Categorical predictions and ordinal evidence weights are authored heuristics, not probabilities."
+            },
+            "answer": [
+              2,
+              0
+            ],
+            "feedback": "That check differs from the expected result; one error does not establish its cause.",
+            "verdict": "incorrect",
+            "revision_message": null,
+            "hypotheses": [
+              {
+                "id": "incomplete_response",
+                "score": 2,
+                "status": "under_consideration"
+              },
+              {
+                "id": "scalar_multiplication",
+                "score": 4,
+                "status": "under_consideration"
+              },
+              {
+                "id": "vector_addition",
+                "score": 1,
+                "status": "under_consideration"
+              },
+              {
+                "id": "weighted_aggregation",
+                "score": 0,
+                "status": "under_consideration"
+              }
+            ]
+          },
+          {
+            "question_id": "scalar_followup",
+            "prompt": "Use new values: what is 0.25 \u00d7 [4,2]?",
+            "selection": {
+              "reason": "Distinguish remaining explanations with an unasked operation check.",
+              "score": 33,
+              "separated_pair_weight": 30,
+              "hypothesis_coverage": 5,
+              "difficulty_cost": 2,
+              "prerequisite_policy": "Isolate graph prerequisites before testing their combination; answered does not mean mastered.",
+              "assumption": "Categorical predictions and ordinal evidence weights are authored heuristics, not probabilities."
+            },
+            "answer": [
+              4,
+              2
+            ],
+            "feedback": "That check differs from the expected result; one error does not establish its cause.",
+            "verdict": "incorrect",
+            "revision_message": null,
+            "hypotheses": [
+              {
+                "id": "incomplete_response",
+                "score": 2,
+                "status": "under_consideration"
+              },
+              {
+                "id": "scalar_multiplication",
+                "score": 7,
+                "status": "supported"
+              },
+              {
+                "id": "vector_addition",
+                "score": 1,
+                "status": "under_consideration"
+              },
+              {
+                "id": "weighted_aggregation",
+                "score": 0,
+                "status": "under_consideration"
+              }
+            ]
+          },
+          {
+            "kind": "lesson",
+            "repair": "scalar_multiplication",
+            "lesson": {
+              "explanation": "Multiply every component by the scalar.",
+              "example": "0.5 \u00d7 [6,4] = [3,2].",
+              "connection": "An attention weight scales every coordinate of its value vector."
+            }
+          },
+          {
+            "question_id": "practice_scalar",
+            "prompt": "Practice: what is 0.5 \u00d7 [2,6]?",
+            "selection": {
+              "reason": "Try new values after the delivered targeted lesson."
+            },
+            "answer": [
+              1,
+              3
+            ],
+            "feedback": "That check is correct.",
+            "verdict": "correct",
+            "revision_message": null,
+            "hypotheses": [
+              {
+                "id": "incomplete_response",
+                "score": 2,
+                "status": "under_consideration"
+              },
+              {
+                "id": "scalar_multiplication",
+                "score": 7,
+                "status": "supported"
+              },
+              {
+                "id": "vector_addition",
+                "score": 1,
+                "status": "under_consideration"
+              },
+              {
+                "id": "weighted_aggregation",
+                "score": 0,
+                "status": "under_consideration"
+              }
+            ]
+          },
+          {
+            "question_id": "independent_attention",
+            "prompt": "Independent check: V1=[4,2], V2=[0,6], weights [0.25,0.75]. What is the weighted output?",
+            "selection": {
+              "reason": "Practice succeeded; now change the conditions independently."
+            },
+            "answer": [
+              1,
+              5
+            ],
+            "feedback": "That check is correct.",
+            "verdict": "correct",
+            "revision_message": null,
+            "hypotheses": [
+              {
+                "id": "incomplete_response",
+                "score": 2,
+                "status": "under_consideration"
+              },
+              {
+                "id": "scalar_multiplication",
+                "score": 7,
+                "status": "supported"
+              },
+              {
+                "id": "vector_addition",
+                "score": 1,
+                "status": "under_consideration"
+              },
+              {
+                "id": "weighted_aggregation",
+                "score": 0,
+                "status": "under_consideration"
+              }
+            ]
+          },
+          {
+            "question_id": "transfer_attention",
+            "prompt": "Why does a Transformer multiply attention weights by value vectors and add the results?",
+            "selection": {
+              "reason": "A numerical success does not establish transfer to an explanation of attention."
+            },
+            "answer": "Attention combines information from value vectors according to their weights.",
+            "feedback": "Your explanation meets the stated rubric.",
+            "verdict": "correct",
+            "revision_message": null,
+            "hypotheses": [
+              {
+                "id": "incomplete_response",
+                "score": 2,
+                "status": "under_consideration"
+              },
+              {
+                "id": "scalar_multiplication",
+                "score": 7,
+                "status": "supported"
+              },
+              {
+                "id": "vector_addition",
+                "score": 1,
+                "status": "under_consideration"
+              },
+              {
+                "id": "weighted_aggregation",
+                "score": 0,
+                "status": "under_consideration"
+              }
+            ]
+          }
+        ]
+      },
+      "addition_gap": {
+        "prediction": "vector_addition",
+        "repair": "vector_addition",
+        "diagnostic_questions": 5,
+        "unsupported_conclusion": false,
+        "visible_revision": true,
+        "uncertain": false,
+        "trace": [
+          {
+            "question_id": "attention_initial",
+            "prompt": "V1=[2,0], V2=[0,4]; attention weights are 0.75 and 0.25. What is the attention-weighted output? Reply as a two-number vector.",
+            "selection": {
+              "reason": "Establish the initial observation without explaining the answer."
+            },
+            "answer": "1",
+            "feedback": "You sent one number; the requested response contains multiple components.",
+            "verdict": "incomplete",
+            "revision_message": null,
+            "hypotheses": [
+              {
+                "id": "incomplete_response",
+                "score": 1,
+                "status": "under_consideration"
+              },
+              {
+                "id": "scalar_multiplication",
+                "score": 1,
+                "status": "under_consideration"
+              },
+              {
+                "id": "vector_addition",
+                "score": 1,
+                "status": "under_consideration"
+              },
+              {
+                "id": "weighted_aggregation",
+                "score": 1,
+                "status": "under_consideration"
+              }
+            ]
+          },
+          {
+            "question_id": "dimension",
+            "prompt": "If we add two vectors that each contain two numbers, how many numbers should the result contain? Briefly say why.",
+            "selection": {
+              "reason": "Distinguish remaining explanations with an unasked operation check.",
+              "score": 116,
+              "separated_pair_weight": 12,
+              "hypothesis_coverage": 4,
+              "difficulty_cost": 0,
+              "prerequisite_policy": "Isolate graph prerequisites before testing their combination; answered does not mean mastered.",
+              "assumption": "Categorical predictions and ordinal evidence weights are authored heuristics, not probabilities."
+            },
+            "answer": 2,
+            "feedback": "That check is correct.",
+            "verdict": "correct",
+            "revision_message": "This correct check makes the following explanation less likely: Weights and values may be combined using the wrong operation.",
+            "hypotheses": [
+              {
+                "id": "incomplete_response",
+                "score": 2,
+                "status": "under_consideration"
+              },
+              {
+                "id": "scalar_multiplication",
+                "score": 1,
+                "status": "under_consideration"
+              },
+              {
+                "id": "vector_addition",
+                "score": 1,
+                "status": "under_consideration"
+              },
+              {
+                "id": "weighted_aggregation",
+                "score": 0,
+                "status": "under_consideration"
+              }
+            ]
+          },
+          {
+            "question_id": "scalar_probe",
+            "prompt": "What is 0.75 \u00d7 [2,0]? Reply as a vector.",
+            "selection": {
+              "reason": "Distinguish remaining explanations with an unasked operation check.",
+              "score": 12,
+              "separated_pair_weight": 12,
+              "hypothesis_coverage": 2,
+              "difficulty_cost": 2,
+              "prerequisite_policy": "Isolate graph prerequisites before testing their combination; answered does not mean mastered.",
+              "assumption": "Categorical predictions and ordinal evidence weights are authored heuristics, not probabilities."
+            },
+            "answer": [
+              1.5,
+              0
+            ],
+            "feedback": "That check is correct.",
+            "verdict": "correct",
+            "revision_message": "You multiplied the vector correctly. A scalar-multiplication gap is less likely; let's check combining values or reporting the result.",
+            "hypotheses": [
+              {
+                "id": "incomplete_response",
+                "score": 3,
+                "status": "under_consideration"
+              },
+              {
+                "id": "scalar_multiplication",
+                "score": -2,
+                "status": "less_supported"
+              },
+              {
+                "id": "vector_addition",
+                "score": 1,
+                "status": "under_consideration"
+              },
+              {
+                "id": "weighted_aggregation",
+                "score": 0,
+                "status": "under_consideration"
+              }
+            ]
+          },
+          {
+            "question_id": "addition_probe",
+            "prompt": "What is [1.5,0] + [0,1]? Reply as a vector.",
+            "selection": {
+              "reason": "Distinguish remaining explanations with an unasked operation check.",
+              "score": 10,
+              "separated_pair_weight": 10,
+              "hypothesis_coverage": 2,
+              "difficulty_cost": 2,
+              "prerequisite_policy": "Isolate graph prerequisites before testing their combination; answered does not mean mastered.",
+              "assumption": "Categorical predictions and ordinal evidence weights are authored heuristics, not probabilities."
+            },
+            "answer": [
+              1.5,
+              0
+            ],
+            "feedback": "That check differs from the expected result; one error does not establish its cause.",
+            "verdict": "incorrect",
+            "revision_message": null,
+            "hypotheses": [
+              {
+                "id": "incomplete_response",
+                "score": 3,
+                "status": "under_consideration"
+              },
+              {
+                "id": "scalar_multiplication",
+                "score": -2,
+                "status": "less_supported"
+              },
+              {
+                "id": "vector_addition",
+                "score": 4,
+                "status": "under_consideration"
+              },
+              {
+                "id": "weighted_aggregation",
+                "score": 0,
+                "status": "under_consideration"
+              }
+            ]
+          },
+          {
+            "question_id": "addition_followup",
+            "prompt": "A different addition check: [2,3] + [4,1] = ?",
+            "selection": {
+              "reason": "Distinguish remaining explanations with an unasked operation check.",
+              "score": 28,
+              "separated_pair_weight": 25,
+              "hypothesis_coverage": 5,
+              "difficulty_cost": 2,
+              "prerequisite_policy": "Isolate graph prerequisites before testing their combination; answered does not mean mastered.",
+              "assumption": "Categorical predictions and ordinal evidence weights are authored heuristics, not probabilities."
+            },
+            "answer": [
+              2,
+              3
+            ],
+            "feedback": "That check differs from the expected result; one error does not establish its cause.",
+            "verdict": "incorrect",
+            "revision_message": null,
+            "hypotheses": [
+              {
+                "id": "incomplete_response",
+                "score": 3,
+                "status": "under_consideration"
+              },
+              {
+                "id": "scalar_multiplication",
+                "score": -2,
+                "status": "less_supported"
+              },
+              {
+                "id": "vector_addition",
+                "score": 7,
+                "status": "supported"
+              },
+              {
+                "id": "weighted_aggregation",
+                "score": 0,
+                "status": "under_consideration"
+              }
+            ]
+          },
+          {
+            "kind": "lesson",
+            "repair": "vector_addition",
+            "lesson": {
+              "explanation": "Add matching components; preserve the vector shape.",
+              "example": "[2,1]+[3,4]=[5,5].",
+              "connection": "Attention adds the scaled value vectors coordinate by coordinate."
+            }
+          },
+          {
+            "question_id": "practice_addition",
+            "prompt": "Practice: what is [1,4] + [2,2]?",
+            "selection": {
+              "reason": "Try new values after the delivered targeted lesson."
+            },
+            "answer": [
+              3,
+              6
+            ],
+            "feedback": "That check is correct.",
+            "verdict": "correct",
+            "revision_message": null,
+            "hypotheses": [
+              {
+                "id": "incomplete_response",
+                "score": 3,
+                "status": "under_consideration"
+              },
+              {
+                "id": "scalar_multiplication",
+                "score": -2,
+                "status": "less_supported"
+              },
+              {
+                "id": "vector_addition",
+                "score": 7,
+                "status": "supported"
+              },
+              {
+                "id": "weighted_aggregation",
+                "score": 0,
+                "status": "under_consideration"
+              }
+            ]
+          },
+          {
+            "question_id": "independent_attention",
+            "prompt": "Independent check: V1=[4,2], V2=[0,6], weights [0.25,0.75]. What is the weighted output?",
+            "selection": {
+              "reason": "Practice succeeded; now change the conditions independently."
+            },
+            "answer": [
+              1,
+              5
+            ],
+            "feedback": "That check is correct.",
+            "verdict": "correct",
+            "revision_message": null,
+            "hypotheses": [
+              {
+                "id": "incomplete_response",
+                "score": 3,
+                "status": "under_consideration"
+              },
+              {
+                "id": "scalar_multiplication",
+                "score": -2,
+                "status": "less_supported"
+              },
+              {
+                "id": "vector_addition",
+                "score": 7,
+                "status": "supported"
+              },
+              {
+                "id": "weighted_aggregation",
+                "score": 0,
+                "status": "under_consideration"
+              }
+            ]
+          },
+          {
+            "question_id": "transfer_attention",
+            "prompt": "Why does a Transformer multiply attention weights by value vectors and add the results?",
+            "selection": {
+              "reason": "A numerical success does not establish transfer to an explanation of attention."
+            },
+            "answer": "Attention combines information from value vectors according to their weights.",
+            "feedback": "Your explanation meets the stated rubric.",
+            "verdict": "correct",
+            "revision_message": null,
+            "hypotheses": [
+              {
+                "id": "incomplete_response",
+                "score": 3,
+                "status": "under_consideration"
+              },
+              {
+                "id": "scalar_multiplication",
+                "score": -2,
+                "status": "less_supported"
+              },
+              {
+                "id": "vector_addition",
+                "score": 7,
+                "status": "supported"
+              },
+              {
+                "id": "weighted_aggregation",
+                "score": 0,
+                "status": "under_consideration"
+              }
+            ]
+          }
+        ]
+      },
+      "isolated": {
+        "prediction": null,
+        "repair": null,
+        "diagnostic_questions": 4,
+        "unsupported_conclusion": false,
+        "visible_revision": true,
+        "uncertain": true,
+        "trace": [
+          {
+            "question_id": "attention_initial",
+            "prompt": "V1=[2,0], V2=[0,4]; attention weights are 0.75 and 0.25. What is the attention-weighted output? Reply as a two-number vector.",
+            "selection": {
+              "reason": "Establish the initial observation without explaining the answer."
+            },
+            "answer": [
+              1,
+              1
+            ],
+            "feedback": "That check differs from the expected result; one error does not establish its cause.",
+            "verdict": "incorrect",
+            "revision_message": null,
+            "hypotheses": [
+              {
+                "id": "incomplete_response",
+                "score": 1,
+                "status": "under_consideration"
+              },
+              {
+                "id": "scalar_multiplication",
+                "score": 1,
+                "status": "under_consideration"
+              },
+              {
+                "id": "vector_addition",
+                "score": 1,
+                "status": "under_consideration"
+              },
+              {
+                "id": "weighted_aggregation",
+                "score": 1,
+                "status": "under_consideration"
+              }
+            ]
+          },
+          {
+            "question_id": "scalar_probe",
+            "prompt": "What is 0.75 \u00d7 [2,0]? Reply as a vector.",
+            "selection": {
+              "reason": "Distinguish remaining explanations with an unasked operation check.",
+              "score": 12,
+              "separated_pair_weight": 12,
+              "hypothesis_coverage": 2,
+              "difficulty_cost": 2,
+              "prerequisite_policy": "Isolate graph prerequisites before testing their combination; answered does not mean mastered.",
+              "assumption": "Categorical predictions and ordinal evidence weights are authored heuristics, not probabilities."
+            },
+            "answer": [
+              1.5,
+              0
+            ],
+            "feedback": "That check is correct.",
+            "verdict": "correct",
+            "revision_message": "You multiplied the vector correctly. A scalar-multiplication gap is less likely; let's check combining values or reporting the result.",
+            "hypotheses": [
+              {
+                "id": "incomplete_response",
+                "score": 2,
+                "status": "under_consideration"
+              },
+              {
+                "id": "scalar_multiplication",
+                "score": -2,
+                "status": "less_supported"
+              },
+              {
+                "id": "vector_addition",
+                "score": 1,
+                "status": "under_consideration"
+              },
+              {
+                "id": "weighted_aggregation",
+                "score": 1,
+                "status": "under_consideration"
+              }
+            ]
+          },
+          {
+            "question_id": "addition_probe",
+            "prompt": "What is [1.5,0] + [0,1]? Reply as a vector.",
+            "selection": {
+              "reason": "Distinguish remaining explanations with an unasked operation check.",
+              "score": 10,
+              "separated_pair_weight": 10,
+              "hypothesis_coverage": 2,
+              "difficulty_cost": 2,
+              "prerequisite_policy": "Isolate graph prerequisites before testing their combination; answered does not mean mastered.",
+              "assumption": "Categorical predictions and ordinal evidence weights are authored heuristics, not probabilities."
+            },
+            "answer": [
+              1.5,
+              1
+            ],
+            "feedback": "That check is correct.",
+            "verdict": "correct",
+            "revision_message": "This correct check makes the following explanation less likely: Components may not be added in matching positions.",
+            "hypotheses": [
+              {
+                "id": "incomplete_response",
+                "score": 3,
+                "status": "under_consideration"
+              },
+              {
+                "id": "scalar_multiplication",
+                "score": -2,
+                "status": "less_supported"
+              },
+              {
+                "id": "vector_addition",
+                "score": -2,
+                "status": "less_supported"
+              },
+              {
+                "id": "weighted_aggregation",
+                "score": 1,
+                "status": "under_consideration"
+              }
+            ]
+          },
+          {
+            "question_id": "weighted_probe",
+            "prompt": "Weights [0.6,0.4] combine values [5,0] and [0,10]. What is the weighted sum?",
+            "selection": {
+              "reason": "Distinguish remaining explanations with an unasked operation check.",
+              "score": 10,
+              "separated_pair_weight": 8,
+              "hypothesis_coverage": 6,
+              "difficulty_cost": 4,
+              "prerequisite_policy": "Isolate graph prerequisites before testing their combination; answered does not mean mastered.",
+              "assumption": "Categorical predictions and ordinal evidence weights are authored heuristics, not probabilities."
+            },
+            "answer": [
+              3,
+              4
+            ],
+            "feedback": "That check is correct.",
+            "verdict": "correct",
+            "revision_message": "This correct check makes the following explanation less likely: Weights and values may be combined using the wrong operation.",
+            "hypotheses": [
+              {
+                "id": "incomplete_response",
+                "score": 5,
+                "status": "under_consideration"
+              },
+              {
+                "id": "scalar_multiplication",
+                "score": -2,
+                "status": "less_supported"
+              },
+              {
+                "id": "vector_addition",
+                "score": -2,
+                "status": "less_supported"
+              },
+              {
+                "id": "weighted_aggregation",
+                "score": -2,
+                "status": "less_supported"
+              }
+            ]
+          }
+        ]
+      }
+    }
+  }
+}

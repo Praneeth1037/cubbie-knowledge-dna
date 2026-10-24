@@ -1,0 +1,422 @@
+{
+  "trajectory": "academic",
+  "synthetic": true,
+  "expected_label": "tensor_shapes",
+  "trace": [
+    {
+      "question_id": "shape_initial",
+      "prompt": "A tensor has shape (2,4,8). What is its shape after swapping axes 1 and 2? Use zero-based axes.",
+      "selection": {
+        "reason": "Use source-derived priors to choose a live test; the records alone do not establish a gap.",
+        "source_ids": [
+          "synthetic-canvas-1",
+          "synthetic-canvas-2",
+          "synthetic-docs-1"
+        ]
+      },
+      "answer": [
+        2,
+        4,
+        8
+      ],
+      "feedback": "That check differs from the expected result; one error does not establish its cause.",
+      "verdict": "incorrect",
+      "revision_message": null,
+      "hypotheses": [
+        {
+          "id": "tensor_shapes",
+          "score": 5,
+          "status": "under_consideration"
+        },
+        {
+          "id": "broadcasting",
+          "score": 1,
+          "status": "under_consideration"
+        },
+        {
+          "id": "notation_to_code",
+          "score": 2,
+          "status": "under_consideration"
+        },
+        {
+          "id": "isolated_error",
+          "score": 0,
+          "status": "under_consideration"
+        }
+      ]
+    },
+    {
+      "question_id": "shape_followup",
+      "prompt": "A tensor has shape (3,5,7). Swap axes 0 and 2. What is the new shape?",
+      "selection": {
+        "reason": "Distinguish remaining explanations with an unasked operation check.",
+        "score": 40,
+        "separated_pair_weight": 36,
+        "hypothesis_coverage": 6,
+        "difficulty_cost": 2,
+        "prerequisite_policy": "Isolate graph prerequisites before testing their combination; answered does not mean mastered.",
+        "assumption": "Categorical predictions and ordinal evidence weights are authored heuristics, not probabilities."
+      },
+      "answer": [
+        3,
+        5,
+        7
+      ],
+      "feedback": "That check differs from the expected result; one error does not establish its cause.",
+      "verdict": "incorrect",
+      "revision_message": null,
+      "hypotheses": [
+        {
+          "id": "tensor_shapes",
+          "score": 8,
+          "status": "supported"
+        },
+        {
+          "id": "broadcasting",
+          "score": 1,
+          "status": "under_consideration"
+        },
+        {
+          "id": "notation_to_code",
+          "score": 2,
+          "status": "under_consideration"
+        },
+        {
+          "id": "isolated_error",
+          "score": 0,
+          "status": "under_consideration"
+        }
+      ]
+    },
+    {
+      "kind": "lesson",
+      "repair": "tensor_shapes",
+      "lesson": {
+        "explanation": "Swapping axes exchanges those positions in the shape, not the values of every dimension.",
+        "example": "(2,3,4), swap axes 0 and 1: (3,2,4).",
+        "connection": "Attention masks and score tensors must refer to matching axes."
+      }
+    },
+    {
+      "question_id": "practice_shapes",
+      "prompt": "Practice: shape (2,3,5), swap axes 1 and 2. What shape results?",
+      "selection": {
+        "reason": "Try new values after the delivered targeted lesson."
+      },
+      "answer": [
+        2,
+        5,
+        3
+      ],
+      "feedback": "That check is correct.",
+      "verdict": "correct",
+      "revision_message": null,
+      "hypotheses": [
+        {
+          "id": "tensor_shapes",
+          "score": 8,
+          "status": "supported"
+        },
+        {
+          "id": "broadcasting",
+          "score": 1,
+          "status": "under_consideration"
+        },
+        {
+          "id": "notation_to_code",
+          "score": 2,
+          "status": "under_consideration"
+        },
+        {
+          "id": "isolated_error",
+          "score": 0,
+          "status": "under_consideration"
+        }
+      ]
+    },
+    {
+      "question_id": "independent_shapes",
+      "prompt": "Independent check: shape (4,6,9), swap axes 0 and 2. What shape results?",
+      "selection": {
+        "reason": "Practice succeeded; now change the conditions independently."
+      },
+      "answer": [
+        9,
+        6,
+        4
+      ],
+      "feedback": "That check is correct.",
+      "verdict": "correct",
+      "revision_message": null,
+      "hypotheses": [
+        {
+          "id": "tensor_shapes",
+          "score": 8,
+          "status": "supported"
+        },
+        {
+          "id": "broadcasting",
+          "score": 1,
+          "status": "under_consideration"
+        },
+        {
+          "id": "notation_to_code",
+          "score": 2,
+          "status": "under_consideration"
+        },
+        {
+          "id": "isolated_error",
+          "score": 0,
+          "status": "under_consideration"
+        }
+      ]
+    },
+    {
+      "question_id": "transfer_shapes",
+      "prompt": "Why track tensor dimensions when applying a mask to attention scores?",
+      "selection": {
+        "reason": "A numerical success does not establish transfer to an explanation of attention."
+      },
+      "answer": "The mask shape must align with the correct attention dimensions.",
+      "feedback": "Your explanation meets the stated rubric.",
+      "verdict": "correct",
+      "revision_message": null,
+      "hypotheses": [
+        {
+          "id": "tensor_shapes",
+          "score": 8,
+          "status": "supported"
+        },
+        {
+          "id": "broadcasting",
+          "score": 1,
+          "status": "under_consideration"
+        },
+        {
+          "id": "notation_to_code",
+          "score": 2,
+          "status": "under_consideration"
+        },
+        {
+          "id": "isolated_error",
+          "score": 0,
+          "status": "under_consideration"
+        }
+      ]
+    }
+  ],
+  "result": {
+    "ok": true,
+    "engine": "knowledge-dna",
+    "engine_version": "3.0",
+    "next": {
+      "kind": "complete",
+      "reason": "Independent and transfer observations recorded; no permanent mastery claim is made."
+    },
+    "report": {
+      "original_goal": "Tensor implementation",
+      "diagnosis": {
+        "status": "supported",
+        "hypothesis": "tensor_shapes",
+        "basis": [
+          "shape_initial",
+          "shape_followup"
+        ],
+        "observed_pattern": "Two distinct checks of this operation were incorrect; the cause remains a likely explanation.",
+        "language": "A likely explanation on these examples; not a personal trait."
+      },
+      "observed_difficulty": "Two distinct checks of this operation were incorrect; the cause remains a likely explanation.",
+      "understanding": {
+        "calculation": "demonstrated on independent examples",
+        "transfer": "demonstrated in a new application"
+      },
+      "intervention": {
+        "id": "tensor_shapes",
+        "delivered": true,
+        "requested_directly": false,
+        "practice": "correct",
+        "independent": "correct",
+        "transfer": "correct"
+      },
+      "improvement_verified": true,
+      "recall_application_mismatch": false,
+      "diagnostic_questions_used": 2,
+      "next_step": "Recheck tensor_shapes in a later session, then continue toward Tensor implementation."
+    },
+    "feedback": "Your explanation meets the stated rubric.",
+    "revision_message": null,
+    "hypotheses": [
+      {
+        "id": "tensor_shapes",
+        "score": 8,
+        "status": "supported"
+      },
+      {
+        "id": "broadcasting",
+        "score": 1,
+        "status": "under_consideration"
+      },
+      {
+        "id": "notation_to_code",
+        "score": 2,
+        "status": "under_consideration"
+      },
+      {
+        "id": "isolated_error",
+        "score": 0,
+        "status": "under_consideration"
+      }
+    ],
+    "academic_evidence": {
+      "sources_used": 3,
+      "synthetic": true,
+      "connections": {
+        "canvas": "not_requested",
+        "google": "not_requested"
+      }
+    },
+    "last_observation": {
+      "question_id": "transfer_shapes",
+      "verdict": "correct",
+      "signal": "correct"
+    },
+    "investigation": {
+      "hypotheses": [
+        {
+          "id": "tensor_shapes",
+          "description": "Difficulty tracking dimensions when permuting tensor axes.",
+          "for": [
+            "shape_initial",
+            "shape_followup"
+          ],
+          "against": [],
+          "source_priors": [
+            "synthetic-canvas-1",
+            "synthetic-canvas-2"
+          ]
+        },
+        {
+          "id": "broadcasting",
+          "description": "Difficulty aligning trailing dimensions for broadcasting.",
+          "for": [],
+          "against": [],
+          "source_priors": [
+            "synthetic-canvas-2"
+          ]
+        },
+        {
+          "id": "notation_to_code",
+          "description": "Difficulty translating an axis operation into implementation notation.",
+          "for": [],
+          "against": [],
+          "source_priors": [
+            "synthetic-canvas-1",
+            "synthetic-docs-1"
+          ]
+        },
+        {
+          "id": "isolated_error",
+          "description": "Earlier mistakes may be isolated; current evidence may not show a persistent gap.",
+          "for": [],
+          "against": [],
+          "source_priors": []
+        }
+      ],
+      "path": [
+        {
+          "question_id": "shape_initial",
+          "answer": "[2, 4, 8]",
+          "verdict": "incorrect"
+        },
+        {
+          "question_id": "shape_followup",
+          "answer": "[3, 5, 7]",
+          "verdict": "incorrect"
+        },
+        {
+          "question_id": "practice_shapes",
+          "answer": "[2, 5, 3]",
+          "verdict": "correct"
+        },
+        {
+          "question_id": "independent_shapes",
+          "answer": "[9, 6, 4]",
+          "verdict": "correct"
+        },
+        {
+          "question_id": "transfer_shapes",
+          "answer": "The mask shape must align with the correct attention dimensions.",
+          "verdict": "correct"
+        }
+      ],
+      "sources": [
+        {
+          "id": "synthetic-canvas-1",
+          "title": "SYNTHETIC Assignment 1",
+          "excerpt": "Incorrect tensor shape after reshaping.",
+          "source_type": "canvas_feedback",
+          "url": "https://canvas.example.invalid/assignments/1",
+          "reference": "",
+          "evidence_type": "direct",
+          "supports": [
+            "tensor_shapes",
+            "notation_to_code"
+          ],
+          "synthetic": true
+        },
+        {
+          "id": "synthetic-canvas-2",
+          "title": "SYNTHETIC Assignment 2",
+          "excerpt": "Mask applied to the wrong dimension.",
+          "source_type": "canvas_feedback",
+          "url": "https://canvas.example.invalid/assignments/2",
+          "reference": "",
+          "evidence_type": "direct",
+          "supports": [
+            "tensor_shapes",
+            "broadcasting"
+          ],
+          "synthetic": true
+        },
+        {
+          "id": "synthetic-docs-1",
+          "title": "SYNTHETIC attention notes",
+          "excerpt": "Scaled dot-product attention computes softmax(QK^T / sqrt(d_k)) V. This is an example note, not evidence of any real student's understanding.",
+          "source_type": "google_docs",
+          "url": "",
+          "reference": "bundled synthetic notes, paragraph 1",
+          "evidence_type": "direct",
+          "supports": [
+            "notation_to_code"
+          ],
+          "synthetic": true
+        }
+      ],
+      "connections": {
+        "canvas": "not_requested",
+        "google": "not_requested"
+      },
+      "assessments": [
+        {
+          "question_id": "practice_shapes",
+          "role": "practice",
+          "answer_excerpt": "[2, 5, 3]",
+          "verdict": "correct"
+        },
+        {
+          "question_id": "independent_shapes",
+          "role": "verification",
+          "answer_excerpt": "[9, 6, 4]",
+          "verdict": "correct"
+        },
+        {
+          "question_id": "transfer_shapes",
+          "role": "transfer",
+          "answer_excerpt": "The mask shape must align with the correct attention dimensions.",
+          "verdict": "correct"
+        }
+      ]
+    },
+    "revision": 7
+  }
+}

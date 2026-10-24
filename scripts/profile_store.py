@@ -139,6 +139,15 @@ class ProfileStore:
             raise StoreError("Malformed profile; preserve the file.", "corrupt_profile")
         if profile["learner_id"] != learner or profile["revision"] < 0:
             raise StoreError("Profile identity or revision is invalid", "corrupt_profile")
+        if "forensics" in profile:
+            record = profile["forensics"]
+            if not isinstance(record, dict) or not isinstance(record.get("history"), list):
+                raise StoreError("Invalid forensic profile; preserve the file", "corrupt_profile")
+            if record.get("version") != 3:
+                raise StoreError("Unsupported forensic schema; preserve the file", "unsupported_schema")
+            if (not isinstance(record.get("current"), dict) or len(record["history"]) > 10
+                    or any(not isinstance(s, dict) for s in record["history"])):
+                raise StoreError("Invalid forensic session history", "corrupt_profile")
         statuses = {"untested", "suspected", "uncertain", "likely_gap", "demonstrated", "needs_practice"}
         for record in profile["concepts"].values():
             if (not isinstance(record, dict) or record.get("status") not in statuses
@@ -207,6 +216,17 @@ class ProfileStore:
                 if os.path.exists(temporary):
                     os.unlink(temporary)
             return profile
+
+    def recover(self, learner):
+        """Explicitly quarantine corrupt bytes; never silently discard a learning record."""
+        with self.locked(learner):
+            path = self.path(learner)
+            if not path.exists() or path.is_symlink():
+                raise StoreError("No regular profile is available to quarantine")
+            quarantine = path.with_name(path.name + ".corrupt-" + utc_now().replace(":", "-") + ".bak")
+            os.replace(path, quarantine)
+            return {"quarantined": str(quarantine), "original_preserved": True,
+                    "message": "Original bytes preserved. Start a new investigation explicitly."}
 
 
 def main():
