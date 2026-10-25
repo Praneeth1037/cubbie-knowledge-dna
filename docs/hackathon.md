@@ -68,8 +68,8 @@ was a connected Canvas assignment, or that an unsaved session was persisted.
 - [x] Student moment and working local investigation
 - [x] Valid Agent Skills entry point; local numerical/CLI tests
 - [x] Public repository already exists
-- [ ] Latest 3.0 commit pushed and official validator/public-clone check passes
-- [ ] Real updated Cubbie main flow, save and resume verified
+- [x] Writing-demo runtime commit pushed; official validator and Linux CI pass
+- [x] Writing flow, save/resume and evidence receipt checked through real Cubbie using synthetic replies
 - [ ] Actual Canvas/Docs retrieval verified, or clearly disclosed as not tested
 - [ ] Team name and 1–4 members confirmed
 - [ ] Submission account checked with official `whoami`; existing entries checked with `mine`

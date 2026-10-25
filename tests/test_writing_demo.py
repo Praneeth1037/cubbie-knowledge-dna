@@ -61,6 +61,25 @@ class WritingTests(unittest.TestCase):
         r=self.service.handle({'action':'start','scenario':'writing'});r=self.reply(r,'B')
         resumed=DiagnosticService(lambda:ProfileStore(self.temp.name)).handle({'action':'resume'})
         self.assertEqual(resumed['next'],r['next'])
+    def test_fresh_verification_preserves_failed_attempt_then_records_transfer(self):
+        r=self.service.handle({'action':'start','scenario':'writing'})
+        overrides=dict(TRAJECTORIES['writing']['answers'],writing_independent='A')
+        for _ in range(15):
+            n=r['next']
+            if n['kind']=='intervention':
+                r=self.service.handle({'action':'repair','session_id':r['session_id'],'revision':r['revision']})
+            elif n['kind']=='question':
+                r=self.reply(r,answer_for(self.service.engine.questions[n['question_id']],overrides))
+            else:break
+        self.assertFalse(r['report']['improvement_verified'])
+        r=self.service.handle({'action':'verify','session_id':r['session_id'],'revision':r['revision']})
+        self.assertEqual(r['next']['question_id'],'writing_independent_followup')
+        r=self.reply(r,'Option A')
+        r=self.reply(r,'I would connect the evidence to the main point and explain why it supports the claim.')
+        self.assertTrue(r['report']['improvement_verified'])
+        observations=ProfileStore(self.temp.name).load('student')['forensics']['current']['observations']
+        checks=[o for o in observations if self.service.engine.questions[o['question_id']]['role']=='verification']
+        self.assertEqual([(o['answer'],o['verdict']) for o in checks],[('A','incorrect'),('Option A','correct')])
 
 
 class FailedIndependentRegressionTests(unittest.TestCase):

@@ -9,10 +9,12 @@ uses competing hypotheses and adaptive experiments to discover which explanation
 student actually needs. It runs as a **Cubbie Agent Skill**: no frontend, backend, GPU,
 paid API, service account or third-party Python dependency.
 
-**Status:** implemented and tested locally; synthetic transcripts and executed evaluation
-are included. An earlier Skill installed in Cubbie, but its saved diagnostic did not run in
-the reported exchange. **The 3.0 main flow still requires a real Cubbie acceptance test.**
-Connected Canvas/Google retrieval has not been verified on a real student account.
+**Status:** implemented, locally tested, and the simple writing demo was tested through a
+real, authorized Cubbie iMessage conversation using scripted synthetic responses. Adaptive
+investigation, hypothesis revision, targeted repair, fresh verification, transfer and
+save/resume were observed; the reported evidence digest matched a local replay. The updated
+Transformer flow is regression-tested locally. Connected Canvas/Google retrieval has not
+been verified on a real student account. See [live verification](docs/verification.md).
 
 ## Try it
 

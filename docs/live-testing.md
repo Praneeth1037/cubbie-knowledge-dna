@@ -1,4 +1,14 @@
-# Real Cubbie acceptance test — 3.0 pending
+# Real Cubbie acceptance tests
+
+The simple writing demo at runtime commit `690453d` was exercised through an authorized
+real iMessage conversation, using built-in examples, scripted answers and a separate demo
+learner. It narrowed the hypotheses, taught the supported skill, resumed the same pending
+question, preserved an earlier failed check, then passed a different independent item and
+transfer. The final reported digest matched a local replay of all nine recorded answers.
+This is a live integration check using synthetic inputs, not a study of student learning.
+No private chat transcript, contact number or real academic record is published here.
+
+The Transformer and connected-source checks below still require live acceptance testing.
 
 A local replay verifies Python behavior, not Cubbie's native tool execution, account access
 or deployment. The earlier installed version fell back to unsaved tutoring. Do not call the
@@ -46,6 +56,7 @@ obtain the exact command's JSON error, source folder and whether a sandbox tool 
 Do not diagnose an absent environment variable from a conversational paraphrase alone.
 Update the repository, text the branch link again, and repeat the failed rows.
 
-No automated test here accesses a real Cubbie account. No Canvas or Google account was used
+The checked-in unittest suite does not access a real Cubbie account; the developer-side
+Messages integration test above was separate and explicitly authorized. No Canvas or Google account was used
 for the checked-in synthetic material. Submission and external social posts require a
 reviewable preview and explicit approval; the official form goes public immediately.

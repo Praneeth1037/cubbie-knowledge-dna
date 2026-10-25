@@ -29,7 +29,7 @@ name is preserved so an installed copy can update.
 | Reproducible evaluation | evaluate.py recomputes policies; synthetic limitations disclosed; snapshots reproduce exactly |
 | Short iMessage UX and privacy | SKILL.md instructions, consent before records/actions, native documents for long reports |
 | Public installable folder | existing GitHub repository; official validator and anonymous clone/link check required after final push |
-| Real execution on Cubbie | **Pending** 3.0 manual checklist; earlier installation is not proof |
+| Real execution on Cubbie | **Writing demo observed live** using scripted synthetic replies, save/resume and a matching replay digest; Transformer live checks remain pending |
 | Connected Canvas + Google execution | **Not tested on a real account**; synthetic examples are explicitly labeled |
 | Hackathon submission | **Not submitted**; requires team/account details and approval of public preview |
 
