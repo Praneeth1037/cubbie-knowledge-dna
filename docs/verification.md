@@ -4,7 +4,7 @@ Run on October 24, 2026 using 3.12.6.
 
 ```text
 ----------------------------------------------------------------------
-Ran 113 tests in 2.230s
+Ran 124 tests in 2.627s
 
 OK
 ```
@@ -14,3 +14,5 @@ The official Cubbie Skill validator also passes. Nine isolated local replays com
 The same-initial-answer test passes, generated transcripts reproduce exactly, and actual evaluation details are in `evaluation/results.json`. GitHub Actions independently runs Python 3.12 Linux tests, demos and artifact-regeneration checks after publication.
 
 The updated 3.0 flow and connected account retrieval still require real Cubbie testing. Earlier installation alone does not verify them.
+
+A simple writing demo now distinguishes point, evidence and explanation without arithmetic. The reported correct-opening / failed-independent sequence is a regression test: diagnosis continues rather than ending. Previously explained openings can be excluded from fresh checks.

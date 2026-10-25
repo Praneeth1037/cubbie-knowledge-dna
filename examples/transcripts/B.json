@@ -256,7 +256,7 @@
       "question_id": "practice_weighted",
       "prompt": "Practice: weights [0.5,0.5] combine [6,2] and [2,4]. Give the weighted sum.",
       "selection": {
-        "reason": "Try new values after the delivered targeted lesson."
+        "reason": "Try a different example after the delivered targeted lesson."
       },
       "answer": [
         4,
@@ -328,7 +328,7 @@
       "question_id": "transfer_attention",
       "prompt": "Why does a Transformer multiply attention weights by value vectors and add the results?",
       "selection": {
-        "reason": "A numerical success does not establish transfer to an explanation of attention."
+        "reason": "An independent answer does not establish transfer to a new application."
       },
       "answer": "Attention combines information from value vectors according to their weights.",
       "feedback": "Your explanation meets the stated rubric.",

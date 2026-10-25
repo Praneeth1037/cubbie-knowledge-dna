@@ -22,6 +22,7 @@ TRAJECTORIES = {
     'scalar_gap': {'label': 'scalar_multiplication', 'answers': {'attention_initial': '1', 'scalar_probe': [2,0], 'scalar_followup': [4,2]}},
     'addition_gap': {'label': 'vector_addition', 'answers': {'attention_initial': '1', 'addition_probe': [1.5,0], 'addition_followup': [2,3]}},
     'isolated': {'label': None, 'answers': {'attention_initial': [1,1]}},
+    'writing': {'label': 'writing_link', 'scenario': 'writing', 'answers': {'writing_initial': 'B', 'writing_link_probe': 'B', 'writing_link_followup': 'A'}},
 }
 
 
@@ -31,6 +32,8 @@ def answer_for(question, overrides):
     if question['id'] == 'recall_qkv':
         return RECALL
     if question['role'] == 'transfer':
+        if question['domain'] == 'writing':
+            return 'I would connect the evidence to the main point and explain why it supports the claim.'
         return 'The mask shape must align with the correct attention dimensions.' if question['domain'] == 'shapes' else TRANSFER
     return question['expected']
 

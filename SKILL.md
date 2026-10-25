@@ -1,6 +1,6 @@
 ---
 name: cubbie-knowledge-dna
-description: Investigates why attention calculations go wrong using competing hypotheses, adaptive experiments, targeted repair and independent checks. Use when students get attention wrong, lose marks despite understanding theory, ask what foundation is missing, claim they understand attention, or want to resume Knowledge DNA. Also handle requests to show hypotheses, explain a diagnostic question, or verify learning.
+description: Investigates why a student struggles using competing hypotheses, short experiments, targeted repair and independent checks. Use for a simple writing or paragraph demo, missing main points or explanations, attention errors, lost marks despite understanding theory, or resuming Knowledge DNA. Also handle requests to show hypotheses, explain a diagnostic question, or verify learning.
 ---
 
 # Knowledge DNA — AI Learning Forensics
@@ -51,6 +51,12 @@ For a new session, the file is:
 ```
 
 Use `false_mastery` when the student asks to be quizzed on what they already understand.
+For a simple demo without calculations, use `"scenario":"writing"`. Trigger this for
+requests about writing a paragraph, supporting a main point, or a non-math Knowledge DNA
+demo. Its short A/B questions distinguish recognizing the point, choosing relevant evidence,
+and explaining the connection. Use this demo when no topic is specified. For a deliberate
+fresh start, use restart rather than resuming the previous completed topic.
+
 Use `academic_forensics` to investigate tensor-shape/implementation difficulties. Start
 resumes an existing investigation; restart deliberately creates another and retains history.
 Use an opaque learner ID in this student's private sandbox, never an email address.
@@ -125,6 +131,11 @@ assessment. An ordinary explanation is available if the student explicitly asks 
   delivery and obtain practice. Do not acknowledge a lesson that was not delivered.
 - `verification` is a fresh problem with different conditions. Don't reuse the worked example,
   give hints, or mark success without scoring the student's independent answer.
+  If a correct opening is followed by a wrong independent answer before any lesson, the
+  engine continues diagnosis in the same session. Do not end it or jump to explanation.
+  If an answer was already explained earlier, pass `initial_exposed:true` or list the
+  known question IDs in `exposed_questions` on restart. Do not count an exposed answer as
+  independent evidence. The engine substitutes an unused opening/check where available.
 - `transfer` checks explanation in an application. The local rubric is conservative: partial
   or ambiguous wording does not prove transfer. Do not silently replace its score with praise.
 - `complete` / `uncertain`: run `report`. Summarize observed difficulty, tested hypotheses,

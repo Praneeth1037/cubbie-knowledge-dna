@@ -101,7 +101,7 @@
       "question_id": "practice_shapes",
       "prompt": "Practice: shape (2,3,5), swap axes 1 and 2. What shape results?",
       "selection": {
-        "reason": "Try new values after the delivered targeted lesson."
+        "reason": "Try a different example after the delivered targeted lesson."
       },
       "answer": [
         2,
@@ -175,7 +175,7 @@
       "question_id": "transfer_shapes",
       "prompt": "Why track tensor dimensions when applying a mask to attention scores?",
       "selection": {
-        "reason": "A numerical success does not establish transfer to an explanation of attention."
+        "reason": "An independent answer does not establish transfer to a new application."
       },
       "answer": "The mask shape must align with the correct attention dimensions.",
       "feedback": "Your explanation meets the stated rubric.",

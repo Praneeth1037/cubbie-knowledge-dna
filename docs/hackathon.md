@@ -9,6 +9,10 @@ and notes with permission, test competing causes one question at a time, change 
 when evidence disagrees, then teach a specific repair and check a new problem. The result
 is an inspectable learning investigation, not another generic explanation.”
 
+## Simple non-math demo
+
+Use `python3 scripts/demo_runner.py --scenario writing --json` or [the writing transcript](../examples/writing_demo.md). Ask why a paragraph lists facts without making its argument clear. Reply B on the opening, B on the main-point probe (correct), A on relevant evidence (correct), then B and A on the two explanation checks (incorrect). The engine should revise away from a missing main point, teach only the evidence-to-point connection, and verify a new paragraph. Student replies are short choices; there are no calculations.
+
 ## Three-minute interactive demo
 
 Use the actual Cubbie installation only after the real-flow test. Have a local synthetic

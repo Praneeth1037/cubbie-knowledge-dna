@@ -29,11 +29,22 @@ lesson acknowledgment must refer to the latest output. Learner IDs default to `s
 must be 1–64 letters, digits, underscores or hyphens, beginning with a letter/digit.
 `message_id` is optional (at most 80 characters) and deduplicates a native incoming message.
 
-Scenarios: `attention`, `false_mastery`, `academic_forensics`. Diagnostic question budget:
+Scenarios: `writing` (simple A/B paragraph demo), `attention`, `false_mastery`, `academic_forensics`. Diagnostic question budget:
 integer 3–10, default 8. A question is never repeated inside an investigation. Practice,
 independent verification and transfer are separate phases outside that diagnostic budget.
 `start` preserves an existing session; `restart` archives it and starts a fresh assessment.
 No expiry or permanent-mastery inference is attached to old demonstrations.
+
+Writing start/restart example: `{"learner_id":"student","scenario":"writing"}`. Its
+hypotheses are writing_claim, writing_evidence, writing_link and writing_isolated. A/B
+responses are scored without numerical math. Each targeted finding still requires two
+distinct direct errors, and a correct check can reduce an earlier hypothesis's support.
+
+On start/restart, `initial_exposed:true` replaces the familiar opening. Optional
+`exposed_questions` contains at most 30 known IDs and excludes those items from selection.
+Never relabel a previously explained response as independent. A failed independent check
+before intervention returns to diagnosis in the same session; after repair, a different
+unused independent item is selected. No item is repeated to manufacture improvement.
 
 ## Successful output
 

@@ -10,6 +10,15 @@ def evaluate(question, answer):
     if isinstance(answer, str) and len(answer) > 512:
         raise ValueError("Answers must be at most 512 characters")
     kind = question.get("answer_type", "numeric")
+    if kind == "choice":
+        if not isinstance(answer, str):
+            return result("ambiguous", "unscored", "Please choose A or B.")
+        match = re.fullmatch(r"\s*(?:option\s+|answer\s+)?([ab])\s*[.)]?\s*", answer, re.IGNORECASE)
+        if not match:
+            return result("ambiguous", "unscored", "Please choose A or B so I can check the choice without guessing your meaning.")
+        if match.group(1).upper() == question["expected"]:
+            return result("correct", "correct", "That choice is correct.")
+        return result("incorrect", "incorrect", "That choice gives us something to investigate; it does not establish the cause yet.")
     if kind == "rubric":
         if not isinstance(answer, str):
             return result("ambiguous", "unscored", "Please explain in a short sentence.")

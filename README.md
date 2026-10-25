@@ -16,6 +16,20 @@ Connected Canvas/Google retrieval has not been verified on a real student accoun
 
 ## Try it
 
+**Simple demo without math:** investigate why a paragraph lists facts without making its
+argument clear. Short A/B choices distinguish recognizing a main point, selecting evidence,
+and explaining their connection. A correct early answer can rule against one explanation;
+two later failures can support another. The engine then teaches only the missing step.
+
+```sh
+python3 scripts/demo_runner.py --scenario writing --json
+```
+
+In Cubbie: “Start a new Knowledge DNA writing demo. My paragraphs list facts, but my teacher
+says I don't explain my point. Investigate why before teaching. Use the Python engine.”
+Use `scenario: writing` on the start/restart request. The existing Transformer demo remains
+available. See [the non-math transcript](examples/writing_demo.md).
+
 Python 3.12 on Linux or macOS:
 
 ```sh
@@ -220,7 +234,7 @@ Regenerate transcripts with `python3 scripts/demo_runner.py --output examples/tr
 The automated suite covers numerical scoring, incomplete/ambiguous replies, counterevidence,
 question selection, repetitions, stopping, targeted repair, independent checks, false mastery,
 CLI execution, persistence/restart, corruption, temporary mode, missing connections,
-provenance and evaluation. The local verification snapshot records **113 passing tests**; see [verification.md](docs/verification.md). CI runs on Python 3.12
+provenance and evaluation. See [the actual verification snapshot](docs/verification.md) for the latest test result. CI runs on Python 3.12
 Linux; local development uses Python 3.12.6. Dependencies remain standard-library only.
 
 ## Privacy and limits

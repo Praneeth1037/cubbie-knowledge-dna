@@ -1,0 +1,494 @@
+{
+  "trajectory": "writing",
+  "synthetic": true,
+  "expected_label": "writing_link",
+  "trace": [
+    {
+      "question_id": "writing_initial",
+      "prompt": "A paragraph says: 'School gardens are worth funding. Students learn where food comes from.' Which ending strengthens the argument? A: This practical learning is a reason to invest in gardens. B: The garden has a green gate. Reply A or B.",
+      "selection": {
+        "reason": "Establish the initial observation without explaining the answer."
+      },
+      "answer": "B",
+      "feedback": "That choice gives us something to investigate; it does not establish the cause yet.",
+      "verdict": "incorrect",
+      "revision_message": null,
+      "hypotheses": [
+        {
+          "id": "writing_claim",
+          "score": 1,
+          "status": "under_consideration"
+        },
+        {
+          "id": "writing_evidence",
+          "score": 1,
+          "status": "under_consideration"
+        },
+        {
+          "id": "writing_link",
+          "score": 1,
+          "status": "under_consideration"
+        },
+        {
+          "id": "writing_isolated",
+          "score": 1,
+          "status": "under_consideration"
+        }
+      ]
+    },
+    {
+      "question_id": "writing_claim_probe",
+      "prompt": "Which sentence states a main point? A: The library opens at eight. B: Schools should keep libraries open later. Reply A or B.",
+      "selection": {
+        "reason": "Distinguish remaining explanations with an unasked operation check.",
+        "score": 12,
+        "separated_pair_weight": 12,
+        "hypothesis_coverage": 2,
+        "difficulty_cost": 2,
+        "prerequisite_policy": "Isolate graph prerequisites before testing their combination; answered does not mean mastered.",
+        "assumption": "Categorical predictions and ordinal evidence weights are authored heuristics, not probabilities."
+      },
+      "answer": "B",
+      "feedback": "That choice is correct.",
+      "verdict": "correct",
+      "revision_message": "This correct check makes the following explanation less likely: The student may not distinguish a main point from a factual detail.",
+      "hypotheses": [
+        {
+          "id": "writing_claim",
+          "score": -2,
+          "status": "less_supported"
+        },
+        {
+          "id": "writing_evidence",
+          "score": 1,
+          "status": "under_consideration"
+        },
+        {
+          "id": "writing_link",
+          "score": 1,
+          "status": "under_consideration"
+        },
+        {
+          "id": "writing_isolated",
+          "score": 1,
+          "status": "under_consideration"
+        }
+      ]
+    },
+    {
+      "question_id": "writing_evidence_probe",
+      "prompt": "Main point: Keep the library open later. Which detail supports it? A: Many students lack a quiet evening study space. B: The library has blue chairs. Reply A or B.",
+      "selection": {
+        "reason": "Distinguish remaining explanations with an unasked operation check.",
+        "score": 8,
+        "separated_pair_weight": 8,
+        "hypothesis_coverage": 2,
+        "difficulty_cost": 2,
+        "prerequisite_policy": "Isolate graph prerequisites before testing their combination; answered does not mean mastered.",
+        "assumption": "Categorical predictions and ordinal evidence weights are authored heuristics, not probabilities."
+      },
+      "answer": "A",
+      "feedback": "That choice is correct.",
+      "verdict": "correct",
+      "revision_message": "This correct check makes the following explanation less likely: The student may not distinguish relevant evidence from an unrelated detail.",
+      "hypotheses": [
+        {
+          "id": "writing_claim",
+          "score": -2,
+          "status": "less_supported"
+        },
+        {
+          "id": "writing_evidence",
+          "score": -2,
+          "status": "less_supported"
+        },
+        {
+          "id": "writing_link",
+          "score": 1,
+          "status": "under_consideration"
+        },
+        {
+          "id": "writing_isolated",
+          "score": 1,
+          "status": "under_consideration"
+        }
+      ]
+    },
+    {
+      "question_id": "writing_link_probe",
+      "prompt": "Main point: Bike lanes make school commutes safer. Evidence: Separate lanes reduce car-bike collisions. Which sentence explains the link? A: Fewer collisions mean less risk for students cycling to school. B: There are lanes. Reply A or B.",
+      "selection": {
+        "reason": "Distinguish remaining explanations with an unasked operation check.",
+        "score": 4,
+        "separated_pair_weight": 4,
+        "hypothesis_coverage": 2,
+        "difficulty_cost": 2,
+        "prerequisite_policy": "Isolate graph prerequisites before testing their combination; answered does not mean mastered.",
+        "assumption": "Categorical predictions and ordinal evidence weights are authored heuristics, not probabilities."
+      },
+      "answer": "B",
+      "feedback": "That choice gives us something to investigate; it does not establish the cause yet.",
+      "verdict": "incorrect",
+      "revision_message": null,
+      "hypotheses": [
+        {
+          "id": "writing_claim",
+          "score": -2,
+          "status": "less_supported"
+        },
+        {
+          "id": "writing_evidence",
+          "score": -2,
+          "status": "less_supported"
+        },
+        {
+          "id": "writing_link",
+          "score": 4,
+          "status": "under_consideration"
+        },
+        {
+          "id": "writing_isolated",
+          "score": 1,
+          "status": "under_consideration"
+        }
+      ]
+    },
+    {
+      "question_id": "writing_link_followup",
+      "prompt": "Main point: Daily reading builds vocabulary. Evidence: Books introduce unfamiliar words. Which sentence explains the link? A: Some books are paperbacks. B: Meeting new words regularly helps readers learn their meanings. Reply A or B.",
+      "selection": {
+        "reason": "Distinguish remaining explanations with an unasked operation check.",
+        "score": 13,
+        "separated_pair_weight": 10,
+        "hypothesis_coverage": 5,
+        "difficulty_cost": 2,
+        "prerequisite_policy": "Isolate graph prerequisites before testing their combination; answered does not mean mastered.",
+        "assumption": "Categorical predictions and ordinal evidence weights are authored heuristics, not probabilities."
+      },
+      "answer": "A",
+      "feedback": "That choice gives us something to investigate; it does not establish the cause yet.",
+      "verdict": "incorrect",
+      "revision_message": null,
+      "hypotheses": [
+        {
+          "id": "writing_claim",
+          "score": -2,
+          "status": "less_supported"
+        },
+        {
+          "id": "writing_evidence",
+          "score": -2,
+          "status": "less_supported"
+        },
+        {
+          "id": "writing_link",
+          "score": 7,
+          "status": "supported"
+        },
+        {
+          "id": "writing_isolated",
+          "score": 1,
+          "status": "under_consideration"
+        }
+      ]
+    },
+    {
+      "kind": "lesson",
+      "repair": "writing_link",
+      "lesson": {
+        "explanation": "After giving evidence, explain why it supports your main point. Do not just add another fact.",
+        "example": "Point: More shade makes playgrounds comfortable. Evidence: Shade keeps surfaces cooler. Link: Cooler surfaces let students play without overheating.",
+        "connection": "Use point, evidence, then a sentence explaining their connection in your next paragraph."
+      }
+    },
+    {
+      "question_id": "writing_practice_link",
+      "prompt": "Practice: School breakfast helps learning; hungry students struggle to concentrate. Which sentence explains why that supports the point? A: Less hunger helps students focus in lessons. B: Breakfast is sometimes hot. Reply A or B.",
+      "selection": {
+        "reason": "Try a different example after the delivered targeted lesson."
+      },
+      "answer": "A",
+      "feedback": "That choice is correct.",
+      "verdict": "correct",
+      "revision_message": null,
+      "hypotheses": [
+        {
+          "id": "writing_claim",
+          "score": -2,
+          "status": "less_supported"
+        },
+        {
+          "id": "writing_evidence",
+          "score": -2,
+          "status": "less_supported"
+        },
+        {
+          "id": "writing_link",
+          "score": 7,
+          "status": "supported"
+        },
+        {
+          "id": "writing_isolated",
+          "score": 1,
+          "status": "under_consideration"
+        }
+      ]
+    },
+    {
+      "question_id": "writing_independent",
+      "prompt": "Fresh independent example: Refill stations reduce plastic waste; students reuse bottles instead of buying disposables. Which explains the link? A: Some stations are silver. B: Reusing bottles means fewer plastic bottles are thrown away. Reply A or B.",
+      "selection": {
+        "reason": "Practice succeeded; now change the conditions independently."
+      },
+      "answer": "B",
+      "feedback": "That choice is correct.",
+      "verdict": "correct",
+      "revision_message": null,
+      "hypotheses": [
+        {
+          "id": "writing_claim",
+          "score": -2,
+          "status": "less_supported"
+        },
+        {
+          "id": "writing_evidence",
+          "score": -2,
+          "status": "less_supported"
+        },
+        {
+          "id": "writing_link",
+          "score": 7,
+          "status": "supported"
+        },
+        {
+          "id": "writing_isolated",
+          "score": 1,
+          "status": "under_consideration"
+        }
+      ]
+    },
+    {
+      "question_id": "writing_transfer",
+      "prompt": "How would you improve a new paragraph that lists facts but does not explain its main point? Answer in one sentence.",
+      "selection": {
+        "reason": "An independent answer does not establish transfer to a new application."
+      },
+      "answer": "I would connect the evidence to the main point and explain why it supports the claim.",
+      "feedback": "Your explanation meets the stated rubric.",
+      "verdict": "correct",
+      "revision_message": null,
+      "hypotheses": [
+        {
+          "id": "writing_claim",
+          "score": -2,
+          "status": "less_supported"
+        },
+        {
+          "id": "writing_evidence",
+          "score": -2,
+          "status": "less_supported"
+        },
+        {
+          "id": "writing_link",
+          "score": 7,
+          "status": "supported"
+        },
+        {
+          "id": "writing_isolated",
+          "score": 1,
+          "status": "under_consideration"
+        }
+      ]
+    }
+  ],
+  "result": {
+    "ok": true,
+    "engine": "knowledge-dna",
+    "engine_version": "3.0",
+    "next": {
+      "kind": "complete",
+      "reason": "Independent and transfer observations recorded; no permanent mastery claim is made."
+    },
+    "report": {
+      "original_goal": "Clear paragraph arguments",
+      "diagnosis": {
+        "status": "supported",
+        "hypothesis": "writing_link",
+        "basis": [
+          "writing_link_probe",
+          "writing_link_followup"
+        ],
+        "observed_pattern": "On two checks, the selected sentence did not explain how the evidence supports the main point.",
+        "language": "A likely explanation on these examples; not a personal trait."
+      },
+      "observed_difficulty": "On two checks, the selected sentence did not explain how the evidence supports the main point.",
+      "understanding": {
+        "paragraph_application": "demonstrated on independent examples",
+        "transfer": "demonstrated in a new application"
+      },
+      "intervention": {
+        "id": "writing_link",
+        "delivered": true,
+        "requested_directly": false,
+        "practice": "correct",
+        "independent": "correct",
+        "transfer": "correct"
+      },
+      "improvement_verified": true,
+      "recall_application_mismatch": false,
+      "diagnostic_questions_used": 5,
+      "next_step": "Recheck writing_link in a later session, then continue toward Clear paragraph arguments."
+    },
+    "feedback": "Your explanation meets the stated rubric.",
+    "revision_message": null,
+    "hypotheses": [
+      {
+        "id": "writing_claim",
+        "score": -2,
+        "status": "less_supported"
+      },
+      {
+        "id": "writing_evidence",
+        "score": -2,
+        "status": "less_supported"
+      },
+      {
+        "id": "writing_link",
+        "score": 7,
+        "status": "supported"
+      },
+      {
+        "id": "writing_isolated",
+        "score": 1,
+        "status": "under_consideration"
+      }
+    ],
+    "academic_evidence": {
+      "sources_used": 0,
+      "synthetic": false,
+      "connections": {
+        "canvas": "not_requested",
+        "google": "not_requested"
+      }
+    },
+    "last_observation": {
+      "question_id": "writing_transfer",
+      "verdict": "correct",
+      "signal": "correct"
+    },
+    "investigation": {
+      "hypotheses": [
+        {
+          "id": "writing_claim",
+          "description": "The student may not distinguish a main point from a factual detail.",
+          "for": [
+            "writing_initial"
+          ],
+          "against": [
+            "writing_claim_probe"
+          ],
+          "source_priors": []
+        },
+        {
+          "id": "writing_evidence",
+          "description": "The student may not distinguish relevant evidence from an unrelated detail.",
+          "for": [
+            "writing_initial"
+          ],
+          "against": [
+            "writing_evidence_probe"
+          ],
+          "source_priors": []
+        },
+        {
+          "id": "writing_link",
+          "description": "The student may not connect evidence to the main point.",
+          "for": [
+            "writing_initial",
+            "writing_link_probe",
+            "writing_link_followup"
+          ],
+          "against": [],
+          "source_priors": []
+        },
+        {
+          "id": "writing_isolated",
+          "description": "The response may be an isolated choice or instruction misunderstanding.",
+          "for": [
+            "writing_initial"
+          ],
+          "against": [],
+          "source_priors": []
+        }
+      ],
+      "path": [
+        {
+          "question_id": "writing_initial",
+          "answer": "B",
+          "verdict": "incorrect"
+        },
+        {
+          "question_id": "writing_claim_probe",
+          "answer": "B",
+          "verdict": "correct"
+        },
+        {
+          "question_id": "writing_evidence_probe",
+          "answer": "A",
+          "verdict": "correct"
+        },
+        {
+          "question_id": "writing_link_probe",
+          "answer": "B",
+          "verdict": "incorrect"
+        },
+        {
+          "question_id": "writing_link_followup",
+          "answer": "A",
+          "verdict": "incorrect"
+        },
+        {
+          "question_id": "writing_practice_link",
+          "answer": "A",
+          "verdict": "correct"
+        },
+        {
+          "question_id": "writing_independent",
+          "answer": "B",
+          "verdict": "correct"
+        },
+        {
+          "question_id": "writing_transfer",
+          "answer": "I would connect the evidence to the main point and explain why it supports the claim.",
+          "verdict": "correct"
+        }
+      ],
+      "sources": [],
+      "connections": {
+        "canvas": "not_requested",
+        "google": "not_requested"
+      },
+      "assessments": [
+        {
+          "question_id": "writing_practice_link",
+          "role": "practice",
+          "answer_excerpt": "A",
+          "verdict": "correct"
+        },
+        {
+          "question_id": "writing_independent",
+          "role": "verification",
+          "answer_excerpt": "B",
+          "verdict": "correct"
+        },
+        {
+          "question_id": "writing_transfer",
+          "role": "transfer",
+          "answer_excerpt": "I would connect the evidence to the main point and explain why it supports the claim.",
+          "verdict": "correct"
+        }
+      ]
+    },
+    "revision": 10
+  }
+}

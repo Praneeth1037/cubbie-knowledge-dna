@@ -1019,6 +1019,545 @@
         "notation_to_code": "correct",
         "isolated_error": "correct"
       }
+    },
+    {
+      "id": "independent_attention_followup",
+      "domain": "attention",
+      "concept": "attention_output",
+      "role": "verification",
+      "prompt": "Fresh independent check: values [6,2] and [2,10], weights [0.25,0.75]. What is the weighted output?",
+      "expected": [
+        3,
+        8
+      ],
+      "tests": [],
+      "direct_test": null,
+      "requires": [],
+      "patterns": [],
+      "evidence": {},
+      "difficulty": 1,
+      "priority": 0,
+      "opening": false,
+      "answer_type": "numeric",
+      "predictions": {
+        "incomplete_response": "correct",
+        "scalar_multiplication": "correct",
+        "vector_addition": "correct",
+        "weighted_aggregation": "correct"
+      }
+    },
+    {
+      "id": "attention_fresh_initial",
+      "domain": "attention",
+      "concept": "attention_output",
+      "role": "diagnostic",
+      "prompt": "Fresh attention challenge: values [8,4] and [0,8], weights [0.25,0.75]. What is the two-number output?",
+      "expected": [
+        2,
+        7
+      ],
+      "tests": [],
+      "direct_test": null,
+      "requires": [],
+      "patterns": [],
+      "evidence": {
+        "incomplete": {
+          "incomplete_response": 1,
+          "scalar_multiplication": 1,
+          "vector_addition": 1,
+          "weighted_aggregation": 1
+        },
+        "incorrect": {
+          "incomplete_response": 1,
+          "scalar_multiplication": 1,
+          "vector_addition": 1,
+          "weighted_aggregation": 1
+        },
+        "unweighted": {
+          "weighted_aggregation": 2
+        },
+        "average": {
+          "weighted_aggregation": 2
+        },
+        "winner": {
+          "weighted_aggregation": 2
+        }
+      },
+      "difficulty": 2,
+      "priority": 0,
+      "opening": true,
+      "answer_type": "numeric",
+      "predictions": {
+        "incomplete_response": "correct",
+        "scalar_multiplication": "correct",
+        "vector_addition": "correct",
+        "weighted_aggregation": "correct"
+      }
+    },
+    {
+      "id": "writing_initial",
+      "domain": "writing",
+      "concept": "paragraph_reasoning",
+      "role": "diagnostic",
+      "prompt": "A paragraph says: 'School gardens are worth funding. Students learn where food comes from.' Which ending strengthens the argument? A: This practical learning is a reason to invest in gardens. B: The garden has a green gate. Reply A or B.",
+      "expected": "A",
+      "tests": [],
+      "direct_test": null,
+      "requires": [],
+      "patterns": [],
+      "evidence": {
+        "incorrect": {
+          "writing_claim": 1,
+          "writing_evidence": 1,
+          "writing_link": 1,
+          "writing_isolated": 1
+        },
+        "unscored": {}
+      },
+      "difficulty": 1,
+      "priority": 0,
+      "opening": true,
+      "answer_type": "choice",
+      "predictions": {
+        "writing_claim": "correct",
+        "writing_evidence": "correct",
+        "writing_link": "correct",
+        "writing_isolated": "correct"
+      }
+    },
+    {
+      "id": "writing_claim_probe",
+      "domain": "writing",
+      "concept": "writing_claim",
+      "role": "diagnostic",
+      "prompt": "Which sentence states a main point? A: The library opens at eight. B: Schools should keep libraries open later. Reply A or B.",
+      "expected": "B",
+      "tests": [
+        "writing_claim"
+      ],
+      "direct_test": "writing_claim",
+      "requires": [],
+      "patterns": [],
+      "evidence": {
+        "correct": {
+          "writing_claim": -3
+        },
+        "incorrect": {
+          "writing_claim": 3
+        }
+      },
+      "difficulty": 1,
+      "priority": 10,
+      "opening": false,
+      "answer_type": "choice",
+      "predictions": {
+        "writing_claim": "error",
+        "writing_evidence": "correct",
+        "writing_link": "correct",
+        "writing_isolated": "correct"
+      }
+    },
+    {
+      "id": "writing_claim_followup",
+      "domain": "writing",
+      "concept": "writing_claim",
+      "role": "diagnostic",
+      "prompt": "Which sentence states a viewpoint? A: Schools should provide quiet reading time. B: Our class reads for twenty minutes. Reply A or B.",
+      "expected": "A",
+      "tests": [
+        "writing_claim"
+      ],
+      "direct_test": "writing_claim",
+      "requires": [
+        "writing_claim_probe"
+      ],
+      "patterns": [],
+      "evidence": {
+        "correct": {
+          "writing_claim": -3
+        },
+        "incorrect": {
+          "writing_claim": 3
+        }
+      },
+      "difficulty": 1,
+      "priority": 12,
+      "opening": false,
+      "answer_type": "choice",
+      "predictions": {
+        "writing_claim": "error",
+        "writing_evidence": "correct",
+        "writing_link": "correct",
+        "writing_isolated": "correct"
+      },
+      "after_error": "writing_claim_probe"
+    },
+    {
+      "id": "writing_evidence_probe",
+      "domain": "writing",
+      "concept": "writing_evidence",
+      "role": "diagnostic",
+      "prompt": "Main point: Keep the library open later. Which detail supports it? A: Many students lack a quiet evening study space. B: The library has blue chairs. Reply A or B.",
+      "expected": "A",
+      "tests": [
+        "writing_evidence"
+      ],
+      "direct_test": "writing_evidence",
+      "requires": [],
+      "patterns": [],
+      "evidence": {
+        "correct": {
+          "writing_evidence": -3
+        },
+        "incorrect": {
+          "writing_evidence": 3
+        }
+      },
+      "difficulty": 1,
+      "priority": 9,
+      "opening": false,
+      "answer_type": "choice",
+      "predictions": {
+        "writing_claim": "correct",
+        "writing_evidence": "error",
+        "writing_link": "correct",
+        "writing_isolated": "correct"
+      }
+    },
+    {
+      "id": "writing_evidence_followup",
+      "domain": "writing",
+      "concept": "writing_evidence",
+      "role": "diagnostic",
+      "prompt": "Main point: Schools should offer breakfast. Which detail supports it? A: The cafeteria door is red. B: Hungry students struggle to concentrate. Reply A or B.",
+      "expected": "B",
+      "tests": [
+        "writing_evidence"
+      ],
+      "direct_test": "writing_evidence",
+      "requires": [
+        "writing_evidence_probe"
+      ],
+      "patterns": [],
+      "evidence": {
+        "correct": {
+          "writing_evidence": -3
+        },
+        "incorrect": {
+          "writing_evidence": 3
+        }
+      },
+      "difficulty": 1,
+      "priority": 12,
+      "opening": false,
+      "answer_type": "choice",
+      "predictions": {
+        "writing_claim": "correct",
+        "writing_evidence": "error",
+        "writing_link": "correct",
+        "writing_isolated": "correct"
+      },
+      "after_error": "writing_evidence_probe"
+    },
+    {
+      "id": "writing_link_probe",
+      "domain": "writing",
+      "concept": "writing_link",
+      "role": "diagnostic",
+      "prompt": "Main point: Bike lanes make school commutes safer. Evidence: Separate lanes reduce car-bike collisions. Which sentence explains the link? A: Fewer collisions mean less risk for students cycling to school. B: There are lanes. Reply A or B.",
+      "expected": "A",
+      "tests": [
+        "writing_link"
+      ],
+      "direct_test": "writing_link",
+      "requires": [],
+      "patterns": [],
+      "evidence": {
+        "correct": {
+          "writing_link": -3
+        },
+        "incorrect": {
+          "writing_link": 3
+        }
+      },
+      "difficulty": 1,
+      "priority": 8,
+      "opening": false,
+      "answer_type": "choice",
+      "predictions": {
+        "writing_claim": "correct",
+        "writing_evidence": "correct",
+        "writing_link": "error",
+        "writing_isolated": "correct"
+      }
+    },
+    {
+      "id": "writing_link_followup",
+      "domain": "writing",
+      "concept": "writing_link",
+      "role": "diagnostic",
+      "prompt": "Main point: Daily reading builds vocabulary. Evidence: Books introduce unfamiliar words. Which sentence explains the link? A: Some books are paperbacks. B: Meeting new words regularly helps readers learn their meanings. Reply A or B.",
+      "expected": "B",
+      "tests": [
+        "writing_link"
+      ],
+      "direct_test": "writing_link",
+      "requires": [
+        "writing_link_probe"
+      ],
+      "patterns": [],
+      "evidence": {
+        "correct": {
+          "writing_link": -3
+        },
+        "incorrect": {
+          "writing_link": 3
+        }
+      },
+      "difficulty": 1,
+      "priority": 12,
+      "opening": false,
+      "answer_type": "choice",
+      "predictions": {
+        "writing_claim": "correct",
+        "writing_evidence": "correct",
+        "writing_link": "error",
+        "writing_isolated": "correct"
+      },
+      "after_error": "writing_link_probe"
+    },
+    {
+      "id": "writing_practice_link",
+      "domain": "writing",
+      "concept": "paragraph_reasoning",
+      "role": "practice",
+      "prompt": "Practice: School breakfast helps learning; hungry students struggle to concentrate. Which sentence explains why that supports the point? A: Less hunger helps students focus in lessons. B: Breakfast is sometimes hot. Reply A or B.",
+      "expected": "A",
+      "tests": [],
+      "direct_test": null,
+      "requires": [],
+      "patterns": [],
+      "evidence": {},
+      "difficulty": 1,
+      "priority": 0,
+      "opening": false,
+      "answer_type": "choice",
+      "predictions": {
+        "writing_claim": "correct",
+        "writing_evidence": "correct",
+        "writing_link": "correct",
+        "writing_isolated": "correct"
+      }
+    },
+    {
+      "id": "writing_practice_claim",
+      "domain": "writing",
+      "concept": "paragraph_reasoning",
+      "role": "practice",
+      "prompt": "Practice: Which is a main point? A: The playground has trees. B: Schools should plant more shade trees. Reply A or B.",
+      "expected": "B",
+      "tests": [],
+      "direct_test": null,
+      "requires": [],
+      "patterns": [],
+      "evidence": {},
+      "difficulty": 1,
+      "priority": 0,
+      "opening": false,
+      "answer_type": "choice",
+      "predictions": {
+        "writing_claim": "correct",
+        "writing_evidence": "correct",
+        "writing_link": "correct",
+        "writing_isolated": "correct"
+      }
+    },
+    {
+      "id": "writing_practice_evidence",
+      "domain": "writing",
+      "concept": "paragraph_reasoning",
+      "role": "practice",
+      "prompt": "Practice: More shade makes playgrounds comfortable. Which supports it? A: Shaded surfaces stay cooler. B: Some trees have rough bark. Reply A or B.",
+      "expected": "A",
+      "tests": [],
+      "direct_test": null,
+      "requires": [],
+      "patterns": [],
+      "evidence": {},
+      "difficulty": 1,
+      "priority": 0,
+      "opening": false,
+      "answer_type": "choice",
+      "predictions": {
+        "writing_claim": "correct",
+        "writing_evidence": "correct",
+        "writing_link": "correct",
+        "writing_isolated": "correct"
+      }
+    },
+    {
+      "id": "writing_independent",
+      "domain": "writing",
+      "concept": "paragraph_reasoning",
+      "role": "verification",
+      "prompt": "Fresh independent example: Refill stations reduce plastic waste; students reuse bottles instead of buying disposables. Which explains the link? A: Some stations are silver. B: Reusing bottles means fewer plastic bottles are thrown away. Reply A or B.",
+      "expected": "B",
+      "tests": [],
+      "direct_test": null,
+      "requires": [],
+      "patterns": [],
+      "evidence": {},
+      "difficulty": 1,
+      "priority": 0,
+      "opening": false,
+      "answer_type": "choice",
+      "predictions": {
+        "writing_claim": "correct",
+        "writing_evidence": "correct",
+        "writing_link": "correct",
+        "writing_isolated": "correct"
+      }
+    },
+    {
+      "id": "writing_independent_followup",
+      "domain": "writing",
+      "concept": "paragraph_reasoning",
+      "role": "verification",
+      "prompt": "Another fresh example: Quiet study rooms help concentration; noise interrupts attention. Which explains the link? A: Fewer interruptions let students stay focused. B: The rooms have doors. Reply A or B.",
+      "expected": "A",
+      "tests": [],
+      "direct_test": null,
+      "requires": [],
+      "patterns": [],
+      "evidence": {},
+      "difficulty": 1,
+      "priority": 0,
+      "opening": false,
+      "answer_type": "choice",
+      "predictions": {
+        "writing_claim": "correct",
+        "writing_evidence": "correct",
+        "writing_link": "correct",
+        "writing_isolated": "correct"
+      }
+    },
+    {
+      "id": "writing_independent_claim",
+      "domain": "writing",
+      "concept": "paragraph_reasoning",
+      "role": "verification",
+      "prompt": "Independent check: Which is a main point? A: The school bus has forty seats. B: Schools should offer free bus passes. Reply A or B.",
+      "expected": "B",
+      "tests": [],
+      "direct_test": null,
+      "requires": [],
+      "patterns": [],
+      "evidence": {},
+      "difficulty": 1,
+      "priority": 0,
+      "opening": false,
+      "answer_type": "choice",
+      "predictions": {
+        "writing_claim": "correct",
+        "writing_evidence": "correct",
+        "writing_link": "correct",
+        "writing_isolated": "correct"
+      }
+    },
+    {
+      "id": "writing_independent_evidence",
+      "domain": "writing",
+      "concept": "paragraph_reasoning",
+      "role": "verification",
+      "prompt": "Independent check: Free bus passes improve attendance. Which detail supports it? A: Some buses are yellow. B: Students can reach school when transport costs are a barrier. Reply A or B.",
+      "expected": "B",
+      "tests": [],
+      "direct_test": null,
+      "requires": [],
+      "patterns": [],
+      "evidence": {},
+      "difficulty": 1,
+      "priority": 0,
+      "opening": false,
+      "answer_type": "choice",
+      "predictions": {
+        "writing_claim": "correct",
+        "writing_evidence": "correct",
+        "writing_link": "correct",
+        "writing_isolated": "correct"
+      }
+    },
+    {
+      "id": "writing_transfer",
+      "domain": "writing",
+      "concept": "paragraph_reasoning",
+      "role": "transfer",
+      "prompt": "How would you improve a new paragraph that lists facts but does not explain its main point? Answer in one sentence.",
+      "expected": null,
+      "tests": [],
+      "direct_test": null,
+      "requires": [],
+      "patterns": [],
+      "evidence": {},
+      "difficulty": 1,
+      "priority": 0,
+      "opening": false,
+      "answer_type": "rubric",
+      "predictions": {
+        "writing_claim": "correct",
+        "writing_evidence": "correct",
+        "writing_link": "correct",
+        "writing_isolated": "correct"
+      },
+      "rubric": [
+        [
+          "claim",
+          "point"
+        ],
+        [
+          "evidence",
+          "example",
+          "fact"
+        ],
+        [
+          "explain",
+          "connect",
+          "link",
+          "support",
+          "why"
+        ]
+      ]
+    },
+    {
+      "id": "writing_fresh_initial",
+      "domain": "writing",
+      "concept": "paragraph_reasoning",
+      "role": "diagnostic",
+      "prompt": "A paragraph says: 'Walking to school benefits students. It gives them regular exercise.' Which ending strengthens the argument? A: Regular exercise is a reason to encourage walking to school. B: Some pavements are grey. Reply A or B.",
+      "expected": "A",
+      "tests": [],
+      "direct_test": null,
+      "requires": [],
+      "patterns": [],
+      "evidence": {
+        "incorrect": {
+          "writing_claim": 1,
+          "writing_evidence": 1,
+          "writing_link": 1,
+          "writing_isolated": 1
+        },
+        "unscored": {}
+      },
+      "difficulty": 1,
+      "priority": 0,
+      "opening": true,
+      "answer_type": "choice",
+      "predictions": {
+        "writing_claim": "correct",
+        "writing_evidence": "correct",
+        "writing_link": "correct",
+        "writing_isolated": "correct"
+      }
     }
   ],
   "repairs": {
@@ -1056,6 +1595,21 @@
       "explanation": "Write the output axis order explicitly before choosing a transpose operation.",
       "example": "For original axes [0,1,2], swapping the first two produces [1,0,2].",
       "connection": "An attention formula does not automatically specify the correct tensor-axis order in code."
+    },
+    "writing_claim": {
+      "explanation": "A main point states the idea the paragraph asks the reader to accept; a detail only describes something.",
+      "example": "There are trees in the playground is a detail. Schools should plant more shade trees is a main point.",
+      "connection": "Choose the point first, then add details that support it."
+    },
+    "writing_evidence": {
+      "explanation": "Choose a detail that gives a reason to accept the point. An interesting detail can still be irrelevant.",
+      "example": "For more playground shade, shaded surfaces staying cooler is useful evidence; rough tree bark is not.",
+      "connection": "Explain why that relevant detail supports your main point."
+    },
+    "writing_link": {
+      "explanation": "After giving evidence, explain why it supports your main point. Do not just add another fact.",
+      "example": "Point: More shade makes playgrounds comfortable. Evidence: Shade keeps surfaces cooler. Link: Cooler surfaces let students play without overheating.",
+      "connection": "Use point, evidence, then a sentence explaining their connection in your next paragraph."
     }
   }
 }

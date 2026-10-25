@@ -247,7 +247,7 @@
       "question_id": "practice_format",
       "prompt": "Practice reporting: first component is 4, second is 3. Give the full vector.",
       "selection": {
-        "reason": "Try new values after the delivered targeted lesson."
+        "reason": "Try a different example after the delivered targeted lesson."
       },
       "answer": [
         4,
@@ -319,7 +319,7 @@
       "question_id": "transfer_attention",
       "prompt": "Why does a Transformer multiply attention weights by value vectors and add the results?",
       "selection": {
-        "reason": "A numerical success does not establish transfer to an explanation of attention."
+        "reason": "An independent answer does not establish transfer to a new application."
       },
       "answer": "Attention combines information from value vectors according to their weights.",
       "feedback": "Your explanation meets the stated rubric.",

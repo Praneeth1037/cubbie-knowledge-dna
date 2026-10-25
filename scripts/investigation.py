@@ -39,20 +39,31 @@ class InvestigationEngine:
 
     def start(self, request):
         scenario = request.get("scenario", "attention")
-        if scenario not in {"attention", "false_mastery", "academic_forensics"}:
-            raise InvestigationError("scenario must be attention, false_mastery, or academic_forensics")
+        if scenario not in {"attention", "false_mastery", "academic_forensics", "writing"}:
+            raise InvestigationError("scenario must be attention, false_mastery, academic_forensics, or writing")
         budget = request.get("question_budget", 8)
         if type(budget) is not int or not 3 <= budget <= 10:
             raise InvestigationError("question_budget must be an integer from 3 to 10")
-        domain = "shapes" if scenario == "academic_forensics" else "attention"
+        domain = "writing" if scenario == "writing" else ("shapes" if scenario == "academic_forensics" else "attention")
+        exposed = request.get("exposed_questions", [])
+        if not isinstance(exposed, list) or len(exposed) > 30 or any(not isinstance(q, str) or q not in self.questions for q in exposed):
+            raise InvestigationError("exposed_questions must contain at most 30 known question IDs")
+        if "initial_exposed" in request and type(request["initial_exposed"]) is not bool:
+            raise InvestigationError("initial_exposed must be boolean")
+        if request.get("initial_exposed"):
+            exposed = exposed + [{"attention": "attention_initial", "writing": "writing_initial", "shapes": "shape_initial"}[domain]]
+        exposed = list(dict.fromkeys(exposed))
+        if len(exposed) > 30:
+            raise InvestigationError("At most 30 exposed question IDs are supported")
         connections, sources = prepare(request, self.patterns, domain)
         session = {"version": 3, "id": uuid.uuid4().hex, "scenario": scenario, "domain": domain,
-                   "goal": "Tensor implementation" if domain == "shapes" else "Transformer attention",
+                   "goal": "Clear paragraph arguments" if domain == "writing" else ("Tensor implementation" if domain == "shapes" else "Transformer attention"),
                    "budget": budget, "observations": [], "hypotheses": initialize(self.patterns, domain),
                    "conclusion": None, "repair": None, "understanding": {}, "sources": sources,
                    "connections": connections,
-                   "message_ids": [], "false_mastery": False, "next": None, "notice": None}
-        qid = "recall_qkv" if scenario == "false_mastery" else "attention_initial"
+                   "message_ids": [], "false_mastery": False, "next": None, "notice": None,
+                   "exposed_questions": list(dict.fromkeys(exposed))}
+        qid = "recall_qkv" if scenario == "false_mastery" else self.opening_id(session)
         prioritize(session["hypotheses"], sources)
         if domain == "shapes":
             top = max(session["hypotheses"], key=lambda h: session["hypotheses"][h]["score"])
@@ -66,7 +77,7 @@ class InvestigationEngine:
     def validate(self, session):
         if (not isinstance(session, dict) or session.get("version") != 3
                 or not isinstance(session.get("id"), str)
-                or session.get("domain") not in {"attention", "shapes"}
+                or session.get("domain") not in {"attention", "shapes", "writing"}
                 or type(session.get("budget")) is not int or not 3 <= session["budget"] <= 10
                 or not isinstance(session.get("observations"), list) or len(session["observations"]) > 16
                 or not isinstance(session.get("hypotheses"), dict)
@@ -77,6 +88,9 @@ class InvestigationEngine:
         if any(type(session.get(key)) is not value for key, value in required.items()):
             raise InvestigationError("Invalid investigation fields", "corrupt_profile")
         expected_hypotheses = {key for key, value in self.patterns.items() if value["domain"] == session["domain"]}
+        exposed = session.get("exposed_questions", [])
+        if not isinstance(exposed, list) or len(exposed) > 30 or any(not isinstance(q, str) or q not in self.questions for q in exposed):
+            raise InvestigationError("Invalid exposed-question record", "corrupt_profile")
         if set(session["hypotheses"]) != expected_hypotheses:
             raise InvestigationError("Unexpected hypothesis set", "corrupt_profile")
         levels = {"not demonstrated", "partially demonstrated", "demonstrated on diagnostic examples",
@@ -118,6 +132,8 @@ class InvestigationEngine:
     def assign(self, session, qid, reason):
         if qid not in self.questions:
             raise InvestigationError(f"Unknown question: {qid}")
+        if qid in session.get("exposed_questions", []):
+            raise InvestigationError("This item was previously exposed; choose unfamiliar material.", "question_bank_exhausted")
         if any(o["question_id"] == qid for o in session["observations"]):
             raise InvestigationError("A question cannot be repeated in an investigation")
         session["next"] = {"kind": "question", "question_id": qid, "selection": reason}
@@ -132,6 +148,8 @@ class InvestigationEngine:
 
     def investigate(self, session):
         decision = conclusion(session, self.questions)
+        if decision and decision["status"] == "no_gap_demonstrated" and session.get("investigation_trigger"):
+            decision = None  # A failed independent check defeats a premature no-gap finding.
         if decision:
             session["conclusion"] = decision
             if decision["status"] == "supported":
@@ -185,20 +203,21 @@ class InvestigationEngine:
         else:
             session.pop("revision_message", None)
         role = question["role"]
+        application_key = "paragraph_application" if session["domain"] == "writing" else "calculation"
         if role == "recall":
             session["understanding"]["verbal_recall"] = self.level(scoring, "demonstrated on diagnostic examples")
             session["feedback"] = "Definitions are recall evidence. Next we will check application."
-            self.assign(session, "attention_initial", {"reason": "Recall does not establish calculation ability."})
+            self.assign(session, self.opening_id(session), {"reason": "Recall does not establish calculation ability."})
         elif role == "diagnostic":
             if session["domain"] == "shapes":
                 self.investigate(session)
             elif question.get("opening") and scoring["verdict"] == "correct":
-                session["understanding"]["calculation"] = "demonstrated on diagnostic examples"
+                session["understanding"][application_key] = "demonstrated on diagnostic examples"
                 session["conclusion"] = {"status": "no_gap_demonstrated", "hypothesis": None,
-                                         "basis": [question["id"]], "language": "The initial calculation worked; independent verification follows."}
-                self.assign(session, "independent_attention", {"reason": "Change values and weights to check an independent example."})
+                                         "basis": [question["id"]], "language": "The initial example worked; independent verification follows."}
+                self.assign(session, self.assessment_id(session, "independent"), {"reason": "Change the context to check an independent example."})
             else:
-                if question["id"] == "attention_initial" and session["understanding"].get("verbal_recall") == "demonstrated on diagnostic examples":
+                if question.get("opening") and session["understanding"].get("verbal_recall") == "demonstrated on diagnostic examples":
                     session["false_mastery"] = True
                     session["feedback"] = "Your definitions worked; application has not yet been demonstrated. Let's test the operations."
                 self.investigate(session)
@@ -209,11 +228,16 @@ class InvestigationEngine:
             else:
                 self.finish(session, "Practice has not succeeded yet; independent improvement is not verified.")
         elif role == "verification":
-            session["understanding"]["calculation"] = self.level(scoring, "demonstrated on independent examples")
+            session["understanding"][application_key] = self.level(scoring, "demonstrated on independent examples")
             if session["repair"]:
                 session["repair"]["independent"] = scoring["verdict"]
             if scoring["verdict"] == "correct":
-                self.assign(session, self.assessment_id(session, "transfer"), {"reason": "A numerical success does not establish transfer to an explanation of attention."})
+                self.assign(session, self.assessment_id(session, "transfer"), {"reason": "An independent answer does not establish transfer to a new application."})
+            elif not session["repair"]:
+                session["conclusion"] = None
+                session["investigation_trigger"] = question["id"]
+                session["feedback"] = "That independent check did not work. It changes the earlier picture; let's investigate the cause before teaching."
+                self.investigate(session)
             else:
                 self.finish(session, "The independent example did not verify improvement. More focused practice is recommended.")
         elif role == "transfer":
@@ -228,10 +252,29 @@ class InvestigationEngine:
             return success
         return "partially demonstrated" if scoring["verdict"] in {"partial", "incomplete"} else "not demonstrated"
 
+    def opening_id(self, session):
+        candidates = ["writing_initial", "writing_fresh_initial"] if session["domain"] == "writing" else ["attention_initial", "attention_fresh_initial"]
+        if session["domain"] == "shapes":
+            return "shape_initial"
+        return self.unused_id(session, candidates)
+
     @staticmethod
-    def assessment_id(session, role):
+    def unused_id(session, candidates):
+        used = {o["question_id"] for o in session["observations"]} | set(session.get("exposed_questions", []))
+        for candidate in candidates:
+            if candidate not in used:
+                return candidate
+        raise InvestigationError("No unused independent item remains; start a new investigation with unfamiliar material.", "question_bank_exhausted")
+
+    def assessment_id(self, session, role):
         if session["domain"] == "attention":
-            return {"independent": "independent_attention", "transfer": "transfer_attention"}[role]
+            return "transfer_attention" if role == "transfer" else self.unused_id(session, ["independent_attention", "independent_attention_followup"])
+        if session["domain"] == "writing":
+            if role == "transfer":
+                return "writing_transfer"
+            repair = (session.get("repair") or {}).get("id")
+            first = {"writing_claim": "writing_independent_claim", "writing_evidence": "writing_independent_evidence"}.get(repair, "writing_independent")
+            return self.unused_id(session, [first, "writing_independent_followup"])
         if role == "transfer":
             return "transfer_shapes"
         repair = (session.get("repair") or {}).get("id")
@@ -248,17 +291,17 @@ class InvestigationEngine:
             session["repair"]["delivered"] = True
             practice = {"scalar_multiplication": "practice_scalar", "vector_addition": "practice_addition",
                         "response_format": "practice_format", "tensor_shapes": "practice_shapes",
-                        "broadcasting": "practice_broadcast", "notation_to_code": "practice_implementation"}.get(session["repair"]["id"], "practice_weighted")
-            self.assign(session, practice, {"reason": "Try new values after the delivered targeted lesson."})
+                        "broadcasting": "practice_broadcast", "notation_to_code": "practice_implementation",
+                        "writing_claim": "writing_practice_claim", "writing_evidence": "writing_practice_evidence",
+                        "writing_link": "writing_practice_link"}.get(session["repair"]["id"], "practice_weighted")
+            self.assign(session, practice, {"reason": "Try a different example after the delivered targeted lesson."})
         elif action == "skip":
             if session["next"]["kind"] != "question":
                 raise InvestigationError("Skip is available while answering questions")
             session["conclusion"] = {"status": "insufficient_evidence", "hypothesis": None, "basis": [],
                                      "language": "Student requested an explanation; no cause was diagnosed."}
-            self.lesson(session, "weighted_sums", requested=True)
+            self.lesson(session, "writing_link" if session["domain"] == "writing" else "weighted_sums", requested=True)
         elif action == "verify":
-            if any(o["question_id"] == self.assessment_id(session, "independent") for o in session["observations"]):
-                raise InvestigationError("Independent question already used; start a new session for a new investigation")
             self.assign(session, self.assessment_id(session, "independent"), {"reason": "Student requested an independent check; no new diagnosis is inferred."})
         else:
             raise InvestigationError("Unsupported mutation")
@@ -275,11 +318,13 @@ class InvestigationEngine:
         repair = session["repair"]
         decision = session["conclusion"] or {}
         next_step = ("Try a new masking case with tensor axes labeled before writing code." if session["domain"] == "shapes"
-                     else "Try query-key scores or softmax next; those are outside this investigation's checks.")
+                     else ("Try an unfamiliar paragraph with a point, evidence and an explanation." if session["domain"] == "writing"
+                           else "Try query-key scores or softmax next; those are outside this investigation's checks."))
         if pending["kind"] == "uncertain":
             next_step = "Talk through one conflicting answer; keep the cause uncertain until another independent check."
         elif session["understanding"].get("transfer") in {"partially demonstrated", "not demonstrated"}:
-            next_step = "Practice explaining how attention weights mix values, then use a fresh transfer prompt."
+            next_step = ("Explain why a detail supports the main point in a fresh paragraph." if session["domain"] == "writing"
+                         else "Practice explaining how attention weights mix values, then use a fresh transfer prompt.")
         elif session["understanding"].get("calculation") == "not demonstrated":
             next_step = "Revisit " + (repair or {}).get("id", "weighted sums") + " with a different numerical example."
         elif repair and repair["independent"] == "correct":

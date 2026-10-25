@@ -40,6 +40,26 @@
       "domain": "shapes",
       "description": "Earlier mistakes may be isolated; current evidence may not show a persistent gap.",
       "repair": "tensor_shapes"
+    },
+    "writing_claim": {
+      "domain": "writing",
+      "description": "The student may not distinguish a main point from a factual detail.",
+      "repair": "writing_claim"
+    },
+    "writing_evidence": {
+      "domain": "writing",
+      "description": "The student may not distinguish relevant evidence from an unrelated detail.",
+      "repair": "writing_evidence"
+    },
+    "writing_link": {
+      "domain": "writing",
+      "description": "The student may not connect evidence to the main point.",
+      "repair": "writing_link"
+    },
+    "writing_isolated": {
+      "domain": "writing",
+      "description": "The response may be an isolated choice or instruction misunderstanding.",
+      "repair": "writing_link"
     }
   }
 }

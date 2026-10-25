@@ -14,6 +14,8 @@ def select(session, questions, graph=None):
         if (question["domain"] != session["domain"] or question["role"] != "diagnostic"
                 or question["id"] in seen or question.get("opening")):
             continue
+        if question["id"] in session.get("exposed_questions", []):
+            continue
         if any(qid not in seen for qid in question.get("requires", [])):
             continue
         prerequisites = graph.prerequisites(question["concept"]) if graph and question["concept"] in graph.nodes else []
@@ -23,7 +25,8 @@ def select(session, questions, graph=None):
             continue
         if question.get("after_error") and observed.get(question["after_error"], {}).get("verdict") not in {"incorrect", "incomplete", "partial"}:
             continue
-        if question["id"] == "dimension" and observed.get("attention_initial", {}).get("verdict") != "incomplete":
+        opening = next((o for o in session["observations"] if questions[o["question_id"]].get("opening") and questions[o["question_id"]]["role"] == "diagnostic"), {})
+        if question["id"] == "dimension" and opening.get("verdict") != "incomplete":
             continue
         predictions = question["predictions"]
         separated = sum((1 + max(0, hypotheses[a]["score"])) * (1 + max(0, hypotheses[b]["score"]))
